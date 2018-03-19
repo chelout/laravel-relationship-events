@@ -14,7 +14,13 @@ class RelationshipEventsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        HasOneOrMany::setEventDispatcher($this->app['events']);
+        Relationships\BelongsTo::setEventDispatcher($this->app['events']);
+        Relationships\BelongsToMany::setEventDispatcher($this->app['events']);
+        Relationships\HasMany::setEventDispatcher($this->app['events']);
+        Relationships\HasOne::setEventDispatcher($this->app['events']);
+        Relationships\MorphMany::setEventDispatcher($this->app['events']);
+        Relationships\MorphOne::setEventDispatcher($this->app['events']);
+        Relationships\MorphTo::setEventDispatcher($this->app['events']);
     }
 
     /**
@@ -24,6 +30,6 @@ class RelationshipEventsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // $this->app->bind(HasOneOrMany::class, Relationships\HasOneOrMany::class);
+        // 
     }
 }
