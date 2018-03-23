@@ -104,6 +104,7 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
 
         return static::$dispatcher->{$method}(
             "eloquent.".static::$relationEventName.ucfirst($event).": ".get_class($this->child), [
+                $this->relation,
                 $this->child,
                 $parent,
             ]

@@ -143,6 +143,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
 
         return static::$dispatcher->{$method}(
             "eloquent.".static::$relationEventName.ucfirst($event).": ".get_class($this->parent), [
+                $this->getRelationName(),
                 $this->parent,
                 $this->parseIdsForEvent($parsedIds),
                 $this->parseAttributesForEvent($ids, $parsedIds, $attributes),
