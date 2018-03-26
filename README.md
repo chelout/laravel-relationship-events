@@ -3,6 +3,70 @@
 
 Missing relationship events for Laravel
 
+## Install
+
+1. Install package with composer
+
+    ```
+    composer require chelout/laravel-relationship-events:dev-master
+    ```
+
+2. Use necessary trait in your model.
+```php
+...
+use Chelout\RelationshipEvents\Relationships\Concerns\HasOneEvents;
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    use HasOneEvents;
+...
+    public static function boot()
+    {
+        parent::boot();
+
+        /**
+         * One To One Relationship Events
+         */
+        static::hasOneSaving(function ($parent, $related) {
+            dump('hasOneSaving', $parent, $related);
+        });
+
+        static::hasOneSaved(function ($parent, $related) {
+            dump('hasOneSaved', $parent, $related);
+        });
+
+        static::hasOneCreating(function ($parent, $related) {
+            dump('hasOneCreating', $parent, $related);
+        });
+
+        static::hasOneCreated(function ($parent, $related) {
+            dump('hasOneCreated', $parent, $related);
+        });
+
+        static::hasOneUpdating(function ($parent, $related) {
+            dump('hasOneUpdating', $parent, $related);
+        });
+
+        static::hasOneUpdated(function ($parent, $related) {
+            dump('hasOneUpdated', $parent, $related);
+        });
+    }
+...
+}
+```
+
+#### Available traits:
+- HasBelongsToEvents
+- HasBelongsToManyEvents
+- HasManyEvents
+- HasMorphedByManyEvents
+- HasMorphManyEvents
+- HasMorphOneEvents
+- HasMorphToEvents
+- HasMorphToManyEvents
+- HasOneEvents
+
 ## Relationships
 ### One To One:
  - hasOne:
@@ -21,15 +85,17 @@ Missing relationship events for Laravel
 - belongsTo:
     - methods:
         - BelongsTo::associate
-            - fires hasOneAssociating, hasOneAssociated
-            - events have $parent and $related models. Note: related model is dirty, should be saved after associating
+            - fires belongsToAssociating, belongsToAssociated
+            - events have $relation name, $related model and $parent model or key(depends on BelongsTo::associate $model parametr). 
+            > Note: related model is dirty, should be saved after associating
         - BelongsTo::dissociate
-            - fires hasOneAssociating, hasOneAssociated
-            - events have $parent and $related models. Note: related model is dirty, should be saved after dissociating
+            - fires belongsToAssociating, belongsToAssociated
+            - events have $relation name, $related and $parent models. 
+            > Note: has additional query to get parent model
+            > Note: related model is dirty, should be saved after dissociating
         - BelongsTo::update
-            - fires hasOneUpdating, hasOneUpdated
-            - events have $parent and $related models
-            > Note: has additional query to get related model
+            - fires belongsToUpdating, belongsToUpdated
+            - events have $relation name, $related and $parent models. 
 
 
 ### One To Many:
@@ -50,14 +116,16 @@ Missing relationship events for Laravel
     - methods:
         - BelongsTo::associate
             - fires belongToAssociating, belongToAssociated
-            - events have $parent and $related models. Note: related model is dirty, should be saved after associating
+            - events have $relation name, $related model and $parent model or key(depends on BelongsTo::associate $model parametr). 
+            > Note: related model is dirty, should be saved after associating
         - BelongsTo::dissociate
             - fires belongToAssociating, belongToAssociated
-            - events have $parent and $related models. Note: related model is dirty, should be saved after associating
+            - events have $relation name, $related and $parent models. 
+            > Note: has additional query to get parent model
+            > Note: related model is dirty, should be saved after dissociating
         - BelongsTo::update
             - fires belongToUpdating, belongToUpdated
-            - events have $parent and $related models
-            > Note: has additional query to get related model
+            - events have $relation name, $related and $parent models. 
 
 
 ### Many To Many:
@@ -96,19 +164,21 @@ Missing relationship events for Laravel
         - MorphOne::update (HasOneOrMany::update)
             - fires morphOneUpdating, morphOneUpdated
             - events have $parent and $related models
-            > Note: has additional query to get related model
 
 - morphTo:
     - methods:
         - MorphTo::associate
             - fires belongToAssociating, belongToAssociated
-            - events have $parent and $related models. Note: related model is dirty, should be saved after associating
+            - events have $relation name, $related and $parent models. 
+            > Note: related model is dirty, should be saved after associating
         - MorphTo::dissociate
             - fires belongToAssociating, belongToAssociated
-            - events have $parent and $related models. Note: related model is dirty, should be saved after associating
+            - events have $relation name, $related and $parent models. 
+            > Note: has additional query to get parent model
+            > Note: related model is dirty, should be saved after dissociating
         - MorphTo::update
             - fires belongToUpdating, belongToUpdated
-            - events have $parent and $related models
+            - events have $relation name, $related and $parent models. 
             > Note: has additional query to get related model
 
 
@@ -128,15 +198,18 @@ Missing relationship events for Laravel
 
 - morphTo:
     - methods:
-        - BelongsTo::associate
+        - MorphTo::associate
             - fires belongToAssociating, belongToAssociated
-            - events have $parent and $related models. Note: related model is dirty, should be saved after associating
-        - BelongsTo::dissociate
+            - events have $relation name, $related and $parent models. 
+            > Note: related model is dirty, should be saved after associating
+        - MorphTo::dissociate
             - fires belongToAssociating, belongToAssociated
-            - events have $parent and $related models. Note: related model is dirty, should be saved after associating
-        - BelongsTo::update
+            - events have $relation name, $related and $parent models. 
+            > Note: has additional query to get parent model
+            > Note: related model is dirty, should be saved after dissociating
+        - MorphTo::update
             - fires belongToUpdating, belongToUpdated
-            - events have $parent and $related models
+            - events have $relation name, $related and $parent models. 
             > Note: has additional query to get related model
 
 

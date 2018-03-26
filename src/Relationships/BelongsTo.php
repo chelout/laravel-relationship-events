@@ -17,6 +17,7 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
      * Associate the model instance to the given parent.
      *
      * @param  \Illuminate\Database\Eloquent\Model|int|string  $model
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function associate($model)
@@ -54,6 +55,7 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
      * Update the parent model on the relationship.
      *
      * @param  array  $attributes
+     *
      * @return mixed
      */
     public function update(array $attributes)
@@ -62,9 +64,7 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
 
         $this->fireModelRelationshipEvent('updating', $related);
 
-        if ($result = parent::update($attributes)) {
-            $related->fill($attributes)->syncChanges()->syncOriginal();
-
+        if ($result = $related->fill($attributes)->save()) {
             $this->fireModelRelationshipEvent('updated', $related);
         }
 
@@ -75,8 +75,9 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
      * Fire the given event for the model relationship.
      *
      * @param  string  $event
-     * @param  mixed $related
+     * @param \Illuminate\Database\Eloquent\Model|int|string $related
      * @param  bool  $halt
+     *
      * @return mixed
      */
     protected function fireModelRelationshipEvent($event, $parent, $halt = true)
@@ -103,7 +104,7 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
         // );
 
         return static::$dispatcher->{$method}(
-            "eloquent.".static::$relationEventName.ucfirst($event).": ".get_class($this->child), [
+            'eloquent.' . static::$relationEventName . ucfirst($event) . ': ' . get_class($this->child), [
                 $this->relation,
                 $this->child,
                 $parent,

@@ -2,11 +2,8 @@
 
 namespace Chelout\RelationshipEvents\Relationships\Traits;
 
-use Chelout\RelationshipEvents\Relationships\Contracts\EventDispatcher;
-use Chelout\RelationshipEvents\Relationships\Traits\HasEventDispatcher;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany as HasOneOrManyBase;
 
 trait HasOneOrManyMethods
 {
@@ -14,6 +11,7 @@ trait HasOneOrManyMethods
      * Create a new instance of the related model.
      *
      * @param  array  $attributes
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function create(array $attributes = [])
@@ -53,6 +51,7 @@ trait HasOneOrManyMethods
      * Perform an update on all the related models.
      *
      * @param  array  $attributes
+     *
      * @return int
      */
     public function update(array $attributes)
@@ -83,6 +82,7 @@ trait HasOneOrManyMethods
      * @param  string  $event
      * @param  mixed $related
      * @param  bool  $halt
+     *
      * @return mixed
      */
     protected function fireModelRelationshipEvent($event, $related = null, $halt = true)
@@ -109,7 +109,7 @@ trait HasOneOrManyMethods
         // );
 
         return static::$dispatcher->{$method}(
-            "eloquent.".static::$relationEventName.ucfirst($event).": ".get_class($this->parent), [
+            'eloquent.' . static::$relationEventName . ucfirst($event) . ': ' . get_class($this->parent), [
                 $this->parent,
                 $related,
             ]
@@ -117,7 +117,7 @@ trait HasOneOrManyMethods
     }
 
     /**
-     * Updated related model's attributes
+     * Updated related model's attributes.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $related
      * @param  array  $attributes

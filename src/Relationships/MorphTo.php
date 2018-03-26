@@ -4,8 +4,6 @@ namespace Chelout\RelationshipEvents\Relationships;
 
 use Chelout\RelationshipEvents\Relationships\Traits\HasEventDispatcher;
 use Chelout\RelationshipEvents\Relationships\Contracts\EventDispatcher;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo as MorphToBase;
 
@@ -19,6 +17,7 @@ class MorphTo extends MorphToBase implements EventDispatcher
      * Associate the model instance to the given parent.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function associate($model)
@@ -56,6 +55,7 @@ class MorphTo extends MorphToBase implements EventDispatcher
      * Update the parent model on the relationship.
      *
      * @param  array  $attributes
+     *
      * @return mixed
      */
     public function update(array $attributes)
@@ -64,9 +64,7 @@ class MorphTo extends MorphToBase implements EventDispatcher
 
         $this->fireModelRelationshipEvent('updating', $related);
 
-        if ($result = parent::update($attributes)) {
-            $related->fill($attributes)->syncChanges()->syncOriginal();
-
+        if ($related && $result = $related->fill($attributes)->save()) {
             $this->fireModelRelationshipEvent('updated', $related);
         }
 
@@ -78,6 +76,7 @@ class MorphTo extends MorphToBase implements EventDispatcher
      *
      * @param  string  $event
      * @param  bool  $halt
+     *
      * @return mixed
      */
     protected function fireModelRelationshipEvent($event, $parent, $halt = true)
@@ -104,7 +103,7 @@ class MorphTo extends MorphToBase implements EventDispatcher
         // );
 
         return static::$dispatcher->{$method}(
-            "eloquent.".static::$relationEventName.ucfirst($event).": ".get_class($this->child), [
+            'eloquent.' . static::$relationEventName . ucfirst($event) . ': ' . get_class($this->child), [
                 $this->relation,
                 $this->child,
                 $parent,

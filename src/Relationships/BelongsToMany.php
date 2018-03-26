@@ -18,8 +18,9 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      *
      * Each existing model is detached, and non existing ones are attached.
      *
-     * @param  mixed  $ids
+     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|Illuminate\Support\Collection|int|string $ids
      * @param  bool   $touch
+     *
      * @return array
      */
     public function toggle($ids, $touch = true)
@@ -36,8 +37,9 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
     /**
      * Sync the intermediate tables with a list of IDs or collection of models.
      *
-     * @param  \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|array  $ids
+     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|Illuminate\Support\Collection|int|string $ids
      * @param  bool   $detaching
+     *
      * @return array
      */
     public function sync($ids, $detaching = true)
@@ -57,6 +59,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      * @param  mixed  $id
      * @param  array  $attributes
      * @param  bool   $touch
+     *
      * @return int
      */
     public function updateExistingPivot($id, array $attributes, $touch = true)
@@ -76,7 +79,6 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      * @param  mixed  $id
      * @param  array  $attributes
      * @param  bool   $touch
-     * @return void
      */
     public function attach($id, array $attributes = [], $touch = true)
     {
@@ -92,6 +94,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      *
      * @param  mixed  $ids
      * @param  bool  $touch
+     *
      * @return int
      */
     public function detach($ids = null, $touch = true)
@@ -114,6 +117,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      * @param  mixed $ids
      * @param  array $attributes
      * @param  bool  $halt
+     *
      * @return mixed
      */
     protected function fireModelRelationshipEvent($event, $ids, $attributes = [], $halt = true)
@@ -142,7 +146,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
         $parsedIds = $this->parseIds($ids);
 
         return static::$dispatcher->{$method}(
-            "eloquent.".static::$relationEventName.ucfirst($event).": ".get_class($this->parent), [
+            'eloquent.' . static::$relationEventName . ucfirst($event) . ': ' . get_class($this->parent), [
                 $this->getRelationName(),
                 $this->parent,
                 $this->parseIdsForEvent($parsedIds),
@@ -152,7 +156,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
     }
 
     /**
-     * Parse ids for event
+     * Parse ids for event.
      *
      * @param  array $ids
      *
@@ -166,7 +170,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
     }
 
     /**
-     * Parse attributes for event
+     * Parse attributes for event.
      *
      * @param  array $attributes
      *
