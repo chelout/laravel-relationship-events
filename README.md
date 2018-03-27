@@ -137,6 +137,7 @@ class User extends Model
         - BelongsToMany::detach
             - fires belongToManyDetching, belongToManyDetached
             - events have $parent model, $ids detaching model ids, $attributes additional data
+            > Note: has additional query to get related ids
         - BelongsToMany::sync
             - fires belongToManySyncing, belongToManySynced, BelongsToMany::attach, BelongsToMany::detach
             - events have $parent model, $ids detaching model ids, $attributes additional data

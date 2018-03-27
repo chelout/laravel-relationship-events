@@ -99,6 +99,10 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      */
     public function detach($ids = null, $touch = true)
     {
+        if (is_null($ids)) {
+            $ids = $this->parent->{$this->getRelationName()}->pluck('id');
+        }
+        
         $this->fireModelRelationshipEvent('detaching', $ids);
 
         if ($result = parent::detach($ids, $touch)) {
