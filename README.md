@@ -150,7 +150,7 @@ class User extends Model
 
 
 ### Has Many Through:
-- hasManyThrough
+- no events to be added
 
 
 ### One To One Polymorphic Relations:
@@ -256,7 +256,7 @@ class User extends Model
 ## Todo
 
  - ~~Implement Many To Many polymorphic relations events.~~
- - Dive into Has Many Through and understand if there could be some events.
+ - ~~Dive into Has Many Through and understand if there could be some events.~~
  - Move fireModelRelationshipEvent() method to relation concerns in order to create dispatchable relationship events:
 ```php
 protected $dispatchesEvents = [
