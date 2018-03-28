@@ -13,8 +13,6 @@ class MorphMany extends MorphManyBase implements EventDispatcher
     use HasEventDispatcher;
     use HasOneOrManyMethods;
 
-    protected static $relationEventName = 'morphMany';
-
     /**
      * Attach a model instance to the parent model.
      *

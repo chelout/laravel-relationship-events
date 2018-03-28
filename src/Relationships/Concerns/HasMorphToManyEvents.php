@@ -3,11 +3,14 @@
 namespace Chelout\RelationshipEvents\Relationships\Concerns;
 
 use Chelout\RelationshipEvents\Relationships\MorphToMany;
+// use Chelout\RelationshipEvents\Relationships\Traits\HasAttributesMethods;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 trait HasMorphToManyEvents
 {
+    // use HasAttributesMethods;
+
     /**
      * Instantiate a new HasManyThrough relationship.
      *
@@ -185,5 +188,48 @@ trait HasMorphToManyEvents
     public static function morphToManyUpdatedExistingPivot($callback)
     {
         static::registerModelMorphToManyEvent('morphToManyUpdatedExistingPivot', $callback);
+    }
+
+    /**
+     * Fire the given event for the model relationship.
+     *
+     * @param string $event
+     * @param mixed  $ids
+     * @param array  $attributes
+     * @param bool   $halt
+     *
+     * @return mixed
+     */
+    public function fireModelMorphToManyEvent($event, $relation, $ids, $attributes = [], $halt = true)
+    {
+        if (! isset(static::$dispatcher)) {
+            return true;
+        }
+
+        $event = 'morphToMany' . ucfirst($event);
+
+        // First, we will get the proper method to call on the event dispatcher, and then we
+        // will attempt to fire a custom, object based event for the given event. If that
+        // returns a result we can return that result, or we'll call the string events.
+        $method = $halt ? 'until' : 'fire';
+
+        $result = $this->filterModelEventResults(
+            $this->fireCustomModelEvent($event, $method)
+        );
+
+        if (false === $result) {
+            return false;
+        }
+
+        $parsedIds = $this->parseIds($ids);
+
+        return ! empty($result) ? $result : static::$dispatcher->{$method}(
+            "eloquent.{$event}: " . static::class, [
+                $relation,
+                $this,
+                $this->parseIdsForEvent($parsedIds),
+                $this->parseAttributesForEvent($ids, $parsedIds, $attributes),
+            ]
+        );
     }
 }

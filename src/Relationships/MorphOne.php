@@ -11,6 +11,4 @@ class MorphOne extends MorphOneBase implements EventDispatcher
 {
     use HasEventDispatcher;
     use HasOneOrManyMethods;
-
-    protected static $relationEventName = 'morphOne';
 }

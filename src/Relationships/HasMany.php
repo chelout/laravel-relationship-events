@@ -11,6 +11,4 @@ class HasMany extends HasManyBase implements EventDispatcher
 {
     use HasEventDispatcher;
     use HasOneOrManyMethods;
-
-    protected static $relationEventName = 'hasMany';
 }

@@ -16,17 +16,17 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
     /**
      * Associate the model instance to the given parent.
      *
-     * @param  \Illuminate\Database\Eloquent\Model|int|string  $model
+     * @param \Illuminate\Database\Eloquent\Model|int|string $model
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function associate($model)
     {
-        $this->fireModelRelationshipEvent('associating', $model);
+        $this->parent->fireModelBelongsToEvent('associating', $this->relation, $model);
 
         $result = parent::associate($model);
 
-        $this->fireModelRelationshipEvent('associated', $model);
+        $this->parent->fireModelBelongsToEvent('associated', $this->relation, $model);
 
         return $result;
     }
@@ -40,12 +40,12 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
     {
         $parent = $this->getResults();
 
-        $this->fireModelRelationshipEvent('dissociating', $parent);
-        
+        $this->parent->fireModelBelongsToEvent('dissociating', $this->relation, $parent);
+
         $result = parent::dissociate();
 
         if (! is_null($parent)) {
-            $this->fireModelRelationshipEvent('dissociated', $parent);
+            $this->parent->fireModelBelongsToEvent('dissociated', $this->relation, $parent);
         }
 
         return $result;
@@ -54,7 +54,7 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
     /**
      * Update the parent model on the relationship.
      *
-     * @param  array  $attributes
+     * @param array $attributes
      *
      * @return mixed
      */
@@ -62,53 +62,12 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
     {
         $related = $this->getResults();
 
-        $this->fireModelRelationshipEvent('updating', $related);
+        $this->parent->fireModelBelongsToEvent('updating', $this->relation, $related);
 
         if ($result = $related->fill($attributes)->save()) {
-            $this->fireModelRelationshipEvent('updated', $related);
+            $this->parent->fireModelBelongsToEvent('updated', $this->relation, $related);
         }
 
         return $result;
-    }
-
-    /**
-     * Fire the given event for the model relationship.
-     *
-     * @param  string  $event
-     * @param \Illuminate\Database\Eloquent\Model|int|string $related
-     * @param  bool  $halt
-     *
-     * @return mixed
-     */
-    protected function fireModelRelationshipEvent($event, $parent, $halt = true)
-    {
-        if (! isset(static::$dispatcher)) {
-            return true;
-        }
-
-        // First, we will get the proper method to call on the event dispatcher, and then we
-        // will attempt to fire a custom, object based event for the given event. If that
-        // returns a result we can return that result, or we'll call the string events.
-        $method = $halt ? 'until' : 'fire';
-
-        // $result = $this->filterModelEventResults(
-        //     $this->fireCustomModelEvent($event, $method)
-        // );
-
-        // if ($result === false) {
-        //     return false;
-        // }
-
-        // return ! empty($result) ? $result : static::$dispatcher->{$method}(
-        //     "eloquent.{$event}: ".static::class, $this
-        // );
-
-        return static::$dispatcher->{$method}(
-            'eloquent.' . static::$relationEventName . ucfirst($event) . ': ' . get_class($this->child), [
-                $this->relation,
-                $this->child,
-                $parent,
-            ]
-        );
     }
 }

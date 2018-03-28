@@ -11,12 +11,13 @@ trait HasMorphToEvents
     /**
      * Instantiate a new MorphTo relationship.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  \Illuminate\Database\Eloquent\Model  $parent
-     * @param  string  $foreignKey
-     * @param  string  $ownerKey
-     * @param  string  $type
-     * @param  string  $relation
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Model   $parent
+     * @param string                                $foreignKey
+     * @param string                                $ownerKey
+     * @param string                                $type
+     * @param string                                $relation
+     *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     protected function newMorphTo(Builder $query, Model $parent, $foreignKey, $ownerKey, $type, $relation)
@@ -27,9 +28,8 @@ trait HasMorphToEvents
     /**
      * Register a model event with the dispatcher.
      *
-     * @param  string  $event
-     * @param  \Closure|string  $callback
-     * @return void
+     * @param string          $event
+     * @param \Closure|string $callback
      */
     protected static function registerModelMorphToEvent($event, $callback)
     {
@@ -43,8 +43,7 @@ trait HasMorphToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
-     * @return void
+     * @param \Closure|string $callback
      */
     public static function morphToAssociating($callback)
     {
@@ -54,8 +53,7 @@ trait HasMorphToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
-     * @return void
+     * @param \Closure|string $callback
      */
     public static function morphToAssociated($callback)
     {
@@ -65,8 +63,7 @@ trait HasMorphToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
-     * @return void
+     * @param \Closure|string $callback
      */
     public static function morphToDissociating($callback)
     {
@@ -76,8 +73,7 @@ trait HasMorphToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
-     * @return void
+     * @param \Closure|string $callback
      */
     public static function morphToDissociated($callback)
     {
@@ -87,8 +83,7 @@ trait HasMorphToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
-     * @return void
+     * @param \Closure|string $callback
      */
     public static function morphToUpdating($callback)
     {
@@ -98,11 +93,48 @@ trait HasMorphToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
-     * @return void
+     * @param \Closure|string $callback
      */
     public static function morphToUpdated($callback)
     {
         static::registerModelMorphToEvent('morphToUpdated', $callback);
+    }
+
+    /**
+     * Fire the given event for the model relationship.
+     *
+     * @param string $event
+     * @param bool   $halt
+     *
+     * @return mixed
+     */
+    public function fireModelMorphToEvent($event, $relation, $parent, $halt = true)
+    {
+        if (! isset(static::$dispatcher)) {
+            return true;
+        }
+
+        $event = 'morphTo' . ucfirst($event);
+
+        // First, we will get the proper method to call on the event dispatcher, and then we
+        // will attempt to fire a custom, object based event for the given event. If that
+        // returns a result we can return that result, or we'll call the string events.
+        $method = $halt ? 'until' : 'fire';
+
+        $result = $this->filterModelEventResults(
+            $this->fireCustomModelEvent($event, $method)
+        );
+
+        if (false === $result) {
+            return false;
+        }
+
+        return ! empty($result) ? $result : static::$dispatcher->{$method}(
+            "eloquent.{$event}: " . static::class, [
+                $relation,
+                $this,
+                $parent,
+            ]
+        );
     }
 }

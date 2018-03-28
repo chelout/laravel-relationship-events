@@ -26,8 +26,7 @@ trait HasEventDispatcher
     /**
      * Set the event dispatcher instance.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $dispatcher
-     * @return void
+     * @param \Illuminate\Contracts\Events\Dispatcher $dispatcher
      */
     public static function setEventDispatcher(Dispatcher $dispatcher)
     {
@@ -36,12 +35,9 @@ trait HasEventDispatcher
 
     /**
      * Unset the event dispatcher for models.
-     *
-     * @return void
      */
     public static function unsetEventDispatcher()
     {
         static::$dispatcher = null;
     }
-
 }

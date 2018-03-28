@@ -7,31 +7,40 @@ Missing relationship events for Laravel
 
 1. Install package with composer
 
-    ```
-    composer require chelout/laravel-relationship-events:dev-master
-    ```
+#### Stable branch:
+```
+composer require chelout/laravel-relationship-events
+```
+
+#### Development branch:
+```
+composer require chelout/laravel-relationship-events:dev-master
+```
 
 2. Use necessary trait in your model.
 #### Available traits:
 - HasOneEvents
 - HasBelongsToEvents
 - HasManyEvents
-- HasBelongsToManyEvents
+- HasBelongsToManyEvents ()
+    > Note: should be used with HasAttributesMethods trait
 - HasMorphOneEvents
 - HasMorphToEvents
 - HasMorphManyEvents
 - HasMorphToManyEvents
+    > Note: should be used with HasAttributesMethods trait
 - HasMorphedByManyEvents
+    > Note: should be used with HasAttributesMethods trait
 
 ```php
-...
+
 use Chelout\RelationshipEvents\Relationships\Concerns\HasOneEvents;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
     use HasOneEvents;
-...
+
     public static function boot()
     {
         parent::boot();
@@ -47,10 +56,63 @@ class User extends Model
             dump('hasOneUpdated', $parent, $related);
         });
     }
-...
+
 }
 ```
 
+```php
+
+use Chelout\RelationshipEvents\Relationships\Concerns\HasMorphToManyEvents;
+use Chelout\RelationshipEvents\Relationships\Traits\HasAttributesMethods;
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    use HasMorphToManyEvents; // should be used with HasAttributesMethods trait
+    use HasAttributesMethods;
+
+    public static function boot()
+    {
+        parent::boot();
+
+        /**
+         * Many To Many Polymorphic Relations Events.
+         */
+        static::morphToManyAttached(function ($relation, $parent, $ids, $attributes) {
+            dump('morphToManyAttached', $relation, $parent, $ids, $attributes);
+        });
+
+        static::morphToManyDetached(function ($relation, $parent, $ids) {
+            dump('morphToManyDetached', $relation, $parent, $ids);
+        });
+    }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+}
+```
+
+3. Dispatchable relationship events.
+It is possible to fire event classes via $dispatchesEvents properties:
+
+```php
+
+use Chelout\RelationshipEvents\Relationships\Concerns\HasOneEvents;
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    use HasOneEvents;
+
+    protected $dispatchesEvents = [
+        'hasOneSaved' => HasOneSaved::class,
+    ];
+
+}
+```
 
 ## Relationships
 ### One To One:
@@ -242,7 +304,7 @@ class User extends Model
 
  - ~~Implement Many To Many polymorphic relations events.~~
  - ~~Dive into Has Many Through and understand if there could be some events.~~
- - Move fireModelRelationshipEvent() method to relation concerns in order to create dispatchable relationship events:
+ - ~~Move fireModelRelationshipEvent() method to relation concerns in order to create dispatchable relationship events:~~
 ```php
 protected $dispatchesEvents = [
     'hasOneSaving' => \App\Events\UserSaving::class,

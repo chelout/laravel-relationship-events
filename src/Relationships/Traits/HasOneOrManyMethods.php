@@ -10,7 +10,7 @@ trait HasOneOrManyMethods
     /**
      * Create a new instance of the related model.
      *
-     * @param  array  $attributes
+     * @param array $attributes
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -30,8 +30,8 @@ trait HasOneOrManyMethods
     /**
      * Attach a model instance to the parent model.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * 
+     * @param \Illuminate\Database\Eloquent\Model $model
+     *
      * @return \Illuminate\Database\Eloquent\Model|false
      */
     public function save(Model $model)
@@ -50,7 +50,7 @@ trait HasOneOrManyMethods
     /**
      * Perform an update on all the related models.
      *
-     * @param  array  $attributes
+     * @param array $attributes
      *
      * @return int
      */
@@ -79,48 +79,22 @@ trait HasOneOrManyMethods
     /**
      * Fire the given event for the model relationship.
      *
-     * @param  string  $event
-     * @param  mixed $related
-     * @param  bool  $halt
+     * @param string $event
+     * @param mixed  $related
+     * @param bool   $halt
      *
      * @return mixed
      */
-    protected function fireModelRelationshipEvent($event, $related = null, $halt = true)
+    public function fireModelRelationshipEvent($event, $related = null, $halt = true)
     {
-        if (! isset(static::$dispatcher)) {
-            return true;
-        }
-
-        // First, we will get the proper method to call on the event dispatcher, and then we
-        // will attempt to fire a custom, object based event for the given event. If that
-        // returns a result we can return that result, or we'll call the string events.
-        $method = $halt ? 'until' : 'fire';
-
-        // $result = $this->filterModelEventResults(
-        //     $this->fireCustomModelEvent($event, $method)
-        // );
-
-        // if ($result === false) {
-        //     return false;
-        // }
-
-        // return ! empty($result) ? $result : static::$dispatcher->{$method}(
-        //     "eloquent.{$event}: ".static::class, $this
-        // );
-
-        return static::$dispatcher->{$method}(
-            'eloquent.' . static::$relationEventName . ucfirst($event) . ': ' . get_class($this->parent), [
-                $this->parent,
-                $related,
-            ]
-        );
+        return $this->parent->{'fireModel' . class_basename(static::class) . 'Event'}($event, $related, $halt);
     }
 
     /**
      * Updated related model's attributes.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $related
-     * @param  array  $attributes
+     * @param \Illuminate\Database\Eloquent\Model $related
+     * @param array                               $attributes
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
