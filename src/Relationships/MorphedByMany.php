@@ -5,20 +5,20 @@ namespace Chelout\RelationshipEvents\Relationships;
 use Chelout\RelationshipEvents\Relationships\Traits\HasEventDispatcher;
 use Chelout\RelationshipEvents\Relationships\Contracts\EventDispatcher;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany as BelongsToManyBase;
+use Illuminate\Database\Eloquent\Relations\MorphToMany as MorphToManyBase;
 
-class BelongsToMany extends BelongsToManyBase implements EventDispatcher
+class MorphedByMany extends MorphToManyBase implements EventDispatcher
 {
     use HasEventDispatcher;
 
-    protected static $relationEventName = 'belongsToMany';
+    protected static $relationEventName = 'morphedByMany';
 
     /**
      * Toggles a model (or models) from the parent.
      *
      * Each existing model is detached, and non existing ones are attached.
      *
-     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|Illuminate\Support\Collection|int|string $ids
+     * @param  mixed  $ids
      * @param  bool   $touch
      *
      * @return array
@@ -37,7 +37,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
     /**
      * Sync the intermediate tables with a list of IDs or collection of models.
      *
-     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|Illuminate\Support\Collection|int|string $ids
+     * @param  \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|array  $ids
      * @param  bool   $detaching
      *
      * @return array
@@ -101,7 +101,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
     {
         // Get detached ids to pass them to event
         $ids = $ids ?? $this->parent->{$this->getRelationName()}->pluck('id');
-        
+
         $this->fireModelRelationshipEvent('detaching', $ids);
 
         if ($result = parent::detach($ids, $touch)) {

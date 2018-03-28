@@ -133,20 +133,20 @@ class User extends Model
     - methods:
         - BelongsToMany::attach
             - fires belongToManyAttching, belongToManyAttached
-            - events have $parent model, $attributes attaching model ids
+            - events have $relation name, $parent model, $attributes attaching model ids
         - BelongsToMany::detach
             - fires belongToManyDetching, belongToManyDetached
-            - events have $parent model, $ids detaching model ids, $attributes additional data
+            - events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
             > Note: has additional query to get related ids
         - BelongsToMany::sync
             - fires belongToManySyncing, belongToManySynced, BelongsToMany::attach, BelongsToMany::detach
-            - events have $parent model, $ids detaching model ids, $attributes additional data
+            - events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
         - BelongsToMany::toggle
             - fires belongToManyToggling, belongToManyToggled, BelongsToMany::attach, BelongsToMany::detach
-            - events have $parent model, $ids detaching model ids, $attributes additional data
+            - events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
         - BelongsToMany::updateExistingPivot
-            - fires updatingExistingPivotToggling, updatedExistingPivotToggled
-            - events have $parent model, $id updating model id, $attributes additional data
+            - fires belongsToManyUpdatingExistingPivot, belongsToManyUpdatedExistingPivot
+            - events have $relation name, $parent model, $id updating model id, $attributes additional data
 
 
 ### Has Many Through:
@@ -217,27 +217,45 @@ class User extends Model
 ### Many To Many Polymorphic Relations:
 - morphToMany:
     - methods:
-        - ? BelongsToMany::create
-        - ? BelongsToMany::save
-        - BelongsToMany::attach
-        - BelongsToMany::detach
-        - BelongsToMany::sync
-        - BelongsToMany::updateExistingPivot
-        - BelongsToMany::toggle
+        - MorphToMany::attach
+            - fires morphToManyAttching, morphToManyAttached
+            - events have $relation name, $parent model, $attributes attaching model ids
+        - MorphToMany::detach
+            - fires morphToManyDetching, morphToManyDetached
+            - events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
+            > Note: has additional query to get related ids
+        - MorphToMany::sync
+            - fires morphToManySyncing, morphToManySynced, MorphToMany::attach, MorphToMany::detach
+            - events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
+        - MorphToMany::toggle
+            - fires morphToManyToggling, morphToManyToggled, MorphToMany::attach, MorphToMany::detach
+            - events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
+        - MorphToMany::updateExistingPivot
+            - fires morphToManyUpdatingExistingPivot, morphToManyUpdatedExistingPivot
+            - events have $relation name, $parent model, $id updating model id, $attributes additional data
 - morphedByMany:
     - methods:
-        - ? BelongsToMany::create
-        - ? BelongsToMany::save
-        - BelongsToMany::attach
-        - BelongsToMany::detach
-        - BelongsToMany::sync
-        - BelongsToMany::updateExistingPivot
-        - BelongsToMany::toggle
+        - MorphedByMany::attach
+            - fires morphedByManyAttching, morphedByManyAttached
+            - events have $relation name, $parent model, $attributes attaching model ids
+        - MorphedByMany::detach
+            - fires morphedByManyDetching, morphedByManyDetached
+            - events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
+            > Note: has additional query to get related ids
+        - MorphedByMany::sync
+            - fires morphedByManySyncing, morphedByManySynced, MorphedByMany::attach, MorphedByMany::detach
+            - events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
+        - MorphedByMany::toggle
+            - fires morphedByManyToggling, morphedByManyToggled, MorphedByMany::attach, MorphedByMany::detach
+            - events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
+        - MorphedByMany::updateExistingPivot
+            - fires morphedByManyUpdatingExistingPivot, morphedByManyUpdatedExistingPivot
+            - events have $relation name, $parent model, $id updating model id, $attributes additional data
 
 
 ## Todo
 
- - Implement Many To Many polymorphic relations events.
+ - ~~Implement Many To Many polymorphic relations events.~~
  - Dive into Has Many Through and understand if there could be some events.
  - Move fireModelRelationshipEvent() method to relation concerns in order to create dispatchable relationship events:
 ```php
@@ -256,6 +274,6 @@ HasEvents::addObservableEvents([
     'hasOneUpdated',
 ]);
 ```
- - Refactor model relationship events registration to __callStatic() magic method.
+ - ~~Refactor model relationship events registration to __callStatic() magic method.~~
  - Tests, tests, tests
  - Documentation
