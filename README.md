@@ -12,6 +12,17 @@ Missing relationship events for Laravel
     ```
 
 2. Use necessary trait in your model.
+#### Available traits:
+- HasOneEvents
+- HasBelongsToEvents
+- HasManyEvents
+- HasBelongsToManyEvents
+- HasMorphOneEvents
+- HasMorphToEvents
+- HasMorphManyEvents
+- HasMorphToManyEvents
+- HasMorphedByManyEvents
+
 ```php
 ...
 use Chelout\RelationshipEvents\Relationships\Concerns\HasOneEvents;
@@ -28,24 +39,8 @@ class User extends Model
         /**
          * One To One Relationship Events
          */
-        static::hasOneSaving(function ($parent, $related) {
-            dump('hasOneSaving', $parent, $related);
-        });
-
         static::hasOneSaved(function ($parent, $related) {
             dump('hasOneSaved', $parent, $related);
-        });
-
-        static::hasOneCreating(function ($parent, $related) {
-            dump('hasOneCreating', $parent, $related);
-        });
-
-        static::hasOneCreated(function ($parent, $related) {
-            dump('hasOneCreated', $parent, $related);
-        });
-
-        static::hasOneUpdating(function ($parent, $related) {
-            dump('hasOneUpdating', $parent, $related);
         });
 
         static::hasOneUpdated(function ($parent, $related) {
@@ -56,16 +51,6 @@ class User extends Model
 }
 ```
 
-#### Available traits:
-- HasBelongsToEvents
-- HasBelongsToManyEvents
-- HasManyEvents
-- HasMorphedByManyEvents
-- HasMorphManyEvents
-- HasMorphOneEvents
-- HasMorphToEvents
-- HasMorphToManyEvents
-- HasOneEvents
 
 ## Relationships
 ### One To One:
