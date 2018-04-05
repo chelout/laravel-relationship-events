@@ -1,12 +1,12 @@
 <?php
 
-namespace Chelout\RelationshipEvents\Relationships\Traits;
+namespace Chelout\RelationshipEvents\Relationships\Helpers;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection as BaseCollection;
 
-trait HasAttributesMethods
+class AttributesMethods
 {
     /**
      * Get all of the IDs from the given mixed value.
@@ -15,7 +15,7 @@ trait HasAttributesMethods
      *
      * @return array
      */
-    protected function parseIds($value)
+    public static function parseIds($value)
     {
         if ($value instanceof Model) {
             return [$value->getKey()];
@@ -39,7 +39,7 @@ trait HasAttributesMethods
      *
      * @return array
      */
-    protected function parseIdsForEvent(array $ids): array
+    public static function parseIdsForEvent(array $ids): array
     {
         return array_map(function ($key, $id) {
             return is_array($id) ? $key : $id;
@@ -53,7 +53,7 @@ trait HasAttributesMethods
      *
      * @return array
      */
-    protected function parseAttributesForEvent($rawIds, array $parsedIds, array $attributes = []): array
+    public static function parseAttributesForEvent($rawIds, array $parsedIds, array $attributes = []): array
     {
         return is_array($rawIds) ? array_filter($parsedIds, function ($id) {
             return is_array($id) && ! empty($id);

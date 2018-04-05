@@ -26,15 +26,12 @@ composer require chelout/laravel-relationship-events:dev-master
 - HasOneEvents
 - HasBelongsToEvents
 - HasManyEvents
-- HasBelongsToManyEvents ()
-    > Note: should be used with HasAttributesMethods trait
+- HasBelongsToManyEvents
 - HasMorphOneEvents
 - HasMorphToEvents
 - HasMorphManyEvents
 - HasMorphToManyEvents
-    > Note: should be used with HasAttributesMethods trait
 - HasMorphedByManyEvents
-    > Note: should be used with HasAttributesMethods trait
 
 ```php
 
@@ -67,13 +64,11 @@ class User extends Model
 ```php
 
 use Chelout\RelationshipEvents\Relationships\Concerns\HasMorphToManyEvents;
-use Chelout\RelationshipEvents\Relationships\Traits\HasAttributesMethods;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use HasMorphToManyEvents; // should be used with HasAttributesMethods trait
-    use HasAttributesMethods;
+    use HasMorphToManyEvents;
 
     public static function boot()
     {
