@@ -1,16 +1,14 @@
 <?php
 
-namespace Chelout\RelationshipEvents\Relationships\Concerns;
+namespace Chelout\RelationshipEvents\Concerns;
 
-use Chelout\RelationshipEvents\Relationships\BelongsToMany;
-// use Chelout\RelationshipEvents\Relationships\Traits\HasAttributesMethods;
+use Chelout\RelationshipEvents\BelongsToMany;
+use Chelout\RelationshipEvents\Helpers\AttributesMethods;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 trait HasBelongsToManyEvents
 {
-    // use HasAttributesMethods;
-
     /**
      * Instantiate a new BelongsToMany relationship.
      *
@@ -177,14 +175,14 @@ trait HasBelongsToManyEvents
             return false;
         }
 
-        $parsedIds = $this->parseIds($ids);
+        $parsedIds = AttributesMethods::parseIds($ids);
 
         return ! empty($result) ? $result : static::$dispatcher->{$method}(
             "eloquent.{$event}: " . static::class, [
                 $relation,
                 $this,
-                $this->parseIdsForEvent($parsedIds),
-                $this->parseAttributesForEvent($ids, $parsedIds, $attributes),
+                AttributesMethods::parseIdsForEvent($parsedIds),
+                AttributesMethods::parseAttributesForEvent($ids, $parsedIds, $attributes),
             ]
         );
     }
