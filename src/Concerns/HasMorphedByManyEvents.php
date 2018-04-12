@@ -1,16 +1,14 @@
 <?php
 
-namespace Chelout\RelationshipEvents\Relationships\Concerns;
+namespace Chelout\RelationshipEvents\Concerns;
 
-use Chelout\RelationshipEvents\Relationships\MorphedByMany;
-// use Chelout\RelationshipEvents\Relationships\Traits\HasAttributesMethods;
+use Chelout\RelationshipEvents\Helpers\AttributesMethods;
+use Chelout\RelationshipEvents\MorphedByMany;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 trait HasMorphedByManyEvents
 {
-    // use HasAttributesMethods;
-
     /**
      * Instantiate a new HasManyThrough relationship.
      *
@@ -221,14 +219,14 @@ trait HasMorphedByManyEvents
             return false;
         }
 
-        $parsedIds = $this->parseIds($ids);
+        $parsedIds = AttributesMethods::parseIds($ids);
 
         return ! empty($result) ? $result : static::$dispatcher->{$method}(
             "eloquent.{$event}: " . static::class, [
                 $relation,
                 $this,
-                $this->parseIdsForEvent($parsedIds),
-                $this->parseAttributesForEvent($ids, $parsedIds, $attributes),
+                AttributesMethods::parseIdsForEvent($parsedIds),
+                AttributesMethods::parseAttributesForEvent($ids, $parsedIds, $attributes),
             ]
         );
     }

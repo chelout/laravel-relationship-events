@@ -1,6 +1,6 @@
 <?php
 
-namespace Chelout\RelationshipEvents\Relationships\Contracts;
+namespace Chelout\RelationshipEvents\Contracts;
 
 use Illuminate\Contracts\Events\Dispatcher;
 
@@ -16,15 +16,12 @@ interface EventDispatcher
     /**
      * Set the event dispatcher instance.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $dispatcher
-     * @return void
+     * @param \Illuminate\Contracts\Events\Dispatcher $dispatcher
      */
     public static function setEventDispatcher(Dispatcher $dispatcher);
 
     /**
      * Unset the event dispatcher for models.
-     *
-     * @return void
      */
     public static function unsetEventDispatcher();
 }
