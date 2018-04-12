@@ -1,6 +1,6 @@
 <?php
 
-namespace Chelout\RelationshipEvents\Relationships;
+namespace Chelout\RelationshipEvents;
 
 use Chelout\RelationshipEvents\Traits\HasEventDispatcher;
 use Chelout\RelationshipEvents\Traits\HasOneOrManyMethods;
