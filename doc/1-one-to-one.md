@@ -8,10 +8,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Chelout\RelationshipEvents\Relationships\Concerns\HasOneEvents;
+use Chelout\RelationshipEvents\Concerns\HasOneEvents;
 
 class User extends Model
 {
+    use HasOneEvents;
+
     /**
      * Get the profile associated with the user.
      */
@@ -59,13 +61,16 @@ Now we should listen our events, for example we can register event listners in m
 ```
 
 ### Available methods and events
-- HasOne::create (HasOneOrMany::save)
-    - fires hasOneCreating, hasOneCreated
-    - events have $parent and $related models
-- HasOne::save (HasOneOrMany::save)
-    - fires hasOneSaving, hasOneSaved
-    - events have $parent and $related models
-- HasOne::update (HasOneOrMany::update)
+
+#### HasOne::create (HasOneOrMany::save)
+- fires hasOneCreating, hasOneCreated
+- events have $parent and $related models
+
+#### HasOne::save (HasOneOrMany::save)
+- fires hasOneSaving, hasOneSaved
+- events have $parent and $related models
+
+#### HasOne::update (HasOneOrMany::update)
     - fires hasOneUpdating, hasOneUpdated
     - events have $parent and $related models
     > Note: has additional query to get related model
@@ -78,10 +83,12 @@ There is also inverse relation ```Profile``` belongs to ```User```
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Chelout\RelationshipEvents\Relationships\Concerns\HasOneEvents;
+use Chelout\RelationshipEvents\Concerns\HasBelongsToEvents;
 
 class Profile extends Model
 {
+    use HasBelongsToEvents;
+    
     /**
      * Get the user that owns profile.
      */
@@ -131,15 +138,18 @@ Now we should listen our events, for example we can register event listners in m
 ```
 
 ### Available methods and events
-- BelongsTo::associate
+
+#### BelongsTo::associate
     - fires belongsToAssociating, belongsToAssociated
     - events have $relation name, $related model and $parent model or key(depends on BelongsTo::associate $model parametr). 
     > Note: related model is dirty, should be saved after associating
-- BelongsTo::dissociate
+
+#### BelongsTo::dissociate
     - fires belongsToAssociating, belongsToAssociated
     - events have $relation name, $related and $parent models. 
     > Note: has additional query to get parent model
     > Note: related model is dirty, should be saved after dissociating
-- BelongsTo::update
+
+#### BelongsTo::update
     - fires belongsToUpdating, belongsToUpdated
     - events have $relation name, $related and $parent models. 
