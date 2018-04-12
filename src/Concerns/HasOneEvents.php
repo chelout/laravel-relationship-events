@@ -1,8 +1,8 @@
 <?php
 
-namespace Chelout\RelationshipEvents\Relationships\Concerns;
+namespace Chelout\RelationshipEvents\Concerns;
 
-use Chelout\RelationshipEvents\Relationships\HasOne;
+use Chelout\RelationshipEvents\HasOne;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 

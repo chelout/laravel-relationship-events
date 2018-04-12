@@ -2,29 +2,31 @@
 
 namespace Chelout\RelationshipEvents\Relationships;
 
-use Chelout\RelationshipEvents\Relationships\Traits\HasEventDispatcher;
-use Chelout\RelationshipEvents\Relationships\Contracts\EventDispatcher;
+use Chelout\RelationshipEvents\Traits\HasEventDispatcher;
+use Chelout\RelationshipEvents\Contracts\EventDispatcher;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo as MorphToBase;
+use Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToBase;
 
-class MorphTo extends MorphToBase implements EventDispatcher
+class BelongsTo extends BelongsToBase implements EventDispatcher
 {
     use HasEventDispatcher;
+
+    protected static $relationEventName = 'belongsTo';
 
     /**
      * Associate the model instance to the given parent.
      *
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param \Illuminate\Database\Eloquent\Model|int|string $model
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function associate($model)
     {
-        $this->parent->fireModelMorphToEvent('associating', $this->relation, $model);
+        $this->parent->fireModelBelongsToEvent('associating', $this->relation, $model);
 
         $result = parent::associate($model);
 
-        $this->parent->fireModelMorphToEvent('associated', $this->relation, $model);
+        $this->parent->fireModelBelongsToEvent('associated', $this->relation, $model);
 
         return $result;
     }
@@ -38,12 +40,12 @@ class MorphTo extends MorphToBase implements EventDispatcher
     {
         $parent = $this->getResults();
 
-        $this->parent->fireModelMorphToEvent('dissociating', $this->relation, $parent);
+        $this->parent->fireModelBelongsToEvent('dissociating', $this->relation, $parent);
 
         $result = parent::dissociate();
 
         if (! is_null($parent)) {
-            $this->parent->fireModelMorphToEvent('dissociated', $this->relation, $parent);
+            $this->parent->fireModelBelongsToEvent('dissociated', $this->relation, $parent);
         }
 
         return $result;
@@ -60,10 +62,10 @@ class MorphTo extends MorphToBase implements EventDispatcher
     {
         $related = $this->getResults();
 
-        $this->parent->fireModelMorphToEvent('updating', $this->relation, $related);
+        $this->parent->fireModelBelongsToEvent('updating', $this->relation, $related);
 
-        if ($related && $result = $related->fill($attributes)->save()) {
-            $this->parent->fireModelMorphToEvent('updated', $this->relation, $related);
+        if ($result = $related->fill($attributes)->save()) {
+            $this->parent->fireModelBelongsToEvent('updated', $this->relation, $related);
         }
 
         return $result;

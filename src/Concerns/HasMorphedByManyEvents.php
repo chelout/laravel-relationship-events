@@ -1,9 +1,9 @@
 <?php
 
-namespace Chelout\RelationshipEvents\Relationships\Concerns;
+namespace Chelout\RelationshipEvents\Concerns;
 
-use Chelout\RelationshipEvents\Relationships\Helpers\AttributesMethods;
-use Chelout\RelationshipEvents\Relationships\MorphedByMany;
+use Chelout\RelationshipEvents\Helpers\AttributesMethods;
+use Chelout\RelationshipEvents\MorphedByMany;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 

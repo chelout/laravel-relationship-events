@@ -35,7 +35,7 @@ composer require chelout/laravel-relationship-events:dev-master
 
 ```php
 
-use Chelout\RelationshipEvents\Relationships\Concerns\HasOneEvents;
+use Chelout\RelationshipEvents\Concerns\HasOneEvents;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
@@ -63,7 +63,7 @@ class User extends Model
 
 ```php
 
-use Chelout\RelationshipEvents\Relationships\Concerns\HasMorphToManyEvents;
+use Chelout\RelationshipEvents\Concerns\HasMorphToManyEvents;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -99,7 +99,7 @@ It is possible to fire event classes via $dispatchesEvents properties:
 
 ```php
 
-use Chelout\RelationshipEvents\Relationships\Concerns\HasOneEvents;
+use Chelout\RelationshipEvents\Concerns\HasOneEvents;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model

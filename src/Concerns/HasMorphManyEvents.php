@@ -1,8 +1,8 @@
 <?php
 
-namespace Chelout\RelationshipEvents\Relationships\Concerns;
+namespace Chelout\RelationshipEvents\Concerns;
 
-use Chelout\RelationshipEvents\Relationships\MorphMany;
+use Chelout\RelationshipEvents\MorphMany;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,11 +11,12 @@ trait HasMorphManyEvents
     /**
      * Instantiate a new MorphMany relationship.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  \Illuminate\Database\Eloquent\Model  $parent
-     * @param  string  $type
-     * @param  string  $id
-     * @param  string  $localKey
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Model   $parent
+     * @param string                                $type
+     * @param string                                $id
+     * @param string                                $localKey
+     *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     protected function newMorphMany(Builder $query, Model $parent, $type, $id, $localKey)
@@ -26,9 +27,8 @@ trait HasMorphManyEvents
     /**
      * Register a model event with the dispatcher.
      *
-     * @param  string  $event
-     * @param  \Closure|string  $callback
-     * @return void
+     * @param string          $event
+     * @param \Closure|string $callback
      */
     protected static function registerModelMorphManyEvent($event, $callback)
     {
@@ -42,8 +42,7 @@ trait HasMorphManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
-     * @return void
+     * @param \Closure|string $callback
      */
     public static function morphManyCreating($callback)
     {
@@ -53,8 +52,7 @@ trait HasMorphManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
-     * @return void
+     * @param \Closure|string $callback
      */
     public static function morphManyCreated($callback)
     {
@@ -64,8 +62,7 @@ trait HasMorphManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
-     * @return void
+     * @param \Closure|string $callback
      */
     public static function morphManySaving($callback)
     {
@@ -75,8 +72,7 @@ trait HasMorphManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
-     * @return void
+     * @param \Closure|string $callback
      */
     public static function morphManySaved($callback)
     {
@@ -86,8 +82,7 @@ trait HasMorphManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
-     * @return void
+     * @param \Closure|string $callback
      */
     public static function morphManyUpdating($callback)
     {
@@ -97,8 +92,7 @@ trait HasMorphManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param  \Closure|string  $callback
-     * @return void
+     * @param \Closure|string $callback
      */
     public static function morphManyUpdated($callback)
     {

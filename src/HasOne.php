@@ -2,9 +2,9 @@
 
 namespace Chelout\RelationshipEvents\Relationships;
 
-use Chelout\RelationshipEvents\Relationships\Traits\HasEventDispatcher;
-use Chelout\RelationshipEvents\Relationships\Traits\HasOneOrManyMethods;
-use Chelout\RelationshipEvents\Relationships\Contracts\EventDispatcher;
+use Chelout\RelationshipEvents\Traits\HasEventDispatcher;
+use Chelout\RelationshipEvents\Traits\HasOneOrManyMethods;
+use Chelout\RelationshipEvents\Contracts\EventDispatcher;
 use Illuminate\Database\Eloquent\Relations\HasOne as HasOneBase;
 
 class HasOne extends HasOneBase implements EventDispatcher

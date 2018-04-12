@@ -1,9 +1,9 @@
 <?php
 
-namespace Chelout\RelationshipEvents\Relationships\Concerns;
+namespace Chelout\RelationshipEvents\Concerns;
 
-use Chelout\RelationshipEvents\Relationships\BelongsToMany;
-use Chelout\RelationshipEvents\Relationships\Helpers\AttributesMethods;
+use Chelout\RelationshipEvents\BelongsToMany;
+use Chelout\RelationshipEvents\Helpers\AttributesMethods;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
