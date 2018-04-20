@@ -2,9 +2,9 @@
 
 namespace Chelout\RelationshipEvents;
 
+use Chelout\RelationshipEvents\Contracts\EventDispatcher;
 use Chelout\RelationshipEvents\Traits\HasEventDispatcher;
 use Chelout\RelationshipEvents\Traits\HasOneOrManyMethods;
-use Chelout\RelationshipEvents\Contracts\EventDispatcher;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany as MorphManyBase;
 

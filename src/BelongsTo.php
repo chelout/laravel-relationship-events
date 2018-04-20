@@ -2,8 +2,8 @@
 
 namespace Chelout\RelationshipEvents;
 
-use Chelout\RelationshipEvents\Traits\HasEventDispatcher;
 use Chelout\RelationshipEvents\Contracts\EventDispatcher;
+use Chelout\RelationshipEvents\Traits\HasEventDispatcher;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToBase;
 
