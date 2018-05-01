@@ -114,13 +114,13 @@ class User extends Model
 ```
 
 ## Relationships
-- [One To One Relations](doc/01-one-to-one.md)
+- [One To One Relations](doc/1-one-to-one.md)
 - [One To Many Relations](doc/2-one-to-many.md)
 - [Many To Many Relations](doc/3-many-to-many.md)
 - [Has Many Through Relations](doc/4-has-many-through.md)
 - [One To One Polymorphic Relations](doc/5-one-to-one-polymorphic.md)
 - [One To Many Polymorphic Relations](doc/6-one-to-many-polymorphic.md)
-- [Many To Many Polymorphic Relations](7-many-to-many-polymorphic.md)
+- [Many To Many Polymorphic Relations](doc/7-many-to-many-polymorphic.md)
 
 
 ## Todo
@@ -138,3 +138,5 @@ HasEvents::addObservableEvents([
 ```
  - Tests, tests, tests
  - Documentation
+    - Add [One To One Polymorphic Relations](doc/5-one-to-one-polymorphic.md) Polymorphic Relations example
+    - Add [Many To Many Polymorphic Relations](doc/7-many-to-many-polymorphic.md) Polymorphic Relations example
