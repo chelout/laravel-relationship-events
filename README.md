@@ -137,6 +137,3 @@ HasEvents::addObservableEvents([
 ]);
 ```
  - Tests, tests, tests
- - Documentation
-    - Add [One To One Polymorphic Relations](doc/5-one-to-one-polymorphic.md) Polymorphic Relations example
-    - Add [Many To Many Polymorphic Relations](doc/7-many-to-many-polymorphic.md) Polymorphic Relations example
