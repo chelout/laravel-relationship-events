@@ -8,6 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HasOneEvents
 {
+    public static function bootHasOneEvents()
+    {
+        if (! in_array('Chelout\RelationshipEvents\Traits\HasRelationshipObservables', class_uses(get_called_class()))) {
+            return;
+        }
+
+        static::mergeRelationshipObservables([
+            'hasOneCreating',
+            'hasOneCreated',
+            'hasOneSaving',
+            'hasOneSaved',
+            'hasOneUpdating',
+            'hasOneUpdated',
+        ]);
+    }
+
     /**
      * Instantiate a new HasOne relationship.
      *

@@ -8,6 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HasMorphOneEvents
 {
+    public static function bootHasMorphOneEvents()
+    {
+        if (! in_array('Chelout\RelationshipEvents\Traits\HasRelationshipObservables', class_uses(get_called_class()))) {
+            return;
+        }
+
+        static::mergeRelationshipObservables([
+            'morphOneCreating',
+            'morphOneCreated',
+            'morphOneSaving',
+            'morphOneSaved',
+            'morphOneUpdating',
+            'morphOneUpdated',
+        ]);
+    }
+
     /**
      * Instantiate a new MorphOne relationship.
      *
