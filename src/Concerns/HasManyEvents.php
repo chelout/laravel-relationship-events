@@ -8,22 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HasManyEvents
 {
-    public static function bootHasManyEvents()
-    {
-        if (! in_array('Chelout\RelationshipEvents\Traits\HasRelationshipObservables', class_uses(get_called_class()))) {
-            return;
-        }
-        
-        static::mergeRelationshipObservables([
-            'hasManyCreating',
-            'hasManyCreated',
-            'hasManyCreating',
-            'hasManyCreated',
-            'hasManyUpdating',
-            'hasManyUpdated',
-        ]);
-    }
-
     /**
      * Instantiate a new HasMany relationship.
      *

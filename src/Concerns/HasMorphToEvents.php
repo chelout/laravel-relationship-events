@@ -8,22 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HasMorphToEvents
 {
-    public static function bootHasMorphToEvents()
-    {
-        if (! in_array('Chelout\RelationshipEvents\Traits\HasRelationshipObservables', class_uses(get_called_class()))) {
-            return;
-        }
-
-        static::mergeRelationshipObservables([
-            'belongToAssociating',
-            'belongToAssociated',
-            'belongToAssociating',
-            'belongToAssociated',
-            'belongToUpdating',
-            'belongToUpdated',
-        ]);
-    }
-
     /**
      * Instantiate a new MorphTo relationship.
      *

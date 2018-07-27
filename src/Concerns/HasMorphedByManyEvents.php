@@ -9,26 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HasMorphedByManyEvents
 {
-    public static function bootHasMorphedByManyEvents()
-    {
-        if (! in_array('Chelout\RelationshipEvents\Traits\HasRelationshipObservables', class_uses(get_called_class()))) {
-            return;
-        }
-
-        static::mergeRelationshipObservables([
-            'morphedByManyAttching',
-            'morphedByManyAttached',
-            'morphedByManyDetching',
-            'morphedByManyDetached',
-            'morphedByManySyncing',
-            'morphedByManySynced',
-            'morphedByManyToggling',
-            'morphedByManyToggled',
-            'morphedByManyUpdatingExistingPivot',
-            'morphedByManyUpdatedExistingPivot',
-        ]);
-    }
-
     /**
      * Instantiate a new HasManyThrough relationship.
      *

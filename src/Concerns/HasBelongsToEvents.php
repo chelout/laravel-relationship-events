@@ -8,22 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HasBelongsToEvents
 {
-    public static function bootHasBelongsToEvents()
-    {
-        if (! in_array('Chelout\RelationshipEvents\Traits\HasRelationshipObservables', class_uses(get_called_class()))) {
-            return;
-        }
-
-        static::mergeRelationshipObservables([
-            'belongsToAssociating',
-            'belongsToAssociated',
-            'belongsToAssociating',
-            'belongsToAssociated',
-            'belongsToUpdating',
-            'belongsToUpdated',
-        ]);
-    }
-
     /**
      * Instantiate a new BelongsTo relationship.
      *
