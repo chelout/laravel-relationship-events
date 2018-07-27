@@ -67,15 +67,15 @@ Now we should listen our events, for example we can register event listners in m
 ### Available methods and events
 
 #### MorphMany::create (HasOneOrMany::create)
-    - fires hasManyCreating, hasManyCreated
-    - events have $parent and $related models
+- fires hasManyCreating, hasManyCreated
+- events have $parent and $related models
 #### MorphMany::save (HasOneOrMany::save)
-    - fires hasManyCreating, hasManyCreated
-    - events have $parent and $related models
+- fires hasManyCreating, hasManyCreated
+- events have $parent and $related models
 #### MorphMany::update (HasOneOrMany::update)
-    - fires hasManyUpdating, hasManyUpdated
-    - events have $parent model and $related Eloquent collection
-    > Note: has additional query to get related Eloquent collection
+- fires hasManyUpdating, hasManyUpdated
+- events have $parent model and $related Eloquent collection
+> Note: has additional query to get related Eloquent collection
 
 ## morphTo
 
@@ -139,15 +139,15 @@ Now we should listen our events, for example we can register event listners in m
 ### Available methods and events
 
 #### MorphTo::associate
-    - fires belongToAssociating, belongToAssociated
-    - events have $relation name, $related and $parent models. 
-    > Note: related model is dirty, should be saved after associating
+- fires belongToAssociating, belongToAssociated
+- events have $relation name, $related and $parent models. 
+> Note: related model is dirty, should be saved after associating
 #### MorphTo::dissociate
-    - fires belongToAssociating, belongToAssociated
-    - events have $relation name, $related and $parent models. 
-    > Note: has additional query to get parent model
-    > Note: related model is dirty, should be saved after dissociating
+- fires belongToAssociating, belongToAssociated
+- events have $relation name, $related and $parent models. 
+> Note: has additional query to get parent model
+> Note: related model is dirty, should be saved after dissociating
 #### MorphTo::update
-    - fires belongToUpdating, belongToUpdated
-    - events have $relation name, $related and $parent models. 
-    > Note: has additional query to get related model
+- fires belongToUpdating, belongToUpdated
+- events have $relation name, $related and $parent models. 
+> Note: has additional query to get related model

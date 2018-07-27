@@ -142,16 +142,16 @@ Now we should listen our events, for example we can register event listners in m
 ### Available methods and events
 
 #### BelongsTo::associate
-    - fires belongsToAssociating, belongsToAssociated
-    - events have $relation name, $related model and $parent model or key(depends on BelongsTo::associate $model parametr). 
-    > Note: related model is dirty, should be saved after associating
+- fires belongsToAssociating, belongsToAssociated
+- events have $relation name, $related model and $parent model or key(depends on BelongsTo::associate $model parametr). 
+> Note: related model is dirty, should be saved after associating
 
 #### BelongsTo::dissociate
-    - fires belongsToAssociating, belongsToAssociated
-    - events have $relation name, $related and $parent models. 
-    > Note: has additional query to get parent model
-    > Note: related model is dirty, should be saved after dissociating
+- fires belongsToAssociating, belongsToAssociated
+- events have $relation name, $related and $parent models. 
+> Note: has additional query to get parent model
+> Note: related model is dirty, should be saved after dissociating
 
 #### BelongsTo::update
-    - fires belongsToUpdating, belongsToUpdated
-    - events have $relation name, $related and $parent models. 
+- fires belongsToUpdating, belongsToUpdated
+- events have $relation name, $related and $parent models. 
