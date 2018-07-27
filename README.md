@@ -123,17 +123,59 @@ class User extends Model
 - [Many To Many Polymorphic Relations](doc/7-many-to-many-polymorphic.md)
 
 
-## Todo
+## Observers
+Starting from v0.4 it is possible to use relationship events in [Laravel observers classes](https://laravel.com/docs/5.6/eloquent#observers) Usage is very simple. Let's take ```User``` and ```Profile``` classes from [One To One Relations](doc/1-one-to-one.md). Define observer class:
 
- - Add relationship events to models $observables property in order to create model observers:
 ```php
-HasEvents::addObservableEvents([
-    'hasOneCreating',
-    'hasOneCreated',
-    'hasOneSaving',
-    'hasOneSaved',
-    'hasOneUpdating',
-    'hasOneUpdated',
-]);
+namespace App\Models;
+
+class UserObserver
+{
+    /**
+     * Handle the User "hasOneCreating" event.
+     *
+     * @param \App\Models\User $user
+     * @param \Illuminate\Database\Eloquent\Model $related
+     *
+     * @return void
+     */
+    public function hasOneCreating(User $user, Model $related)
+    {
+        Log::info("Creating profile for user {$related->name}.");
+    }
+
+    /**
+     * Handle the User "hasOneCreated" event.
+     *
+     * @param \App\Models\User $user
+     * @param \Illuminate\Database\Eloquent\Model $related
+     *
+     * @return void
+     */
+    public function hasOneCreated(User $user, Model $related)
+    {
+        Log::info("Profile for user {$related->name} has been created.");
+    }
+}
 ```
+
+And now just create profile for user:
+```php
+// ...
+$user = factory(User::class)->create([
+    'name' => 'John Smith',
+]);
+
+// Create profile and assosiate it with user
+// This will fire two events hasOneCreating, hasOneCreated
+$user->profile()->create([
+    'phone' => '8-800-123-45-67',
+    'email' => 'user@example.com',
+    'address' => 'One Infinite Loop Cupertino, CA 95014',
+]);
+// ...
+```
+
+
+## Todo
  - Tests, tests, tests
