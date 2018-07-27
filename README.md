@@ -127,7 +127,7 @@ class User extends Model
 Starting from v0.4 it is possible to use relationship events in [Laravel observers classes](https://laravel.com/docs/5.6/eloquent#observers) Usage is very simple. Let's take ```User``` and ```Profile``` classes from [One To One Relations](doc/1-one-to-one.md). Define observer class:
 
 ```php
-namespace App\Models;
+namespace App\Observer;
 
 class UserObserver
 {
@@ -156,6 +156,25 @@ class UserObserver
     {
         Log::info("Profile for user {$related->name} has been created.");
     }
+}
+```
+
+Don't forget to register an observer in the ```boot``` method of your ```AppServiceProvider```:
+```php
+namespace App\Providers;
+
+use App\Models\User;
+use App\Observers\UserObserver;
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+// ...
+    public function boot()
+    {
+        User::observe(UserObserver::class);
+    }
+// ...
 }
 ```
 
