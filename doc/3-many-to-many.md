@@ -141,11 +141,11 @@ Now we should listen our events, for example we can register event listners in m
     {
         parent::boot();
 
-        static::belongsToManyAttaching(function ($relation, $parent, $attributes) {
+        static::belongsToManyAttaching(function ($relation, $parent, $ids) {
             Log::info("Attaching roles to user {$parent->name}.");
         });
 
-        static::belongsToManyAttached(function ($relation, $parent, $attributes) {
+        static::belongsToManyAttached(function ($relation, $parent, $ids) {
             Log::info("Roles has been attached to user {$parent->name}.");
         });
     }
