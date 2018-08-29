@@ -206,7 +206,6 @@ trait HasMorphToManyEvents
 
         $parsedIds = AttributesMethods::parseIds($ids);
 
-
         $event = 'morphToMany' . ucfirst($event);
 
         // First, we will get the proper method to call on the event dispatcher, and then we
@@ -221,8 +220,6 @@ trait HasMorphToManyEvents
         if (false === $result) {
             return false;
         }
-
-        
 
         return ! empty($result) ? $result : static::$dispatcher->{$method}(
             "eloquent.{$event}: " . static::class, [
