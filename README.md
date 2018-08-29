@@ -100,10 +100,12 @@ It is possible to fire event classes via $dispatchesEvents properties:
 ```php
 
 use Chelout\RelationshipEvents\Concerns\HasOneEvents;
+use Chelout\RelationshipEvents\Traits\HasDispatchableEvents;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
+    use HasDispatchableEvents;
     use HasOneEvents;
 
     protected $dispatchesEvents = [

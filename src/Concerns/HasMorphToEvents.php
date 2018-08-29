@@ -122,7 +122,7 @@ trait HasMorphToEvents
         $method = $halt ? 'until' : 'fire';
 
         $result = $this->filterModelEventResults(
-            $this->fireCustomModelEvent($event, $method)
+            $this->fireCustomModelEvent($event, $method, $parent)
         );
 
         if (false === $result) {

@@ -204,6 +204,8 @@ trait HasMorphedByManyEvents
             return true;
         }
 
+        $parsedIds = AttributesMethods::parseIds($ids);
+
         $event = 'morphedByMany' . ucfirst($event);
 
         // First, we will get the proper method to call on the event dispatcher, and then we
@@ -212,14 +214,12 @@ trait HasMorphedByManyEvents
         $method = $halt ? 'until' : 'fire';
 
         $result = $this->filterModelEventResults(
-            $this->fireCustomModelEvent($event, $method)
+            $this->fireCustomModelEvent($event, $method, $parsedIds, $attributes)
         );
 
         if (false === $result) {
             return false;
         }
-
-        $parsedIds = AttributesMethods::parseIds($ids);
 
         return ! empty($result) ? $result : static::$dispatcher->{$method}(
             "eloquent.{$event}: " . static::class, [
