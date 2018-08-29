@@ -15,9 +15,6 @@ trait HasDispatchableEvents
      */
     protected function fireCustomModelEvent($event, $method, ...$params)
     {
-        if (! empty($params)) {
-            dd($params);
-        }
         if (! isset($this->dispatchesEvents[$event])) {
             return;
         }
