@@ -13,13 +13,13 @@ trait HasDispatchableEvents
      *
      * @return mixed|null
      */
-    protected function fireCustomModelEvent($event, $method, $relation = null, ...$params)
+    protected function fireCustomModelEvent($event, $method, ...$params)
     {
         if (! isset($this->dispatchesEvents[$event])) {
             return;
         }
 
-        $result = static::$dispatcher->$method(new $this->dispatchesEvents[$event]($this, $relation, $params));
+        $result = static::$dispatcher->$method(new $this->dispatchesEvents[$event]($this, $params));
 
         if (! is_null($result)) {
             return $result;
