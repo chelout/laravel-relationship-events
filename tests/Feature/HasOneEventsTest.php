@@ -21,15 +21,25 @@ class HasOneEventsTest extends TestCase
     public function it_fires_hasOneCreating_and_hasOneCreated_when_a_belonged_model_created()
     {
         Event::fake();
-
-        // given we have user and profile with hasOne relation
-        // once the profile created
+        
         User::create()
             ->profile()
             ->create([]);
 
-        // hasOneCreating and hasOneCreated should be fired.
         Event::assertDispatched('eloquent.hasOneCreating: ' . User::class);
         Event::assertDispatched('eloquent.hasOneCreated: ' . User::class);
+    }
+
+    /** @test */
+    public function it_fires_hasOneSaving_and_hasOneSaved_when_a_belonged_model_saved()
+    {
+        Event::fake();
+
+        User::create()
+            ->profile()
+            ->save(new Profile);
+
+        Event::assertDispatched('eloquent.hasOneSaving: ' . User::class);
+        Event::assertDispatched('eloquent.hasOneSaved: ' . User::class);
     }
 }
