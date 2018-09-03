@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
+    protected $guarded = [];
+    
     public static function setupTable()
     {
         Schema::create('profiles', function ($table) {

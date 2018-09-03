@@ -42,4 +42,17 @@ class HasOneEventsTest extends TestCase
         Event::assertDispatched('eloquent.hasOneSaving: ' . User::class);
         Event::assertDispatched('eloquent.hasOneSaved: ' . User::class);
     }
+
+    /** @test */
+    public function it_fires_hasOneUpdating_and_hasOneUpdated_when_a_belonged_model_Updated()
+    {
+        Event::fake();
+        
+        $user = User::create();
+        $profile = $user->profile()->save(new Profile);        
+        $user->profile()->update([]);
+
+        Event::assertDispatched('eloquent.hasOneUpdating: ' . User::class);
+        Event::assertDispatched('eloquent.hasOneUpdated: ' . User::class);
+    }
 }
