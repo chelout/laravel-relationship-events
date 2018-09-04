@@ -22,12 +22,21 @@ class HasBelongsToEventsTest extends TestCase
     {
         Event::fake();
         
-        Profile::create()->user()->associate(
-            User::create()
-        );
+        $profile = Profile::create();
+        $profile->user()->associate($user = User::create());
 
-        Event::assertDispatched('eloquent.belongsToAssociating: ' . Profile::class);
-        Event::assertDispatched('eloquent.belongsToAssociated: ' . Profile::class);
+        Event::assertDispatched(
+            'eloquent.belongsToAssociating: ' . Profile::class,
+            function ($event, $callback) use ($user, $profile) {
+                return $callback[0] == "user" && $callback[1]->is($profile) && $callback[2]->is($user);
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.belongsToAssociated: ' . Profile::class,
+            function ($event, $callback) use ($user, $profile) {
+                return $callback[0] == "user" && $callback[1]->is($profile) && $callback[2]->is($user);
+            }
+        );
     }
 
     /** @test */
@@ -36,11 +45,21 @@ class HasBelongsToEventsTest extends TestCase
         Event::fake();
         
         $profile = Profile::create();
-        $profile->user()->associate(User::create());
+        $profile->user()->associate($user = User::create());
         $profile->user()->dissociate();
 
-        Event::assertDispatched('eloquent.belongsToDissociating: ' . Profile::class);
-        Event::assertDispatched('eloquent.belongsToDissociated: ' . Profile::class);
+        Event::assertDispatched(
+            'eloquent.belongsToDissociating: ' . Profile::class,
+            function ($event, $callback) use ($user, $profile) {
+                return $callback[0] == "user" && $callback[1]->is($profile) && $callback[2]->is($user);
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.belongsToDissociated: ' . Profile::class,
+            function ($event, $callback) use ($user, $profile) {
+                return $callback[0] == "user" && $callback[1]->is($profile) && $callback[2]->is($user);
+            }
+        );
     }
 
     /** @test */
@@ -53,7 +72,17 @@ class HasBelongsToEventsTest extends TestCase
         $profile->user()->associate($user);
         $profile->user()->update([]);
 
-        Event::assertDispatched('eloquent.belongsToUpdating: ' . Profile::class);
-        Event::assertDispatched('eloquent.belongsToUpdated: ' . Profile::class);
+        Event::assertDispatched(
+            'eloquent.belongsToUpdating: ' . Profile::class,
+            function ($event, $callback) use ($user, $profile) {
+                return $callback[0] == "user" && $callback[1]->is($profile) && $callback[2]->is($user);
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.belongsToUpdated: ' . Profile::class,
+            function ($event, $callback) use ($user, $profile) {
+                return $callback[0] == "user" && $callback[1]->is($profile) && $callback[2]->is($user);
+            }
+        );
     }
 }
