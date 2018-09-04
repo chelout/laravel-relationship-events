@@ -44,12 +44,21 @@ class HasOneEventsTest extends TestCase
     {
         Event::fake();
 
-        User::create()
-            ->profile()
-            ->save(new Profile);
+        $user = User::create();
+        $profile = $user->profile()->save(new Profile);
 
-        Event::assertDispatched('eloquent.hasOneSaving: ' . User::class);
-        Event::assertDispatched('eloquent.hasOneSaved: ' . User::class);
+        Event::assertDispatched(
+            'eloquent.hasOneSaving: ' . User::class, 
+            function ($e, $callback) use ($user, $profile) {
+                return $callback[0]->is($user) && $callback[1]->is($profile);
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.hasOneSaved: ' . User::class, 
+            function ($e, $callback) use ($user, $profile) {
+                return $callback[0]->is($user) && $callback[1]->is($profile);
+            }
+        );
     }
 
     /** @test */
