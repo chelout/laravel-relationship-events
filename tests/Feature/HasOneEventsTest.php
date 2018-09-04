@@ -44,7 +44,7 @@ class HasOneEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_hasOneUpdating_and_hasOneUpdated_when_a_belonged_model_Updated()
+    public function it_fires_hasOneUpdating_and_hasOneUpdated_when_a_belonged_model_updated()
     {
         Event::fake();
         

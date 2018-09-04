@@ -145,7 +145,7 @@ Now we should listen our events, for example we can register event listners in m
 > Note: related model is dirty, should be saved after associating
 
 #### BelongsTo::dissociate
-- fires belongsToAssociating, belongsToAssociated
+- fires belongsToDissociating, belongsToDissociated
 - events have $relation name, $related and $parent models. 
 > Note: has additional query to get parent model
 > Note: related model is dirty, should be saved after dissociating

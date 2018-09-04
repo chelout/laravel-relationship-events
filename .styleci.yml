@@ -6,3 +6,8 @@ disabled:
   - concat_without_spaces
   - post_increment
   - new_with_braces
+finder:
+  exclude:
+    - "tests"
+  name:
+    - "*.php"
