@@ -21,13 +21,22 @@ class HasOneEventsTest extends TestCase
     public function it_fires_hasOneCreating_and_hasOneCreated_when_a_belonged_model_created()
     {
         Event::fake();
-        
-        User::create()
-            ->profile()
-            ->create([]);
 
-        Event::assertDispatched('eloquent.hasOneCreating: ' . User::class);
-        Event::assertDispatched('eloquent.hasOneCreated: ' . User::class);
+        $user = User::create();
+        $profile = $user->profile()->create([]);
+
+        Event::assertDispatched(
+            'eloquent.hasOneCreating: ' . User::class, 
+            function ($e, $callback) use ($user, $profile) {
+                return $callback[0]->is($user) && $callback[1]->is($profile);
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.hasOneCreated: ' . User::class, 
+            function ($e, $callback) use ($user, $profile) {
+                return $callback[0]->is($user) && $callback[1]->is($profile);
+            }
+        );
     }
 
     /** @test */
