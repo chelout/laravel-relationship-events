@@ -23,10 +23,21 @@ class HasManyEventsTest extends TestCase
     {
         Event::fake();
 
-        User::create()->posts()->create([]);
+        $user = User::create();
+        $post = $user->posts()->create([]);
 
-        Event::assertDispatched('eloquent.hasManyCreating: ' . User::class);
-        Event::assertDispatched('eloquent.hasManyCreated: ' . User::class);
+        Event::assertDispatched(
+            'eloquent.hasManyCreating: ' . User::class,
+            function ($event, $callback) use ($user, $post) {
+                return $callback[0]->is($user) && $callback[1]->is($post);
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.hasManyCreated: ' . User::class,
+            function ($event, $callback) use ($user, $post) {
+                return $callback[0]->is($user) && $callback[1]->is($post);
+            }
+        );
     }
 
     /** @test */
@@ -34,10 +45,21 @@ class HasManyEventsTest extends TestCase
     {
         Event::fake();
 
-        User::create()->posts()->save(new Post);
+        $user = User::create();
+        $post = $user->posts()->save(new Post);
 
-        Event::assertDispatched('eloquent.hasManySaving: ' . User::class);
-        Event::assertDispatched('eloquent.hasManySaved: ' . User::class);
+        Event::assertDispatched(
+            'eloquent.hasManySaving: ' . User::class,
+            function ($event, $callback) use ($user, $post) {
+                return $callback[0]->is($user) && $callback[1]->is($post);
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.hasManySaved: ' . User::class,
+            function ($event, $callback) use ($user, $post) {
+                return $callback[0]->is($user) && $callback[1]->is($post);
+            }
+        );
     }
 
     /** @test */
@@ -46,10 +68,20 @@ class HasManyEventsTest extends TestCase
         Event::fake();
 
         $user = User::create();
-        $user->posts()->create([]);
+        $post = $user->posts()->create([]);
         $user->posts()->update([]);
 
-        Event::assertDispatched('eloquent.hasManyUpdating: ' . User::class);
-        Event::assertDispatched('eloquent.hasManyUpdated: ' . User::class);
+        Event::assertDispatched(
+            'eloquent.hasManyUpdating: ' . User::class,
+            function ($event, $callback) use ($user, $post) {
+                return $callback[0]->is($user) && $callback[1][0]->is($post);
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.hasManyUpdated: ' . User::class,
+            function ($event, $callback) use ($user, $post) {
+                return $callback[0]->is($user) && $callback[1][0]->is($post);
+            }
+        );
     }
 }
