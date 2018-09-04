@@ -5,10 +5,12 @@ namespace Chelout\RelationshipEvents\Tests\Stubs;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Chelout\RelationshipEvents\Concerns\HasOneEvents;
+use Chelout\RelationshipEvents\Concerns\HasManyEvents;
 
 class User extends Model
 {
-    use HasOneEvents;
+    use HasOneEvents,
+        HasManyEvents;
 
     public static function setupTable()
     {
@@ -21,5 +23,10 @@ class User extends Model
     public function profile()
     {
         return $this->hasOne(Profile::class);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }
