@@ -70,7 +70,17 @@ class HasOneEventsTest extends TestCase
         $profile = $user->profile()->save(new Profile);        
         $user->profile()->update([]);
 
-        Event::assertDispatched('eloquent.hasOneUpdating: ' . User::class);
-        Event::assertDispatched('eloquent.hasOneUpdated: ' . User::class);
+        Event::assertDispatched(
+            'eloquent.hasOneUpdating: ' . User::class, 
+            function ($e, $callback) use ($user, $profile) {
+                return $callback[0]->is($user) && $callback[1]->is($profile);
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.hasOneUpdated: ' . User::class, 
+            function ($e, $callback) use ($user, $profile) {
+                return $callback[0]->is($user) && $callback[1]->is($profile);
+            }
+        );
     }
 }
