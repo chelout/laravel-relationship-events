@@ -32,7 +32,7 @@ script:
   - if [[ $coverage = 'no' ]]; then ./vendor/bin/phpunit -c phpunit.xml; fi
 
 after_script:
-  - if [[ $setup = 'coveralls' ]]; then php vendor/bin/coveralls -v; fi
+  - if [[ $setup = 'coveralls' ]]; then php vendor/bin/php-coveralls -v; fi
 
 notifications:
     on_success: never
