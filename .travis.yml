@@ -4,8 +4,36 @@ php:
   - 7.1
   - 7.2
 
+matrix:
+  include:
+    - php: 7.1
+      env: setup=stable coverage=no
+    - php: 7.1
+      env: setup=lowest coverage=no
+    - php: 7.1
+      env: setup=coveralls coverage=yes
+    - php: 7.2
+      env: setup=stable coverage=no
+    - php: 7.2
+      env: setup=lowest coverage=no
+    - php: 7.2
+      env: setup=coveralls coverage=yes
+  fast_finish: true
+
 before_script:
   - travis_retry composer self-update
-  - travis_retry composer install --prefer-source --no-interaction --dev
+  - composer config discard-changes true
+  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable; fi
+  - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable; fi
+  - if [[ $setup = 'coveralls' ]]; then travis_retry composer require "satooshi/php-coveralls" --prefer-dist --no-interaction --dev; fi
 
-script: vendor/bin/phpunit
+script:
+  - if [[ $coverage = 'yes' ]]; then ./vendor/bin/phpunit -c phpunit.xml --coverage-clover build/logs/clover.xml; fi
+  - if [[ $coverage = 'no' ]]; then ./vendor/bin/phpunit -c phpunit.xml; fi
+
+after_script:
+  - if [[ $setup = 'coveralls' ]]; then php vendor/bin/coveralls -v; fi
+
+notifications:
+    on_success: never
+    on_failure: always
