@@ -19,7 +19,7 @@ class HasMorphOneEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphOneCreating_and_morphOneCreated_when_belonged_model_with_many_created()
+    public function it_fires_morphOneCreating_and_morphOneCreated_when_belonged_model_with_morph_one_created()
     {
         Event::fake();
 
@@ -34,6 +34,28 @@ class HasMorphOneEventsTest extends TestCase
         );
         Event::assertDispatched(
             'eloquent.morphOneCreated: ' . User::class,
+            function ($event, $callback) use ($user, $address) {
+                return $callback[0]->is($user) && $callback[1]->is($address);
+            }
+        );
+    }
+
+    /** @test */
+    public function it_fires_morphOneSaving_and_morphOneSaved_when_belonged_model_with_morph_one_saved()
+    {
+        Event::fake();
+
+        $user = User::create();
+        $address = $user->address()->save(new Address);
+
+        Event::assertDispatched(
+            'eloquent.morphOneSaving: ' . User::class,
+            function ($event, $callback) use ($user, $address) {
+                return $callback[0]->is($user) && $callback[1]->is($address);
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.morphOneSaved: ' . User::class,
             function ($event, $callback) use ($user, $address) {
                 return $callback[0]->is($user) && $callback[1]->is($address);
             }
