@@ -61,4 +61,27 @@ class HasMorphOneEventsTest extends TestCase
             }
         );
     }
+
+    /** @test */
+    public function it_fires_morphOneUpdating_and_morphOneUpdated_when_belonged_model_with_morph_one_updated()
+    {
+        Event::fake();
+
+        $user = User::create();
+        $address = $user->address()->save(new Address);
+        $user->address()->update([]);
+
+        Event::assertDispatched(
+            'eloquent.morphOneUpdating: ' . User::class,
+            function ($event, $callback) use ($user, $address) {
+                return $callback[0]->is($user) && $callback[1]->is($address);
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.morphOneUpdated: ' . User::class,
+            function ($event, $callback) use ($user, $address) {
+                return $callback[0]->is($user) && $callback[1]->is($address);
+            }
+        );
+    }
 }
