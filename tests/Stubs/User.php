@@ -6,11 +6,13 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Chelout\RelationshipEvents\Concerns\HasOneEvents;
 use Chelout\RelationshipEvents\Concerns\HasManyEvents;
+use Chelout\RelationshipEvents\Concerns\HasMorphOneEvents;
 
 class User extends Model
 {
     use HasOneEvents,
-        HasManyEvents;
+        HasManyEvents,
+        HasMorphOneEvents;
 
     public static function setupTable()
     {
@@ -28,5 +30,10 @@ class User extends Model
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'addressable');
     }
 }
