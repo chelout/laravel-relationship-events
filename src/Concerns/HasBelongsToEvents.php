@@ -122,7 +122,7 @@ trait HasBelongsToEvents
         $method = $halt ? 'until' : 'fire';
 
         $result = $this->filterModelEventResults(
-            $this->fireCustomModelEvent($event, $method, $parent)
+            $this->fireCustomModelEvent($event, $method, $relation, $parent)
         );
 
         if (false === $result) {
