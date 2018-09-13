@@ -4,9 +4,12 @@ namespace Chelout\RelationshipEvents\Tests\Stubs;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
+use Chelout\RelationshipEvents\Concerns\HasMorphManyEvents;
 
 class Post extends Model
 {
+    use HasMorphManyEvents;
+    
     protected $guarded = [];
 
     public static function setupTable()
@@ -16,5 +19,10 @@ class Post extends Model
             $table->unsignedInteger('user_id');
             $table->timestamps();
         });
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }

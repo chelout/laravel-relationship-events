@@ -5,7 +5,6 @@ namespace Chelout\RelationshipEvents\Tests\Feature;
 use Illuminate\Support\Facades\Event;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Chelout\RelationshipEvents\Tests\Stubs\User;
-use Chelout\RelationshipEvents\Tests\Stubs\Profile;
 use Chelout\RelationshipEvents\Tests\Stubs\Address;
 
 class HasMorphOneEventsTest extends TestCase
@@ -23,7 +22,7 @@ class HasMorphOneEventsTest extends TestCase
     {
         Event::fake();
 
-        $user = User::create();
+        $user    = User::create();
         $address = $user->address()->create([]);
 
         Event::assertDispatched(
@@ -45,7 +44,7 @@ class HasMorphOneEventsTest extends TestCase
     {
         Event::fake();
 
-        $user = User::create();
+        $user    = User::create();
         $address = $user->address()->save(new Address);
 
         Event::assertDispatched(
@@ -67,7 +66,7 @@ class HasMorphOneEventsTest extends TestCase
     {
         Event::fake();
 
-        $user = User::create();
+        $user    = User::create();
         $address = $user->address()->save(new Address);
         $user->address()->update([]);
 
