@@ -16,7 +16,7 @@ class Post extends Model
     {
         Schema::create('posts', function ($table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->nullable();
             $table->timestamps();
         });
     }
