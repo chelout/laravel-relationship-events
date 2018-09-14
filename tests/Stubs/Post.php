@@ -5,10 +5,12 @@ namespace Chelout\RelationshipEvents\Tests\Stubs;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Chelout\RelationshipEvents\Concerns\HasMorphManyEvents;
+use Chelout\RelationshipEvents\Concerns\HasMorphToManyEvents;
 
 class Post extends Model
 {
-    use HasMorphManyEvents;
+    use HasMorphManyEvents, 
+        HasMorphToManyEvents;
     
     protected $guarded = [];
 
@@ -24,5 +26,10 @@ class Post extends Model
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 }
