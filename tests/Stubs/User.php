@@ -6,15 +6,32 @@ use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Concerns\HasManyEvents;
 use Chelout\RelationshipEvents\Concerns\HasMorphOneEvents;
 use Chelout\RelationshipEvents\Concerns\HasOneEvents;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneCreated;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneCreating;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneSaved;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneSaving;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneUpdated;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneUpdating;
+use Chelout\RelationshipEvents\Traits\HasDispatchableEvents;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 
 class User extends Model
 {
-    use HasOneEvents,
+    use HasDispatchableEvents,
+        HasOneEvents,
         HasManyEvents,
         HasMorphOneEvents,
         HasBelongsToManyEvents;
+
+    protected $dispatchesEvents = [
+        'hasOneCreating' => HasOneCreating::class,
+        'hasOneCreated' => HasOneCreated::class,
+        'hasOneSaving' => HasOneSaving::class,
+        'hasOneSaved' => HasOneSaved::class,
+        'hasOneUpdating' => HasOneUpdating::class,
+        'hasOneUpdated' => HasOneUpdated::class,
+    ];
 
     public static function setupTable()
     {
