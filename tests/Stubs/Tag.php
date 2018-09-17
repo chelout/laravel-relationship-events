@@ -2,12 +2,12 @@
 
 namespace Chelout\RelationshipEvents\Tests\Stubs;
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\Model;
 use Chelout\RelationshipEvents\Concerns\HasMorphedByManyEvents;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 
 class Tag extends Model
-{   
+{
     use HasMorphedByManyEvents;
 
     protected $guarded = [];

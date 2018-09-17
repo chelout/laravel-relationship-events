@@ -2,10 +2,10 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
-use Illuminate\Support\Facades\Event;
-use Chelout\RelationshipEvents\Tests\TestCase;
-use Chelout\RelationshipEvents\Tests\Stubs\User;
 use Chelout\RelationshipEvents\Tests\Stubs\Profile;
+use Chelout\RelationshipEvents\Tests\Stubs\User;
+use Chelout\RelationshipEvents\Tests\TestCase;
+use Illuminate\Support\Facades\Event;
 
 class HasOneEventsTest extends TestCase
 {
@@ -26,13 +26,13 @@ class HasOneEventsTest extends TestCase
         $profile = $user->profile()->create([]);
 
         Event::assertDispatched(
-            'eloquent.hasOneCreating: ' . User::class, 
+            'eloquent.hasOneCreating: ' . User::class,
             function ($e, $callback) use ($user, $profile) {
                 return $callback[0]->is($user) && $callback[1]->is($profile);
             }
         );
         Event::assertDispatched(
-            'eloquent.hasOneCreated: ' . User::class, 
+            'eloquent.hasOneCreated: ' . User::class,
             function ($e, $callback) use ($user, $profile) {
                 return $callback[0]->is($user) && $callback[1]->is($profile);
             }
@@ -48,13 +48,13 @@ class HasOneEventsTest extends TestCase
         $profile = $user->profile()->save(new Profile);
 
         Event::assertDispatched(
-            'eloquent.hasOneSaving: ' . User::class, 
+            'eloquent.hasOneSaving: ' . User::class,
             function ($e, $callback) use ($user, $profile) {
                 return $callback[0]->is($user) && $callback[1]->is($profile);
             }
         );
         Event::assertDispatched(
-            'eloquent.hasOneSaved: ' . User::class, 
+            'eloquent.hasOneSaved: ' . User::class,
             function ($e, $callback) use ($user, $profile) {
                 return $callback[0]->is($user) && $callback[1]->is($profile);
             }
@@ -65,19 +65,19 @@ class HasOneEventsTest extends TestCase
     public function it_fires_hasOneUpdating_and_hasOneUpdated_when_a_belonged_model_updated()
     {
         Event::fake();
-        
+
         $user = User::create();
-        $profile = $user->profile()->save(new Profile);        
+        $profile = $user->profile()->save(new Profile);
         $user->profile()->update([]);
 
         Event::assertDispatched(
-            'eloquent.hasOneUpdating: ' . User::class, 
+            'eloquent.hasOneUpdating: ' . User::class,
             function ($e, $callback) use ($user, $profile) {
                 return $callback[0]->is($user) && $callback[1]->is($profile);
             }
         );
         Event::assertDispatched(
-            'eloquent.hasOneUpdated: ' . User::class, 
+            'eloquent.hasOneUpdated: ' . User::class,
             function ($e, $callback) use ($user, $profile) {
                 return $callback[0]->is($user) && $callback[1]->is($profile);
             }

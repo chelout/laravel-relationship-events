@@ -2,10 +2,10 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
-use Illuminate\Support\Facades\Event;
-use Chelout\RelationshipEvents\Tests\TestCase;
-use Chelout\RelationshipEvents\Tests\Stubs\Tag;
 use Chelout\RelationshipEvents\Tests\Stubs\Post;
+use Chelout\RelationshipEvents\Tests\Stubs\Tag;
+use Chelout\RelationshipEvents\Tests\TestCase;
+use Illuminate\Support\Facades\Event;
 
 class HasMorphToManyEventsTest extends TestCase
 {
@@ -23,17 +23,17 @@ class HasMorphToManyEventsTest extends TestCase
         Event::fake();
 
         $post = Post::create();
-        $tag  = Tag::create();
+        $tag = Tag::create();
         $post->tags()->attach($tag);
 
         Event::assertDispatched(
-            'eloquent.morphToManyAttaching: ' . Post::class, 
+            'eloquent.morphToManyAttaching: ' . Post::class,
             function ($e, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }
         );
         Event::assertDispatched(
-            'eloquent.morphToManyAttached: ' . Post::class, 
+            'eloquent.morphToManyAttached: ' . Post::class,
             function ($e, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }
@@ -46,18 +46,18 @@ class HasMorphToManyEventsTest extends TestCase
         Event::fake();
 
         $post = Post::create();
-        $tag  = Tag::create();
+        $tag = Tag::create();
         $post->tags()->attach($tag);
         $post->tags()->detach($tag);
 
         Event::assertDispatched(
-            'eloquent.morphToManyDetaching: ' . Post::class, 
+            'eloquent.morphToManyDetaching: ' . Post::class,
             function ($e, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }
         );
         Event::assertDispatched(
-            'eloquent.morphToManyDetached: ' . Post::class, 
+            'eloquent.morphToManyDetached: ' . Post::class,
             function ($e, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }
@@ -70,17 +70,17 @@ class HasMorphToManyEventsTest extends TestCase
         Event::fake();
 
         $post = Post::create();
-        $tag  = Tag::create();
+        $tag = Tag::create();
         $post->tags()->sync($tag);
 
         Event::assertDispatched(
-            'eloquent.morphToManySyncing: ' . Post::class, 
+            'eloquent.morphToManySyncing: ' . Post::class,
             function ($e, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }
         );
         Event::assertDispatched(
-            'eloquent.morphToManySynced: ' . Post::class, 
+            'eloquent.morphToManySynced: ' . Post::class,
             function ($e, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }
@@ -93,18 +93,18 @@ class HasMorphToManyEventsTest extends TestCase
         Event::fake();
 
         $post = Post::create();
-        $tag  = Tag::create();
+        $tag = Tag::create();
         $post->tags()->sync($tag);
         $post->tags()->updateExistingPivot(1, ['created_at' => now()]);
 
         Event::assertDispatched(
-            'eloquent.morphToManyUpdatingExistingPivot: ' . Post::class, 
+            'eloquent.morphToManyUpdatingExistingPivot: ' . Post::class,
             function ($e, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }
         );
         Event::assertDispatched(
-            'eloquent.morphToManyUpdatedExistingPivot: ' . Post::class, 
+            'eloquent.morphToManyUpdatedExistingPivot: ' . Post::class,
             function ($e, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }

@@ -2,14 +2,14 @@
 
 namespace Chelout\RelationshipEvents\Tests\Stubs;
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\Model;
 use Chelout\RelationshipEvents\Concerns\HasMorphToEvents;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 
 class Comment extends Model
 {
     use HasMorphToEvents;
-    
+
     protected $guarded = [];
 
     public static function setupTable()

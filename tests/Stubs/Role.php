@@ -2,11 +2,11 @@
 
 namespace Chelout\RelationshipEvents\Tests\Stubs;
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 
 class Role extends Model
-{   
+{
     protected $guarded = [];
 
     public static function setupTable()
