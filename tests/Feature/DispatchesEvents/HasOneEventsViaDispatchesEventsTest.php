@@ -13,7 +13,7 @@ use Chelout\RelationshipEvents\Tests\Stubs\User;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 
-class HasOneEventsTest extends TestCase
+class HasOneEventsViaDispatchesEventsTest extends TestCase
 {
     public function setup()
     {
