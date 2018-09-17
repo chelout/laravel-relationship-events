@@ -6,6 +6,12 @@ use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Concerns\HasManyEvents;
 use Chelout\RelationshipEvents\Concerns\HasMorphOneEvents;
 use Chelout\RelationshipEvents\Concerns\HasOneEvents;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\HasMany\HasManyCreated;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\HasMany\HasManyCreating;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\HasMany\HasManySaved;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\HasMany\HasManySaving;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\HasMany\HasManyUpdated;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\HasMany\HasManyUpdating;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneCreated;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneCreating;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneSaved;
@@ -25,12 +31,20 @@ class User extends Model
         HasBelongsToManyEvents;
 
     protected $dispatchesEvents = [
+        // HasOne
         'hasOneCreating' => HasOneCreating::class,
         'hasOneCreated' => HasOneCreated::class,
         'hasOneSaving' => HasOneSaving::class,
         'hasOneSaved' => HasOneSaved::class,
         'hasOneUpdating' => HasOneUpdating::class,
         'hasOneUpdated' => HasOneUpdated::class,
+        // HasMany
+        'hasManyCreating' => HasManyCreating::class,
+        'hasManyCreated' => HasManyCreated::class,
+        'hasManySaving' => HasManySaving::class,
+        'hasManySaved' => HasManySaved::class,
+        'hasManyUpdating' => HasManyUpdating::class,
+        'hasManyUpdated' => HasManyUpdated::class,
     ];
 
     public static function setupTable()
