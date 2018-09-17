@@ -2,16 +2,16 @@
 
 namespace Chelout\RelationshipEvents\Tests\Stubs;
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\Model;
 use Chelout\RelationshipEvents\Concerns\HasMorphManyEvents;
 use Chelout\RelationshipEvents\Concerns\HasMorphToManyEvents;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 
 class Post extends Model
 {
-    use HasMorphManyEvents, 
+    use HasMorphManyEvents,
         HasMorphToManyEvents;
-    
+
     protected $guarded = [];
 
     public static function setupTable()

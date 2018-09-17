@@ -2,16 +2,16 @@
 
 namespace Chelout\RelationshipEvents\Tests\Stubs;
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\Model;
 use Chelout\RelationshipEvents\Concerns\HasBelongsToEvents;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 
 class Profile extends Model
 {
     use HasBelongsToEvents;
 
     protected $guarded = [];
-    
+
     public static function setupTable()
     {
         Schema::create('profiles', function ($table) {

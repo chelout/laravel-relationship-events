@@ -2,10 +2,10 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
-use Illuminate\Support\Facades\Event;
-use Chelout\RelationshipEvents\Tests\TestCase;
-use Chelout\RelationshipEvents\Tests\Stubs\Post;
 use Chelout\RelationshipEvents\Tests\Stubs\Comment;
+use Chelout\RelationshipEvents\Tests\Stubs\Post;
+use Chelout\RelationshipEvents\Tests\TestCase;
+use Illuminate\Support\Facades\Event;
 
 class HasMorphToEventsTest extends TestCase
 {
@@ -27,13 +27,13 @@ class HasMorphToEventsTest extends TestCase
         $comment->post()->associate($post);
 
         Event::assertDispatched(
-            'eloquent.morphToAssociating: ' . Comment::class, 
+            'eloquent.morphToAssociating: ' . Comment::class,
             function ($e, $callback) use ($post, $comment) {
                 return $callback[0] == 'Chelout\RelationshipEvents\Tests\Stubs\Post' && $callback[1]->is($comment) && $callback[2]->is($post);
             }
         );
         Event::assertDispatched(
-            'eloquent.morphToAssociated: ' . Comment::class, 
+            'eloquent.morphToAssociated: ' . Comment::class,
             function ($e, $callback) use ($post, $comment) {
                 return $callback[0] == 'Chelout\RelationshipEvents\Tests\Stubs\Post' && $callback[1]->is($comment) && $callback[2]->is($post);
             }
@@ -51,13 +51,13 @@ class HasMorphToEventsTest extends TestCase
         $comment->post()->dissociate($post);
 
         Event::assertDispatched(
-            'eloquent.morphToDissociating: ' . Comment::class, 
+            'eloquent.morphToDissociating: ' . Comment::class,
             function ($e, $callback) use ($post, $comment) {
                 return $callback[0] == 'Chelout\RelationshipEvents\Tests\Stubs\Post' && $callback[1]->is($comment) && $callback[2]->is($post);
             }
         );
         Event::assertDispatched(
-            'eloquent.morphToDissociated: ' . Comment::class, 
+            'eloquent.morphToDissociated: ' . Comment::class,
             function ($e, $callback) use ($post, $comment) {
                 return $callback[0] == 'Chelout\RelationshipEvents\Tests\Stubs\Post' && $callback[1]->is($comment) && $callback[2]->is($post);
             }
@@ -75,13 +75,13 @@ class HasMorphToEventsTest extends TestCase
         $comment->post()->update([]);
 
         Event::assertDispatched(
-            'eloquent.morphToUpdating: ' . Comment::class, 
+            'eloquent.morphToUpdating: ' . Comment::class,
             function ($e, $callback) use ($post, $comment) {
                 return $callback[0] == 'Chelout\RelationshipEvents\Tests\Stubs\Post' && $callback[1]->is($comment) && $callback[2]->is($post);
             }
         );
         Event::assertDispatched(
-            'eloquent.morphToUpdated: ' . Comment::class, 
+            'eloquent.morphToUpdated: ' . Comment::class,
             function ($e, $callback) use ($post, $comment) {
                 return $callback[0] == 'Chelout\RelationshipEvents\Tests\Stubs\Post' && $callback[1]->is($comment) && $callback[2]->is($post);
             }

@@ -2,10 +2,10 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
-use Illuminate\Support\Facades\Event;
-use Chelout\RelationshipEvents\Tests\TestCase;
-use Chelout\RelationshipEvents\Tests\Stubs\Post;
 use Chelout\RelationshipEvents\Tests\Stubs\Comment;
+use Chelout\RelationshipEvents\Tests\Stubs\Post;
+use Chelout\RelationshipEvents\Tests\TestCase;
+use Illuminate\Support\Facades\Event;
 
 class HasMorphManyEventsTest extends TestCase
 {
@@ -22,7 +22,7 @@ class HasMorphManyEventsTest extends TestCase
     {
         Event::fake();
 
-        $post    = Post::create(['user_id' => 1]);
+        $post = Post::create(['user_id' => 1]);
         $comment = $post->comments()->create([]);
 
         Event::assertDispatched(
@@ -44,7 +44,7 @@ class HasMorphManyEventsTest extends TestCase
     {
         Event::fake();
 
-        $post    = Post::create(['user_id' => 1]);
+        $post = Post::create(['user_id' => 1]);
         $comment = $post->comments()->save(new Comment);
 
         Event::assertDispatched(
@@ -66,7 +66,7 @@ class HasMorphManyEventsTest extends TestCase
     {
         Event::fake();
 
-        $post    = Post::create(['user_id' => 1]);
+        $post = Post::create(['user_id' => 1]);
         $comment = $post->comments()->save(new Comment);
         $post->comments()->update([]);
 

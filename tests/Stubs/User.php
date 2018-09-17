@@ -2,12 +2,12 @@
 
 namespace Chelout\RelationshipEvents\Tests\Stubs;
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\Model;
-use Chelout\RelationshipEvents\Concerns\HasOneEvents;
+use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
 use Chelout\RelationshipEvents\Concerns\HasManyEvents;
 use Chelout\RelationshipEvents\Concerns\HasMorphOneEvents;
-use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
+use Chelout\RelationshipEvents\Concerns\HasOneEvents;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 
 class User extends Model
 {
@@ -31,7 +31,7 @@ class User extends Model
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class, 'role_user');    
+        return $this->belongsToMany(Role::class, 'role_user');
     }
 
     public function posts()
