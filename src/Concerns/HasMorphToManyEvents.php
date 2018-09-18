@@ -214,7 +214,7 @@ trait HasMorphToManyEvents
         $method = $halt ? 'until' : 'fire';
 
         $result = $this->filterModelEventResults(
-            $this->fireCustomModelEvent($event, $method, $parsedIds, $attributes)
+            $this->fireCustomModelEvent($event, $method, $relation, $parsedIds, $attributes)
         );
 
         if (false === $result) {

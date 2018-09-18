@@ -161,6 +161,8 @@ trait HasBelongsToManyEvents
         }
 
         $parsedIds = AttributesMethods::parseIds($ids);
+        $parsedIdsForEvent = AttributesMethods::parseIdsForEvent($parsedIds);
+        $parseAttributesForEvent = AttributesMethods::parseAttributesForEvent($ids, $parsedIds, $attributes);
 
         $event = 'belongsToMany' . ucfirst($event);
 
@@ -170,7 +172,7 @@ trait HasBelongsToManyEvents
         $method = $halt ? 'until' : 'fire';
 
         $result = $this->filterModelEventResults(
-            $this->fireCustomModelEvent($event, $method, $parsedIds, $attributes)
+            $this->fireCustomModelEvent($event, $method, $relation, $parsedIdsForEvent, $parseAttributesForEvent)
         );
 
         if (false === $result) {
@@ -181,8 +183,8 @@ trait HasBelongsToManyEvents
             "eloquent.{$event}: " . static::class, [
                 $relation,
                 $this,
-                AttributesMethods::parseIdsForEvent($parsedIds),
-                AttributesMethods::parseAttributesForEvent($ids, $parsedIds, $attributes),
+                $parsedIdsForEvent,
+                $parseAttributesForEvent,
             ]
         );
     }
