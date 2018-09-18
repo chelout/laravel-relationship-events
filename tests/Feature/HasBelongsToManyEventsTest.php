@@ -24,18 +24,21 @@ class HasBelongsToManyEventsTest extends TestCase
 
         $user = User::create();
         $role = Role::create(['name' => 'admin']);
-        $user->roles()->attach($role);
+        $attributes = [
+            'note' => 'bla bla',
+        ];
+        $user->roles()->attach($role, $attributes);
 
         Event::assertDispatched(
             'eloquent.belongsToManyAttaching: ' . User::class,
-            function ($event, $callback) use ($user, $role) {
-                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id;
+            function ($event, $callback) use ($user, $role, $attributes) {
+                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id && $callback[3] == $attributes;
             }
         );
         Event::assertDispatched(
             'eloquent.belongsToManyAttached: ' . User::class,
-            function ($event, $callback) use ($user, $role) {
-                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id;
+            function ($event, $callback) use ($user, $role, $attributes) {
+                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id && $callback[3] == $attributes;
             }
         );
     }
@@ -71,18 +74,23 @@ class HasBelongsToManyEventsTest extends TestCase
 
         $user = User::create();
         $role = Role::create(['name' => 'admin']);
-        $user->roles()->sync($role);
+        $attributes = [
+            'note' => 'bla bla',
+        ];
+        $user->roles()->sync([
+            $role->id => $attributes,
+        ]);
 
         Event::assertDispatched(
             'eloquent.belongsToManySyncing: ' . User::class,
-            function ($event, $callback) use ($user, $role) {
-                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id;
+            function ($event, $callback) use ($user, $role, $attributes) {
+                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id && $callback[3][$role->id] == $attributes;
             }
         );
         Event::assertDispatched(
             'eloquent.belongsToManySynced: ' . User::class,
-            function ($event, $callback) use ($user, $role) {
-                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id;
+            function ($event, $callback) use ($user, $role, $attributes) {
+                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id && $callback[3][$role->id] == $attributes;
             }
         );
     }
@@ -94,18 +102,21 @@ class HasBelongsToManyEventsTest extends TestCase
 
         $user = User::create();
         $role = Role::create(['name' => 'admin']);
-        $user->roles()->toggle($role);
+        $attributes = [
+            'note' => 'bla bla',
+        ];
+        $user->roles()->toggle([$role->id => $attributes]);
 
         Event::assertDispatched(
             'eloquent.belongsToManyToggling: ' . User::class,
-            function ($event, $callback) use ($user, $role) {
-                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id;
+            function ($event, $callback) use ($user, $role, $attributes) {
+                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id && $callback[3][$role->id] == $attributes;
             }
         );
         Event::assertDispatched(
             'eloquent.belongsToManyToggled: ' . User::class,
-            function ($event, $callback) use ($user, $role) {
-                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id;
+            function ($event, $callback) use ($user, $role, $attributes) {
+                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id && $callback[3][$role->id] == $attributes;
             }
         );
     }
@@ -117,19 +128,22 @@ class HasBelongsToManyEventsTest extends TestCase
 
         $user = User::create();
         $role = Role::create(['name' => 'admin']);
+        $attributes = [
+            'note' => 'bla bla',
+        ];
         $user->roles()->attach($role);
-        $user->roles()->updateExistingPivot(1, ['note' => 'bla bla']);
+        $user->roles()->updateExistingPivot(1, $attributes);
 
         Event::assertDispatched(
             'eloquent.belongsToManyUpdatingExistingPivot: ' . User::class,
-            function ($event, $callback) use ($user, $role) {
-                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id;
+            function ($event, $callback) use ($user, $role, $attributes) {
+                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id && $callback[3] == $attributes;
             }
         );
         Event::assertDispatched(
             'eloquent.belongsToManyUpdatedExistingPivot: ' . User::class,
-            function ($event, $callback) use ($user, $role) {
-                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id;
+            function ($event, $callback) use ($user, $role, $attributes) {
+                return $callback[0] == 'roles' && $callback[1]->is($user) && $callback[2][0] == $role->id && $callback[3] == $attributes;
             }
         );
     }
