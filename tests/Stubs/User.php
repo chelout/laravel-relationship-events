@@ -28,6 +28,12 @@ use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneSaved;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneSaving;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneUpdated;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneUpdating;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphOne\MorphOneCreated;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphOne\MorphOneCreating;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphOne\MorphOneSaved;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphOne\MorphOneSaving;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphOne\MorphOneUpdated;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphOne\MorphOneUpdating;
 use Chelout\RelationshipEvents\Traits\HasDispatchableEvents;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
@@ -66,6 +72,13 @@ class User extends Model
         'belongsToManyToggled' => BelongsToManyToggled::class,
         'belongsToManyUpdatingExistingPivot' => BelongsToManyUpdatingExistingPivot::class,
         'belongsToManyUpdatedExistingPivot' => BelongsToManyUpdatedExistingPivot::class,
+        // MorphOne
+        'morphOneCreating' => MorphOneCreating::class,
+        'morphOneCreated' => MorphOneCreated::class,
+        'morphOneSaving' => MorphOneSaving::class,
+        'morphOneSaved' => MorphOneSaved::class,
+        'morphOneUpdating' => MorphOneUpdating::class,
+        'morphOneUpdated' => MorphOneUpdated::class,
     ];
 
     public static function setupTable()
