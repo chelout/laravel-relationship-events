@@ -3,14 +3,31 @@
 namespace Chelout\RelationshipEvents\Tests\Stubs;
 
 use Chelout\RelationshipEvents\Concerns\HasMorphToEvents;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphTo\MorphToAssociated;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphTo\MorphToAssociating;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphTo\MorphToDissociated;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphTo\MorphToDissociating;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphTo\MorphToUpdated;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphTo\MorphToUpdating;
+use Chelout\RelationshipEvents\Traits\HasDispatchableEvents;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 
 class Comment extends Model
 {
-    use HasMorphToEvents;
+    use HasDispatchableEvents,
+        HasMorphToEvents;
 
     protected $guarded = [];
+
+    protected $dispatchesEvents = [
+        'morphToAssociating' => MorphToAssociating::class,
+        'morphToAssociated' => MorphToAssociated::class,
+        'morphToDissociating' => MorphToDissociating::class,
+        'morphToDissociated' => MorphToDissociated::class,
+        'morphToUpdating' => MorphToUpdating::class,
+        'morphToUpdated' => MorphToUpdated::class,
+    ];
 
     public static function setupTable()
     {
