@@ -22,21 +22,21 @@ trait HasRelationshipObservables
         $methods = collect(
             class_uses(static::class)
         )
-            ->filter(function ($trait) {
-                return starts_with($trait, 'Chelout\RelationshipEvents\Concerns');
-            })
-            ->flatMap(function ($trait) {
-                $trait = new ReflectionClass($trait);
-                $methods = $trait->getMethods(ReflectionMethod::IS_PUBLIC);
+        ->filter(function ($trait) {
+            return starts_with($trait, 'Chelout\RelationshipEvents\Concerns');
+        })
+        ->flatMap(function ($trait) {
+            $trait = new ReflectionClass($trait);
+            $methods = $trait->getMethods(ReflectionMethod::IS_PUBLIC);
 
-                return collect($methods)->filter(function ($method) {
-                    return $method->isStatic();
-                })
-                    ->map(function ($method) {
-                        return $method->name;
-                    });
+            return collect($methods)->filter(function ($method) {
+                return $method->isStatic();
             })
-            ->toArray();
+            ->map(function ($method) {
+                return $method->name;
+            });
+        })
+        ->toArray();
 
         static::mergeRelationshipObservables($methods);
     }
