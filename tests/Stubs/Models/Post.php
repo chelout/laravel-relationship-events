@@ -1,6 +1,6 @@
 <?php
 
-namespace Chelout\RelationshipEvents\Tests\Stubs;
+namespace Chelout\RelationshipEvents\Tests\Stubs\Models;
 
 use Chelout\RelationshipEvents\Concerns\HasMorphManyEvents;
 use Chelout\RelationshipEvents\Concerns\HasMorphToManyEvents;

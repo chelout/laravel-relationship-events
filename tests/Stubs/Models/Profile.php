@@ -1,6 +1,6 @@
 <?php
 
-namespace Chelout\RelationshipEvents\Tests\Stubs;
+namespace Chelout\RelationshipEvents\Tests\Stubs\Models;
 
 use Chelout\RelationshipEvents\Concerns\HasBelongsToEvents;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\BelongsTo\BelongsToAssociated;

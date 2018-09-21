@@ -2,14 +2,14 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature\DispatchesEvents;
 
-use Chelout\RelationshipEvents\Tests\Stubs\Address;
+use Chelout\RelationshipEvents\Tests\Stubs\Models\Address;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphOne\MorphOneCreated;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphOne\MorphOneCreating;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphOne\MorphOneSaved;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphOne\MorphOneSaving;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphOne\MorphOneUpdated;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphOne\MorphOneUpdating;
-use Chelout\RelationshipEvents\Tests\Stubs\User;
+use Chelout\RelationshipEvents\Tests\Stubs\Models\User;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 

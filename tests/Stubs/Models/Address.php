@@ -1,6 +1,6 @@
 <?php
 
-namespace Chelout\RelationshipEvents\Tests\Stubs;
+namespace Chelout\RelationshipEvents\Tests\Stubs\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;

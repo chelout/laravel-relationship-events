@@ -2,8 +2,8 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
-use Chelout\RelationshipEvents\Tests\Stubs\Post;
-use Chelout\RelationshipEvents\Tests\Stubs\Tag;
+use Chelout\RelationshipEvents\Tests\Stubs\Models\Post;
+use Chelout\RelationshipEvents\Tests\Stubs\Models\Tag;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 
