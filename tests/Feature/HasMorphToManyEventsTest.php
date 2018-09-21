@@ -24,18 +24,21 @@ class HasMorphToManyEventsTest extends TestCase
 
         $post = Post::create();
         $tag = Tag::create();
-        $post->tags()->attach($tag);
+        $attributes = [
+            'created_at' => now(),
+        ];
+        $post->tags()->attach($tag, $attributes);
 
         Event::assertDispatched(
             'eloquent.morphToManyAttaching: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
-                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
+            function ($e, $callback) use ($post, $tag, $attributes) {
+                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id && $callback[3] == $attributes;
             }
         );
         Event::assertDispatched(
             'eloquent.morphToManyAttached: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
-                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
+            function ($e, $callback) use ($post, $tag, $attributes) {
+                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id && $callback[3] == $attributes;
             }
         );
     }
@@ -71,18 +74,23 @@ class HasMorphToManyEventsTest extends TestCase
 
         $post = Post::create();
         $tag = Tag::create();
-        $post->tags()->sync($tag);
+        $attributes = [
+            'created_at' => now(),
+        ];
+        $post->tags()->sync([
+            $tag->id => $attributes,
+        ]);
 
         Event::assertDispatched(
             'eloquent.morphToManySyncing: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
-                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
+            function ($e, $callback) use ($post, $tag, $attributes) {
+                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id && $callback[3][$tag->id] == $attributes;
             }
         );
         Event::assertDispatched(
             'eloquent.morphToManySynced: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
-                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
+            function ($e, $callback) use ($post, $tag, $attributes) {
+                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id && $callback[3][$tag->id] == $attributes;
             }
         );
     }
@@ -94,18 +102,23 @@ class HasMorphToManyEventsTest extends TestCase
 
         $post = Post::create();
         $tag = Tag::create();
-        $post->tags()->toggle($tag);
+        $attributes = [
+            'created_at' => now(),
+        ];
+        $post->tags()->toggle([
+            $tag->id => $attributes,
+        ]);
 
         Event::assertDispatched(
             'eloquent.morphToManyToggling: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
-                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
+            function ($e, $callback) use ($post, $tag, $attributes) {
+                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id && $callback[3][$tag->id] == $attributes;
             }
         );
         Event::assertDispatched(
             'eloquent.morphToManyToggled: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
-                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
+            function ($e, $callback) use ($post, $tag, $attributes) {
+                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id && $callback[3][$tag->id] == $attributes;
             }
         );
     }
@@ -117,19 +130,22 @@ class HasMorphToManyEventsTest extends TestCase
 
         $post = Post::create();
         $tag = Tag::create();
+        $attributes = [
+            'created_at' => now(),
+        ];
         $post->tags()->sync($tag);
-        $post->tags()->updateExistingPivot(1, ['created_at' => now()]);
+        $post->tags()->updateExistingPivot(1, $attributes);
 
         Event::assertDispatched(
             'eloquent.morphToManyUpdatingExistingPivot: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
-                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
+            function ($e, $callback) use ($post, $tag, $attributes) {
+                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id && $callback[3] == $attributes;
             }
         );
         Event::assertDispatched(
             'eloquent.morphToManyUpdatedExistingPivot: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
-                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
+            function ($e, $callback) use ($post, $tag, $attributes) {
+                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id && $callback[3] == $attributes;
             }
         );
     }

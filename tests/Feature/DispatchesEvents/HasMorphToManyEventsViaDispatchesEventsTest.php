@@ -34,18 +34,21 @@ class HasMorphToManyEventsViaDispatchesEventsTest extends TestCase
 
         $post = Post::create();
         $tag = Tag::create();
-        $post->tags()->attach($tag);
+        $attributes = [
+            'created_at' => now(),
+        ];
+        $post->tags()->attach($tag, $attributes);
 
         Event::assertDispatched(
             MorphToManyAttaching::class,
-            function ($event) use ($post, $tag) {
-                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id;
+            function ($event) use ($post, $tag, $attributes) {
+                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id && $event->attributes == $attributes;
             }
         );
         Event::assertDispatched(
             MorphToManyAttached::class,
-            function ($event) use ($post, $tag) {
-                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id;
+            function ($event) use ($post, $tag, $attributes) {
+                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id && $event->attributes == $attributes;
             }
         );
     }
@@ -81,18 +84,23 @@ class HasMorphToManyEventsViaDispatchesEventsTest extends TestCase
 
         $post = Post::create();
         $tag = Tag::create();
-        $post->tags()->sync($tag);
+        $attributes = [
+            'created_at' => now(),
+        ];
+        $post->tags()->sync([
+            $tag->id => $attributes,
+        ]);
 
         Event::assertDispatched(
             MorphToManySyncing::class,
-            function ($event) use ($post, $tag) {
-                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id;
+            function ($event) use ($post, $tag, $attributes) {
+                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id && $event->attributes[$tag->id] == $attributes;
             }
         );
         Event::assertDispatched(
             MorphToManySynced::class,
-            function ($event) use ($post, $tag) {
-                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id;
+            function ($event) use ($post, $tag, $attributes) {
+                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id && $event->attributes[$tag->id] == $attributes;
             }
         );
     }
@@ -104,18 +112,23 @@ class HasMorphToManyEventsViaDispatchesEventsTest extends TestCase
 
         $post = Post::create();
         $tag = Tag::create();
-        $post->tags()->toggle($tag);
+        $attributes = [
+            'created_at' => now(),
+        ];
+        $post->tags()->toggle([
+            $tag->id => $attributes,
+        ]);
 
         Event::assertDispatched(
             MorphToManyToggling::class,
-            function ($event) use ($post, $tag) {
-                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id;
+            function ($event) use ($post, $tag, $attributes) {
+                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id && $event->attributes[$tag->id] == $attributes;
             }
         );
         Event::assertDispatched(
             MorphToManyToggled::class,
-            function ($event) use ($post, $tag) {
-                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id;
+            function ($event) use ($post, $tag, $attributes) {
+                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id && $event->attributes[$tag->id] == $attributes;
             }
         );
     }
@@ -127,19 +140,22 @@ class HasMorphToManyEventsViaDispatchesEventsTest extends TestCase
 
         $post = Post::create();
         $tag = Tag::create();
+        $attributes = [
+            'created_at' => now(),
+        ];
         $post->tags()->sync($tag);
-        $post->tags()->updateExistingPivot(1, ['created_at' => now()]);
+        $post->tags()->updateExistingPivot(1, $attributes);
 
         Event::assertDispatched(
             MorphToManyUpdatingExistingPivot::class,
-            function ($event) use ($post, $tag) {
-                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id;
+            function ($event) use ($post, $tag, $attributes) {
+                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id && $event->attributes == $attributes;
             }
         );
         Event::assertDispatched(
             MorphToManyUpdatedExistingPivot::class,
-            function ($event) use ($post, $tag) {
-                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id;
+            function ($event) use ($post, $tag, $attributes) {
+                return $event->relation == 'tags' && $event->post->is($post) && $event->tagId == $tag->id && $event->attributes == $attributes;
             }
         );
     }
