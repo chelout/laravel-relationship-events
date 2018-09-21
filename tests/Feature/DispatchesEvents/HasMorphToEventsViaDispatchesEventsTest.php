@@ -24,7 +24,7 @@ class HasMorphToEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphToAssociating_and_morphToAssociated_via_dispatchesEvents()
+    public function it_fires_morphToAssociating_and_morphToAssociated_via_dispatchesEvents_via_dispatchesEvents()
     {
         Event::fake();
 
@@ -47,7 +47,7 @@ class HasMorphToEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphToDissociating_and_morphToDissociated_via_dispatchesEvents()
+    public function it_fires_morphToDissociating_and_morphToDissociated_via_dispatchesEvents_via_dispatchesEvents()
     {
         Event::fake();
 
@@ -71,7 +71,7 @@ class HasMorphToEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphToUpdating_and_morphToUpdated_via_dispatchesEvents()
+    public function it_fires_morphToUpdating_and_morphToUpdated_via_dispatchesEvents_via_dispatchesEvents()
     {
         Event::fake();
 

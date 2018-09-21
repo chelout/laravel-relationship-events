@@ -3,14 +3,40 @@
 namespace Chelout\RelationshipEvents\Tests\Stubs;
 
 use Chelout\RelationshipEvents\Concerns\HasMorphedByManyEvents;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphedByMany\MorphedByManyAttached;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphedByMany\MorphedByManyAttaching;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphedByMany\MorphedByManyDetached;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphedByMany\MorphedByManyDetaching;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphedByMany\MorphedByManySynced;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphedByMany\MorphedByManySyncing;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphedByMany\MorphedByManyToggled;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphedByMany\MorphedByManyToggling;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphedByMany\MorphedByManyUpdatedExistingPivot;
+use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphedByMany\MorphedByManyUpdatingExistingPivot;
+use Chelout\RelationshipEvents\Traits\HasDispatchableEvents;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 
 class Tag extends Model
 {
-    use HasMorphedByManyEvents;
+    use HasDispatchableEvents,
+        HasMorphedByManyEvents;
 
     protected $guarded = [];
+
+    protected $dispatchesEvents = [
+        // MorphedByMany
+        'morphedByManyAttaching' => MorphedByManyAttaching::class,
+        'morphedByManyAttached' => MorphedByManyAttached::class,
+        'morphedByManyDetaching' => MorphedByManyDetaching::class,
+        'morphedByManyDetached' => MorphedByManyDetached::class,
+        'morphedByManySyncing' => MorphedByManySyncing::class,
+        'morphedByManySynced' => MorphedByManySynced::class,
+        'morphedByManyToggling' => MorphedByManyToggling::class,
+        'morphedByManyToggled' => MorphedByManyToggled::class,
+        'morphedByManyUpdatingExistingPivot' => MorphedByManyUpdatingExistingPivot::class,
+        'morphedByManyUpdatedExistingPivot' => MorphedByManyUpdatedExistingPivot::class,
+    ];
 
     public static function setupTable()
     {
