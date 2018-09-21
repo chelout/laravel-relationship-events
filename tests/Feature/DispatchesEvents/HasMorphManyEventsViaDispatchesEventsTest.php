@@ -2,13 +2,13 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature\DispatchesEvents;
 
-use Chelout\RelationshipEvents\Tests\Stubs\Models\Comment;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphMany\MorphManyCreated;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphMany\MorphManyCreating;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphMany\MorphManySaved;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphMany\MorphManySaving;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphMany\MorphManyUpdated;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphMany\MorphManyUpdating;
+use Chelout\RelationshipEvents\Tests\Stubs\Models\Comment;
 use Chelout\RelationshipEvents\Tests\Stubs\Models\Post;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
