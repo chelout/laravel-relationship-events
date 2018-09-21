@@ -28,7 +28,7 @@ class HasMorphToManyEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphToManyAttaching_and_morphToManyAttached()
+    public function it_fires_morphToManyAttaching_and_morphToManyAttached_via_dispatchesEvents()
     {
         Event::fake();
 
@@ -54,7 +54,7 @@ class HasMorphToManyEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphToManyDetaching_and_morphToManyDetached()
+    public function it_fires_morphToManyDetaching_and_morphToManyDetached_via_dispatchesEvents()
     {
         Event::fake();
 
@@ -78,7 +78,7 @@ class HasMorphToManyEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphToManySyncing_and_morphToManySynced()
+    public function it_fires_morphToManySyncing_and_morphToManySynced_via_dispatchesEvents()
     {
         Event::fake();
 
@@ -106,7 +106,7 @@ class HasMorphToManyEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphToManyToggling_and_morphToManyToggled()
+    public function it_fires_morphToManyToggling_and_morphToManyToggled_via_dispatchesEvents()
     {
         Event::fake();
 
@@ -134,7 +134,7 @@ class HasMorphToManyEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphToManyUpdatingExistingPivot_and_morphToManyUpdatedExistingPivot()
+    public function it_fires_morphToManyUpdatingExistingPivot_and_morphToManyUpdatedExistingPivot_via_dispatchesEvents()
     {
         Event::fake();
 

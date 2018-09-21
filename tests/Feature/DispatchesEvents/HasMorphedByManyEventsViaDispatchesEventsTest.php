@@ -28,7 +28,7 @@ class HasMorphedByManyEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphedByManyAttaching_and_morphedByManyAttached_when_created()
+    public function it_fires_morphedByManyAttaching_and_morphedByManyAttached_when_created_via_dispatchesEvents()
     {
         Event::fake();
 
@@ -50,7 +50,7 @@ class HasMorphedByManyEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphedByManyAttaching_and_morphedByManyAttached_when_saved()
+    public function it_fires_morphedByManyAttaching_and_morphedByManyAttached_when_saved_via_dispatchesEvents()
     {
         Event::fake();
 
@@ -72,7 +72,7 @@ class HasMorphedByManyEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphedByManyAttaching_and_morphedByManyAttached_when_attached()
+    public function it_fires_morphedByManyAttaching_and_morphedByManyAttached_when_attached_via_dispatchesEvents()
     {
         Event::fake();
 
@@ -98,7 +98,7 @@ class HasMorphedByManyEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphedByManyDetaching_and_morphedByManyDetached_when_detached()
+    public function it_fires_morphedByManyDetaching_and_morphedByManyDetached_when_detached_via_dispatchesEvents()
     {
         Event::fake();
 
@@ -122,7 +122,7 @@ class HasMorphedByManyEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphedByManySyncing_and_morphedByManySynced()
+    public function it_fires_morphedByManySyncing_and_morphedByManySynced_via_dispatchesEvents()
     {
         Event::fake();
 
@@ -150,7 +150,7 @@ class HasMorphedByManyEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphedByManyToggling_and_morphedByManyToggled()
+    public function it_fires_morphedByManyToggling_and_morphedByManyToggled_via_dispatchesEvents()
     {
         Event::fake();
 
@@ -178,7 +178,7 @@ class HasMorphedByManyEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_morphedByManyUpdatingExistingPivot_and_morphedByManyUpdatedExistingPivot()
+    public function it_fires_morphedByManyUpdatingExistingPivot_and_morphedByManyUpdatedExistingPivot_via_dispatchesEvents()
     {
         Event::fake();
 

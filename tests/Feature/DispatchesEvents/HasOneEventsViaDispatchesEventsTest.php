@@ -24,7 +24,7 @@ class HasOneEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_HasOneCreating_and_HasOneCreated_when_a_belonged_model_created_via_dispatchesEvents()
+    public function it_fires_HasOneCreating_and_HasOneCreated_when_a_belonged_model_created_via_dispatchesEvents_via_dispatchesEvents()
     {
         Event::fake();
 
@@ -46,7 +46,7 @@ class HasOneEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_HasOneSaving_and_HasOneSaved_when_a_belonged_model_saved_via_dispatchesEvents()
+    public function it_fires_HasOneSaving_and_HasOneSaved_when_a_belonged_model_saved_via_dispatchesEvents_via_dispatchesEvents()
     {
         Event::fake();
 
@@ -68,7 +68,7 @@ class HasOneEventsViaDispatchesEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_fires_HasOneSaving_and_HasOneSaved_when_a_belonged_model_updated_via_dispatchesEvents()
+    public function it_fires_HasOneSaving_and_HasOneSaved_when_a_belonged_model_updated_via_dispatchesEvents_via_dispatchesEvents()
     {
         Event::fake();
 
