@@ -205,6 +205,8 @@ trait HasMorphedByManyEvents
         }
 
         $parsedIds = AttributesMethods::parseIds($ids);
+        $parsedIdsForEvent = AttributesMethods::parseIdsForEvent($parsedIds);
+        $parseAttributesForEvent = AttributesMethods::parseAttributesForEvent($ids, $parsedIds, $attributes);
 
         $event = 'morphedByMany' . ucfirst($event);
 
@@ -214,7 +216,7 @@ trait HasMorphedByManyEvents
         $method = $halt ? 'until' : 'fire';
 
         $result = $this->filterModelEventResults(
-            $this->fireCustomModelEvent($event, $method, $relation, $parsedIds, $attributes)
+            $this->fireCustomModelEvent($event, $method, $relation, $parsedIdsForEvent, $parseAttributesForEvent)
         );
 
         if (false === $result) {
@@ -225,8 +227,8 @@ trait HasMorphedByManyEvents
             "eloquent.{$event}: " . static::class, [
                 $relation,
                 $this,
-                AttributesMethods::parseIdsForEvent($parsedIds),
-                AttributesMethods::parseAttributesForEvent($ids, $parsedIds, $attributes),
+                $parsedIdsForEvent,
+                $parseAttributesForEvent,
             ]
         );
     }
