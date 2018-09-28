@@ -44,6 +44,136 @@ class HasBelongsToManyEventsTest extends TestCase
     }
 
     /** @test */
+    public function it_fires_belongsToManyAttaching_and_belongsToManyAttached_when_an_array_attached()
+    {
+        Event::fake();
+
+        $user = User::create();
+        $adminRole = Role::create([
+            'name' => 'admin',
+        ]);
+        $userRole = Role::create([
+            'name' => 'user',
+        ]);
+        $attributes = [
+            'note' => 'bla bla',
+        ];
+        $roles = [
+            $adminRole->id => $attributes,
+            $userRole->id => $attributes,
+        ];
+
+        $user->roles()->attach($roles);
+
+        Event::assertDispatched(
+            'eloquent.belongsToManyAttaching: ' . User::class,
+            function ($event, $callback) use ($user, $adminRole, $userRole, $roles) {
+                return $callback[0] == 'roles'
+                    && $callback[1]->is($user)
+                    && $callback[2][0] == $adminRole->id
+                    && $callback[2][1] == $userRole->id
+                    && $callback[3] == $roles;
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.belongsToManyAttached: ' . User::class,
+            function ($event, $callback) use ($user, $adminRole, $userRole, $roles) {
+                return $callback[0] == 'roles'
+                    && $callback[1]->is($user)
+                    && $callback[2][0] == $adminRole->id
+                    && $callback[2][1] == $userRole->id
+                    && $callback[3] == $roles;
+            }
+        );
+    }
+
+    /** @test */
+    public function it_fires_belongsToManyAttaching_and_belongsToManyAttached_when_a_base_collection_attached()
+    {
+        Event::fake();
+
+        $user = User::create();
+        $adminRole = Role::create([
+            'name' => 'admin',
+        ]);
+        $userRole = Role::create([
+            'name' => 'user',
+        ]);
+        $attributes = [
+            'note' => 'bla bla',
+        ];
+        $roles = collect([
+            $adminRole->id,
+            $userRole->id,
+        ]);
+
+        $user->roles()->attach($roles, $attributes);
+
+        Event::assertDispatched(
+            'eloquent.belongsToManyAttaching: ' . User::class,
+            function ($event, $callback) use ($user, $adminRole, $userRole, $attributes) {
+                return $callback[0] == 'roles'
+                    && $callback[1]->is($user)
+                    && $callback[2][0] == $adminRole->id
+                    && $callback[2][1] == $userRole->id
+                    && $callback[3] == $attributes;
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.belongsToManyAttached: ' . User::class,
+            function ($event, $callback) use ($user, $adminRole, $userRole, $attributes) {
+                return $callback[0] == 'roles'
+                    && $callback[1]->is($user)
+                    && $callback[2][0] == $adminRole->id
+                    && $callback[2][1] == $userRole->id
+                    && $callback[3] == $attributes;
+            }
+        );
+    }
+
+    /** @test */
+    public function it_fires_belongsToManyAttaching_and_belongsToManyAttached_when_a_collection_attached()
+    {
+        Event::fake();
+
+        $user = User::create();
+        $adminRole = Role::create([
+            'name' => 'admin',
+        ]);
+        $userRole = Role::create([
+            'name' => 'user',
+        ]);
+        $roles = Role::all();
+        
+        $attributes = [
+            'note' => 'bla bla',
+        ];
+
+        $user->roles()->attach($roles, $attributes);
+
+        Event::assertDispatched(
+            'eloquent.belongsToManyAttaching: ' . User::class,
+            function ($event, $callback) use ($user, $adminRole, $userRole, $attributes) {
+                return $callback[0] == 'roles'
+                    && $callback[1]->is($user)
+                    && $callback[2][0] == $adminRole->id
+                    && $callback[2][1] == $userRole->id
+                    && $callback[3] == $attributes;
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.belongsToManyAttached: ' . User::class,
+            function ($event, $callback) use ($user, $adminRole, $userRole, $attributes) {
+                return $callback[0] == 'roles'
+                    && $callback[1]->is($user)
+                    && $callback[2][0] == $adminRole->id
+                    && $callback[2][1] == $userRole->id
+                    && $callback[3] == $attributes;
+            }
+        );
+    }
+
+    /** @test */
     public function it_fires_belongsToManyDetaching_and_belongsToManyDetached_when_a_model_detached()
     {
         Event::fake();
