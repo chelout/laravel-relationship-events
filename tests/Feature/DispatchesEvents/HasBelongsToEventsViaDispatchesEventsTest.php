@@ -8,8 +8,8 @@ use Chelout\RelationshipEvents\Tests\Stubs\Events\BelongsTo\BelongsToDissociated
 use Chelout\RelationshipEvents\Tests\Stubs\Events\BelongsTo\BelongsToDissociating;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\BelongsTo\BelongsToUpdated;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\BelongsTo\BelongsToUpdating;
-use Chelout\RelationshipEvents\Tests\Stubs\Profile;
-use Chelout\RelationshipEvents\Tests\Stubs\User;
+use Chelout\RelationshipEvents\Tests\Stubs\Models\Profile;
+use Chelout\RelationshipEvents\Tests\Stubs\Models\User;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 

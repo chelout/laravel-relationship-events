@@ -12,8 +12,8 @@ use Chelout\RelationshipEvents\Tests\Stubs\Events\BelongsToMany\BelongsToManyTog
 use Chelout\RelationshipEvents\Tests\Stubs\Events\BelongsToMany\BelongsToManyToggling;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\BelongsToMany\BelongsToManyUpdatedExistingPivot;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\BelongsToMany\BelongsToManyUpdatingExistingPivot;
-use Chelout\RelationshipEvents\Tests\Stubs\Role;
-use Chelout\RelationshipEvents\Tests\Stubs\User;
+use Chelout\RelationshipEvents\Tests\Stubs\Models\Role;
+use Chelout\RelationshipEvents\Tests\Stubs\Models\User;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 

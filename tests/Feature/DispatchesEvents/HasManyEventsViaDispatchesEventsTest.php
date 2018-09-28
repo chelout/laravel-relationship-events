@@ -8,8 +8,8 @@ use Chelout\RelationshipEvents\Tests\Stubs\Events\HasMany\HasManySaved;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\HasMany\HasManySaving;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\HasMany\HasManyUpdated;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\HasMany\HasManyUpdating;
-use Chelout\RelationshipEvents\Tests\Stubs\Post;
-use Chelout\RelationshipEvents\Tests\Stubs\User;
+use Chelout\RelationshipEvents\Tests\Stubs\Models\Post;
+use Chelout\RelationshipEvents\Tests\Stubs\Models\User;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 

@@ -2,14 +2,14 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature\DispatchesEvents;
 
-use Chelout\RelationshipEvents\Tests\Stubs\Comment;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphTo\MorphToAssociated;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphTo\MorphToAssociating;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphTo\MorphToDissociated;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphTo\MorphToDissociating;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphTo\MorphToUpdated;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\MorphTo\MorphToUpdating;
-use Chelout\RelationshipEvents\Tests\Stubs\Post;
+use Chelout\RelationshipEvents\Tests\Stubs\Models\Comment;
+use Chelout\RelationshipEvents\Tests\Stubs\Models\Post;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 

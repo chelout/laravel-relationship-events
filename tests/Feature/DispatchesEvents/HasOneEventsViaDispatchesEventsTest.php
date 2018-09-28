@@ -8,8 +8,8 @@ use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneSaved;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneSaving;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneUpdated;
 use Chelout\RelationshipEvents\Tests\Stubs\Events\HasOne\HasOneUpdating;
-use Chelout\RelationshipEvents\Tests\Stubs\Profile;
-use Chelout\RelationshipEvents\Tests\Stubs\User;
+use Chelout\RelationshipEvents\Tests\Stubs\Models\Profile;
+use Chelout\RelationshipEvents\Tests\Stubs\Models\User;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 
