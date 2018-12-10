@@ -9,6 +9,37 @@ use Illuminate\Database\Eloquent\Model;
 trait HasMorphManyEvents
 {
     /**
+     * Define a polymorphic one-to-many relationship.
+     *
+     * @param  string  $related
+     * @param  string  $name
+     * @param  string  $type
+     * @param  string  $id
+     * @param  string  $localKey
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function morphMany($related, $name, $type = null, $id = null, $localKey = null)
+    {
+        // For Laravel > 5.5
+        if (method_exists(get_parent_class($this), 'newMorphMany')) {
+            return parent::morphMany(...func_get_args());
+        }
+
+        $instance = $this->newRelatedInstance($related);
+
+        // Here we will gather up the morph type and ID for the relationship so that we
+        // can properly query the intermediate table of a relation. Finally, we will
+        // get the table and create the relationship instances for the developers.
+        list($type, $id) = $this->getMorphs($name, $type, $id);
+
+        $table = $instance->getTable();
+
+        $localKey = $localKey ?: $this->getKeyName();
+
+        return $this->newMorphMany($instance->newQuery(), $this, $table.'.'.$type, $table.'.'.$id, $localKey);
+    }
+
+    /**
      * Instantiate a new MorphMany relationship.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query

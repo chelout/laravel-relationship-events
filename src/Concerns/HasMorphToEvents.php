@@ -9,6 +9,68 @@ use Illuminate\Database\Eloquent\Model;
 trait HasMorphToEvents
 {
     /**
+     * Define a polymorphic, inverse one-to-one or many relationship.
+     *
+     * @param  string  $name
+     * @param  string  $type
+     * @param  string  $id
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function morphTo($name = null, $type = null, $id = null)
+    {
+        // If no name is provided, we will use the backtrace to get the function name
+        // since that is most likely the name of the polymorphic interface. We can
+        // use that to get both the class and foreign key that will be utilized.
+        $name = $name ?: $this->guessBelongsToRelation();
+
+        list($type, $id) = $this->getMorphs(
+            Str::snake($name), $type, $id
+        );
+
+        // If the type value is null it is probably safe to assume we're eager loading
+        // the relationship. In this case we'll just pass in a dummy query where we
+        // need to remove any eager loads that may already be defined on a model.
+        return empty($class = $this->{$type})
+            ? $this->morphEagerTo($name, $type, $id)
+            : $this->morphInstanceTo($class, $name, $type, $id);
+    }
+
+    /**
+     * Define a polymorphic, inverse one-to-one or many relationship.
+     *
+     * @param  string  $name
+     * @param  string  $type
+     * @param  string  $id
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    protected function morphEagerTo($name, $type, $id)
+    {
+        return $this->newMorphTo(
+            $this->newQuery()->setEagerLoads([]), $this, $id, null, $type, $name
+        );
+    }
+
+    /**
+     * Define a polymorphic, inverse one-to-one or many relationship.
+     *
+     * @param  string  $target
+     * @param  string  $name
+     * @param  string  $type
+     * @param  string  $id
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    protected function morphInstanceTo($target, $name, $type, $id)
+    {
+        $instance = $this->newRelatedInstance(
+            static::getActualClassNameForMorph($target)
+        );
+
+        return $this->newMorphTo(
+            $instance->newQuery(), $this, $id, $instance->getKeyName(), $type, $name
+        );
+    }
+
+    /**
      * Instantiate a new MorphTo relationship.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query

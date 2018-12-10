@@ -9,6 +9,30 @@ use Illuminate\Database\Eloquent\Model;
 trait HasOneEvents
 {
     /**
+     * Define a one-to-one relationship.
+     *
+     * @param  string  $related
+     * @param  string  $foreignKey
+     * @param  string  $localKey
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function hasOne($related, $foreignKey = null, $localKey = null)
+    {
+        // For Laravel > 5.5
+        if (method_exists(get_parent_class($this), 'newHasOne')) {
+            return parent::hasOne(...func_get_args());
+        }
+
+        $instance = $this->newRelatedInstance($related);
+
+        $foreignKey = $foreignKey ?: $this->getForeignKey();
+
+        $localKey = $localKey ?: $this->getKeyName();
+
+        return $this->newHasOne($instance->newQuery(), $this, $instance->getTable().'.'.$foreignKey, $localKey);
+    }
+
+    /**
      * Instantiate a new HasOne relationship.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query

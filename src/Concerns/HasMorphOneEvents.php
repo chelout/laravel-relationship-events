@@ -9,6 +9,34 @@ use Illuminate\Database\Eloquent\Model;
 trait HasMorphOneEvents
 {
     /**
+     * Define a polymorphic one-to-one relationship.
+     *
+     * @param  string  $related
+     * @param  string  $name
+     * @param  string  $type
+     * @param  string  $id
+     * @param  string  $localKey
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function morphOne($related, $name, $type = null, $id = null, $localKey = null)
+    {
+        // For Laravel > 5.5
+        if (method_exists(get_parent_class($this), 'newMorphOne')) {
+            return parent::morphOne(...func_get_args());
+        }
+
+        $instance = $this->newRelatedInstance($related);
+
+        list($type, $id) = $this->getMorphs($name, $type, $id);
+
+        $table = $instance->getTable();
+
+        $localKey = $localKey ?: $this->getKeyName();
+
+        return $this->newMorphOne($instance->newQuery(), $this, $table.'.'.$type, $table.'.'.$id, $localKey);
+    }
+
+    /**
      * Instantiate a new MorphOne relationship.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query

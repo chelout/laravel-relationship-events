@@ -10,6 +10,51 @@ use Illuminate\Database\Eloquent\Model;
 trait HasMorphToManyEvents
 {
     /**
+     * Define a polymorphic many-to-many relationship.
+     *
+     * @param  string  $related
+     * @param  string  $name
+     * @param  string  $table
+     * @param  string  $foreignPivotKey
+     * @param  string  $relatedPivotKey
+     * @param  string  $parentKey
+     * @param  string  $relatedKey
+     * @param  bool  $inverse
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function morphToMany($related, $name, $table = null, $foreignPivotKey = null,
+                                $relatedPivotKey = null, $parentKey = null,
+                                $relatedKey = null, $inverse = false)
+    {
+        // For Laravel > 5.5
+        if (method_exists(get_parent_class($this), 'newMorphToMany')) {
+            return parent::morphToMany(...func_get_args());
+        }
+
+        $caller = $this->guessBelongsToManyRelation();
+
+        // First, we will need to determine the foreign key and "other key" for the
+        // relationship. Once we have determined the keys we will make the query
+        // instances, as well as the relationship instances we need for these.
+        $instance = $this->newRelatedInstance($related);
+
+        $foreignPivotKey = $foreignPivotKey ?: $name.'_id';
+
+        $relatedPivotKey = $relatedPivotKey ?: $instance->getForeignKey();
+
+        // Now we're ready to create a new query builder for this related model and
+        // the relationship instances for this relation. This relations will set
+        // appropriate query constraints then entirely manages the hydrations.
+        $table = $table ?: Str::plural($name);
+
+        return $this->newMorphToMany(
+            $instance->newQuery(), $this, $name, $table,
+            $foreignPivotKey, $relatedPivotKey, $parentKey ?: $this->getKeyName(),
+            $relatedKey ?: $instance->getKeyName(), $caller, $inverse
+        );
+    }
+
+    /**
      * Instantiate a new HasManyThrough relationship.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query

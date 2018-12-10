@@ -9,6 +9,32 @@ use Illuminate\Database\Eloquent\Model;
 trait HasManyEvents
 {
     /**
+     * Define a one-to-many relationship.
+     *
+     * @param  string  $related
+     * @param  string  $foreignKey
+     * @param  string  $localKey
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function hasMany($related, $foreignKey = null, $localKey = null)
+    {
+        // For Laravel > 5.5
+        if (method_exists(get_parent_class($this), 'newHasMany')) {
+            return parent::hasMany(...func_get_args());
+        }
+
+        $instance = $this->newRelatedInstance($related);
+
+        $foreignKey = $foreignKey ?: $this->getForeignKey();
+
+        $localKey = $localKey ?: $this->getKeyName();
+
+        return $this->newHasMany(
+            $instance->newQuery(), $this, $instance->getTable().'.'.$foreignKey, $localKey
+        );
+    }
+
+    /**
      * Instantiate a new HasMany relationship.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
