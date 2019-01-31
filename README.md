@@ -95,7 +95,7 @@ class Post extends Model
 ```
 
 3. Dispatchable relationship events.
-It is possible to fire event classes via $dispatchesEvents properties:
+It is possible to fire event classes via $dispatchesEvents properties and adding ```HasDispatchableEvents``` trait:
 
 ```php
 
@@ -126,7 +126,7 @@ class User extends Model
 
 
 ## Observers
-Starting from v0.4 it is possible to use relationship events in [Laravel observers classes](https://laravel.com/docs/5.6/eloquent#observers) Usage is very simple. Let's take ```User``` and ```Profile``` classes from [One To One Relations](doc/1-one-to-one.md). Define observer class:
+Starting from v0.4 it is possible to use relationship events in [Laravel observers classes](https://laravel.com/docs/5.6/eloquent#observers) Usage is very simple. Let's take ```User``` and ```Profile``` classes from [One To One Relations](doc/1-one-to-one.md), add ```HasRelationshipObservables``` trait to ```User``` class. Define observer class:
 
 ```php
 namespace App\Observer;
