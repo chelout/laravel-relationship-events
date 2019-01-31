@@ -5,6 +5,7 @@ Missing relationship events for Laravel
 
 [![Latest Stable Version](https://poser.pugx.org/chelout/laravel-relationship-events/version)](https://packagist.org/packages/chelout/laravel-relationship-events)
 [![Total Downloads](https://poser.pugx.org/chelout/laravel-relationship-events/downloads)](https://packagist.org/packages/chelout/laravel-relationship-events)
+[![Build Status](https://travis-ci.org/chelout/laravel-relationship-events.svg?branch=master)](https://travis-ci.org/chelout/laravel-relationship-events)
 [![License](https://poser.pugx.org/chelout/laravel-relationship-events/license)](https://packagist.org/packages/chelout/laravel-relationship-events)
 
 ## Install
