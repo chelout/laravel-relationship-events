@@ -79,14 +79,20 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      * @param mixed $id
      * @param array $attributes
      * @param bool  $touch
+     * @return bool
      */
     public function attach($id, array $attributes = [], $touch = true)
     {
-        $this->parent->fireModelBelongsToManyEvent('attaching', $this->getRelationName(), $id, $attributes);
+        if ($this->parent->fireModelBelongsToManyEvent('attaching', $this->getRelationName(), $id, $attributes) == false)
+        {
+            return false;
+        }
 
         parent::attach($id, $attributes, $touch);
 
         $this->parent->fireModelBelongsToManyEvent('attached', $this->getRelationName(), $id, $attributes, false);
+
+        return true;
     }
 
     /**
