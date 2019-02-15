@@ -83,7 +83,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      */
     public function attach($id, array $attributes = [], $touch = true)
     {
-        if ($this->parent->fireModelBelongsToManyEvent('attaching', $this->getRelationName(), $id, $attributes) == false)
+        if ($this->parent->fireModelBelongsToManyEvent('attaching', $this->getRelationName(), $id, $attributes) === false)
         {
             return false;
         }
