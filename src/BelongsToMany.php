@@ -108,7 +108,10 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
         // Get detached ids to pass them to event
         $ids = $ids ?? $this->parent->{$this->getRelationName()}->pluck('id');
 
-        $this->parent->fireModelBelongsToManyEvent('detaching', $this->getRelationName(), $ids);
+        if ($this->parent->fireModelBelongsToManyEvent('detaching', $this->getRelationName(), $ids) === false)
+        {
+            return false;
+        }
 
         if ($result = parent::detach($ids, $touch)) {
             // If records are detached fire detached event
