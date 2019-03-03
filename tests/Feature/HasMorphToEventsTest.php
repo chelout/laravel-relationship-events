@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Event;
 
 class HasMorphToEventsTest extends TestCase
 {
-    public function setup()
+    public function setup(): void
     {
         parent::setup();
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Event;
 
 class HasMorphedByManyEventsTest extends TestCase
 {
-    public function setup()
+    public function setup(): void
     {
         parent::setup();
 
