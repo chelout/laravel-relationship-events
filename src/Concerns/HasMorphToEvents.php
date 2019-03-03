@@ -103,10 +103,10 @@ trait HasMorphToEvents
     /**
      * Fire the given event for the model relationship.
      *
-     * @param string $event
-     * @param string $relation
+     * @param string                                         $event
+     * @param string                                         $relation
      * @param \Illuminate\Database\Eloquent\Model|int|string $parent
-     * @param bool   $halt
+     * @param bool                                           $halt
      *
      * @return mixed
      */
