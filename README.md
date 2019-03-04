@@ -146,7 +146,7 @@ class UserObserver
      */
     public function hasOneCreating(User $user, Model $related)
     {
-        Log::info("Creating profile for user {$related->name}.");
+        Log::info("Creating profile for user.", ['user' => $related->name]);
     }
 
     /**
@@ -159,7 +159,7 @@ class UserObserver
      */
     public function hasOneCreated(User $user, Model $related)
     {
-        Log::info("Profile for user {$related->name} has been created.");
+        Log::info("Profile has been created.", ['user' => $related->name]);
     }
 }
 ```
