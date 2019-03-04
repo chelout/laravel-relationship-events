@@ -8,6 +8,8 @@ Missing relationship events for Laravel
 [![Build Status](https://travis-ci.org/chelout/laravel-relationship-events.svg?branch=master)](https://travis-ci.org/chelout/laravel-relationship-events)
 [![License](https://poser.pugx.org/chelout/laravel-relationship-events/license)](https://packagist.org/packages/chelout/laravel-relationship-events)
 
+### For Laravel < 5.8, please use the [v0.6.3](https://github.com/chelout/laravel-relationship-events/tree/v0.6.3)!
+
 ## Install
 
 1. Install package with composer
