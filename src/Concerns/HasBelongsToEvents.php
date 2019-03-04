@@ -102,11 +102,12 @@ trait HasBelongsToEvents
     /**
      * Fire the given event for the model relationship.
      *
-     * @param string                                         $event
-     * @param \Illuminate\Database\Eloquent\Model|int|string $related
-     * @param bool                                           $halt
+     * @param string $event
+     * @param string $relation
+     * @param \Illuminate\Database\Eloquent\Model|int|string $parent
+     * @param bool $halt
      *
-     * @return mixed
+     * @return bool
      */
     public function fireModelBelongsToEvent($event, $relation, $parent, $halt = true)
     {
@@ -119,7 +120,7 @@ trait HasBelongsToEvents
         // First, we will get the proper method to call on the event dispatcher, and then we
         // will attempt to fire a custom, object based event for the given event. If that
         // returns a result we can return that result, or we'll call the string events.
-        $method = $halt ? 'until' : 'fire';
+        $method = $halt ? 'until' : 'dispatch';
 
         $result = $this->filterModelEventResults(
             $this->fireCustomModelEvent($event, $method, $relation, $parent)

@@ -22,11 +22,11 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
      */
     public function associate($model)
     {
-        $this->parent->fireModelBelongsToEvent('associating', $this->relation, $model);
+        $this->parent->fireModelBelongsToEvent('associating', $this->relationName, $model);
 
         $result = parent::associate($model);
 
-        $this->parent->fireModelBelongsToEvent('associated', $this->relation, $model);
+        $this->parent->fireModelBelongsToEvent('associated', $this->relationName, $model);
 
         return $result;
     }
@@ -40,12 +40,12 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
     {
         $parent = $this->getResults();
 
-        $this->parent->fireModelBelongsToEvent('dissociating', $this->relation, $parent);
+        $this->parent->fireModelBelongsToEvent('dissociating', $this->relationName, $parent);
 
         $result = parent::dissociate();
 
         if (! is_null($parent)) {
-            $this->parent->fireModelBelongsToEvent('dissociated', $this->relation, $parent);
+            $this->parent->fireModelBelongsToEvent('dissociated', $this->relationName, $parent);
         }
 
         return $result;
@@ -62,10 +62,10 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
     {
         $related = $this->getResults();
 
-        $this->parent->fireModelBelongsToEvent('updating', $this->relation, $related);
+        $this->parent->fireModelBelongsToEvent('updating', $this->relationName, $related);
 
         if ($result = $related->fill($attributes)->save()) {
-            $this->parent->fireModelBelongsToEvent('updated', $this->relation, $related);
+            $this->parent->fireModelBelongsToEvent('updated', $this->relationName, $related);
         }
 
         return $result;

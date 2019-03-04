@@ -49,6 +49,8 @@ class AttributesMethods
     /**
      * Parse attributes for event.
      *
+     * @param mixed $rawIds
+     * @param array $parsedIds
      * @param array $attributes
      *
      * @return array
