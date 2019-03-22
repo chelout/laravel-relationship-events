@@ -58,19 +58,41 @@ trait HasOneOrManyMethods
     {
         $related = $this->getResults();
 
+        if ($related instanceof Model) {
+            $related->fill($attributes);
+        }
+        if ($related instanceof Collection) {
+            $related->each(function ($model) use ($attributes) {
+                /** @var Model $model */
+                $model->fill($attributes);
+            });
+        }
+
         $this->fireModelRelationshipEvent('updating', $related);
 
         if ($result = parent::update($attributes)) {
             if ($related instanceof Model) {
-                $this->updateRelated($related, $attributes);
+                $related->syncChanges();
             }
             if ($related instanceof Collection) {
-                $related->each(function ($model) use ($attributes) {
-                    $this->updateRelated($model, $attributes);
+                $related->each(function ($model){
+                    /** @var Model $model */
+                    $model->syncChanges();
                 });
             }
 
             $this->fireModelRelationshipEvent('updated', $related, false);
+
+            if ($related instanceof Model) {
+                $related->syncOriginal();
+            }
+            if ($related instanceof Collection) {
+                $related->each(function ($model) use ($attributes) {
+                    /** @var Model $model */
+                    $model->syncOriginal();
+                });
+            }
+
         }
 
         return $result;
@@ -90,16 +112,4 @@ trait HasOneOrManyMethods
         return $this->parent->{'fireModel' . class_basename(static::class) . 'Event'}($event, $related, $halt);
     }
 
-    /**
-     * Updated related model's attributes.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $related
-     * @param array                               $attributes
-     *
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    protected function updateRelated(Model $related, array $attributes): Model
-    {
-        return $related->fill($attributes)->syncChanges()->syncOriginal();
-    }
 }
