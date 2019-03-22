@@ -68,6 +68,7 @@ trait HasOneOrManyMethods
             });
         }
 
+        $this->fireModelRelationshipEvent('saving', $related);
         $this->fireModelRelationshipEvent('updating', $related);
 
         if ($result = parent::update($attributes)) {
@@ -82,6 +83,7 @@ trait HasOneOrManyMethods
             }
 
             $this->fireModelRelationshipEvent('updated', $related, false);
+            $this->fireModelRelationshipEvent('saved', $related, false);
 
             if ($related instanceof Model) {
                 $related->syncOriginal();
