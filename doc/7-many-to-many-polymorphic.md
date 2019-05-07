@@ -64,11 +64,11 @@ Now we should listen our events, for example we can register event listners in m
          * Many To Many Polymorphic Relationship Events
          */
 
-        static::morphToManyAttaching(function ($parent, $ids, $attributes) {
+        static::morphToManyAttaching(function ($relation, $parent, $attributes) {
             Log::info("Attaching tags to post {$parent->title}.");
         });
 
-        static::morphToManyAttached(function ($parent, $ids, $attributes) {
+        static::morphToManyAttached(function ($relation, $parent, $attributes) {
             Log::info("Tags have been attached to post {$parent->title}.");
         });
     }
@@ -151,11 +151,11 @@ Now we should listen our events, for example we can register event listners in m
          * Many To Many Polymorphic Relationship Events
          */
 
-        static::morphedByManyAttaching(function ($parent, $ids, $attributes) {
+        static::morphedByManyAttaching(function ($relation, $parent, $attributes) {
             Log::info("Attaching post to tag {$parent->name}.");
         });
 
-        static::morphedByManyAttached(function ($parent, $ids, $attributes) {
+        static::morphedByManyAttached(function ($relation, $parent, $attributes) {
             Log::info("Post has been attached to tag {$parent->name}.");
         });
     }
