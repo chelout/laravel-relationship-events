@@ -20,9 +20,8 @@ class MorphTo extends MorphToBase implements EventDispatcher
      */
     public function associate($model)
     {
-        if ($this->parent->fireModelMorphToEvent('associating', $this->relation, $model) === false)
-        {
-            return null;
+        if ($this->parent->fireModelMorphToEvent('associating', $this->relation, $model) === false) {
+            return;
         }
 
         $result = parent::associate($model);
@@ -41,9 +40,8 @@ class MorphTo extends MorphToBase implements EventDispatcher
     {
         $parent = $this->getResults();
 
-        if ($this->parent->fireModelMorphToEvent('dissociating', $this->relation, $parent) === false)
-        {
-            return null;
+        if ($this->parent->fireModelMorphToEvent('dissociating', $this->relation, $parent) === false) {
+            return;
         }
 
         $result = parent::dissociate();

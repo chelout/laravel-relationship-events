@@ -19,7 +19,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      * Each existing model is detached, and non existing ones are attached.
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|int|string $ids
-     * @param bool                                                                                                                  $touch
+     * @param bool                                                                                                                   $touch
      *
      * @return array
      */
@@ -38,7 +38,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      * Sync the intermediate tables with a list of IDs or collection of models.
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|int|string $ids
-     * @param bool                                                                                                                  $detaching
+     * @param bool                                                                                                                   $detaching
      *
      * @return array
      */
@@ -79,12 +79,12 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      * @param mixed $id
      * @param array $attributes
      * @param bool  $touch
+     *
      * @return bool
      */
     public function attach($id, array $attributes = [], $touch = true)
     {
-        if ($this->parent->fireModelBelongsToManyEvent('attaching', $this->getRelationName(), $id, $attributes) === false)
-        {
+        if ($this->parent->fireModelBelongsToManyEvent('attaching', $this->getRelationName(), $id, $attributes) === false) {
             return false;
         }
 
@@ -108,8 +108,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
         // Get detached ids to pass them to event
         $ids = $ids ?? $this->parent->{$this->getRelationName()}->pluck('id');
 
-        if ($this->parent->fireModelBelongsToManyEvent('detaching', $this->getRelationName(), $ids) === false)
-        {
+        if ($this->parent->fireModelBelongsToManyEvent('detaching', $this->getRelationName(), $ids) === false) {
             return false;
         }
 
