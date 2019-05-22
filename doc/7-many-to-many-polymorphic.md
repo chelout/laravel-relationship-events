@@ -64,11 +64,11 @@ Now we should listen our events, for example we can register event listners in m
          * Many To Many Polymorphic Relationship Events
          */
 
-        static::morphToManyAttaching(function ($parent, $ids, $attributes) {
+        static::morphToManyAttaching(function ($relation, $parent, $attributes) {
             Log::info("Attaching tags to post {$parent->title}.");
         });
 
-        static::morphToManyAttached(function ($parent, $ids, $attributes) {
+        static::morphToManyAttached(function ($relation, $parent, $attributes) {
             Log::info("Tags have been attached to post {$parent->title}.");
         });
     }
@@ -78,11 +78,11 @@ Now we should listen our events, for example we can register event listners in m
 ### Available methods and events
 
 #### MorphToMany::attach
-- fires morphToManyAttching, morphToManyAttached
+- fires morphToManyAttaching, morphToManyAttached
 - events have $relation name, $parent model, $attributes attaching model ids
 
 #### MorphToMany::detach
-- fires morphToManyDetching, morphToManyDetached
+- fires morphToManyDetaching, morphToManyDetached
 - events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
 > Note: has additional query to get related ids
 
@@ -151,11 +151,11 @@ Now we should listen our events, for example we can register event listners in m
          * Many To Many Polymorphic Relationship Events
          */
 
-        static::morphedByManyAttaching(function ($parent, $ids, $attributes) {
+        static::morphedByManyAttaching(function ($relation, $parent, $attributes) {
             Log::info("Attaching post to tag {$parent->name}.");
         });
 
-        static::morphedByManyAttached(function ($parent, $ids, $attributes) {
+        static::morphedByManyAttached(function ($relation, $parent, $attributes) {
             Log::info("Post has been attached to tag {$parent->name}.");
         });
     }
@@ -165,10 +165,10 @@ Now we should listen our events, for example we can register event listners in m
 ### Available methods and events
 
 #### MorphedByMany::attach
-- fires morphedByManyAttching, morphedByManyAttached
+- fires morphedByManyAttaching, morphedByManyAttached
 - events have $relation name, $parent model, $attributes attaching model ids
 #### MorphedByMany::detach
-- fires morphedByManyDetching, morphedByManyDetached
+- fires morphedByManyDetaching, morphedByManyDetached
 - events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
 > Note: has additional query to get related ids
 #### MorphedByMany::sync

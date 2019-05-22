@@ -192,6 +192,7 @@ trait HasMorphedByManyEvents
      * Fire the given event for the model relationship.
      *
      * @param string $event
+     * @param string $relation
      * @param mixed  $ids
      * @param array  $attributes
      * @param bool   $halt
@@ -204,29 +205,31 @@ trait HasMorphedByManyEvents
             return true;
         }
 
+        $parsedIds = AttributesMethods::parseIds($ids);
+        $parsedIdsForEvent = AttributesMethods::parseIdsForEvent($parsedIds);
+        $parseAttributesForEvent = AttributesMethods::parseAttributesForEvent($ids, $parsedIds, $attributes);
+
         $event = 'morphedByMany' . ucfirst($event);
 
         // First, we will get the proper method to call on the event dispatcher, and then we
         // will attempt to fire a custom, object based event for the given event. If that
         // returns a result we can return that result, or we'll call the string events.
-        $method = $halt ? 'until' : 'fire';
+        $method = $halt ? 'until' : 'dispatch';
 
         $result = $this->filterModelEventResults(
-            $this->fireCustomModelEvent($event, $method)
+            $this->fireCustomModelEvent($event, $method, $relation, $parsedIdsForEvent, $parseAttributesForEvent)
         );
 
         if (false === $result) {
             return false;
         }
 
-        $parsedIds = AttributesMethods::parseIds($ids);
-
         return ! empty($result) ? $result : static::$dispatcher->{$method}(
             "eloquent.{$event}: " . static::class, [
                 $relation,
                 $this,
-                AttributesMethods::parseIdsForEvent($parsedIds),
-                AttributesMethods::parseAttributesForEvent($ids, $parsedIds, $attributes),
+                $parsedIdsForEvent,
+                $parseAttributesForEvent,
             ]
         );
     }

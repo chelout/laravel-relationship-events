@@ -141,11 +141,11 @@ Now we should listen our events, for example we can register event listners in m
     {
         parent::boot();
 
-        static::belongsToManyAttaching(function ($parent, $ids, $attributes) {
+        static::belongsToManyAttaching(function ($relation, $parent, $ids) {
             Log::info("Attaching roles to user {$parent->name}.");
         });
 
-        static::belongsToManyAttached(function ($parent, $ids, $attributes) {
+        static::belongsToManyAttached(function ($relation, $parent, $ids) {
             Log::info("Roles has been attached to user {$parent->name}.");
         });
     }
@@ -155,18 +155,18 @@ Now we should listen our events, for example we can register event listners in m
 ### Available methods and events
 
 #### BelongsToMany::attach
-    - fires belongToManyAttching, belongToManyAttached
-    - events have $relation name, $parent model, $attributes attaching model ids
+- fires belongToManyAttaching, belongToManyAttached
+- events have $relation name, $parent model, $attributes attaching model ids
 #### BelongsToMany::detach
-    - fires belongToManyDetching, belongToManyDetached
-    - events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
-    > Note: has additional query to get related ids
+- fires belongToManyDetaching, belongToManyDetached
+- events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
+> Note: has additional query to get related ids
 #### BelongsToMany::sync
-    - fires belongToManySyncing, belongToManySynced, BelongsToMany::attach, BelongsToMany::detach
-    - events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
+- fires belongToManySyncing, belongToManySynced, BelongsToMany::attach, BelongsToMany::detach
+- events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
 #### BelongsToMany::toggle
-    - fires belongToManyToggling, belongToManyToggled, BelongsToMany::attach, BelongsToMany::detach
-    - events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
+- fires belongToManyToggling, belongToManyToggled, BelongsToMany::attach, BelongsToMany::detach
+- events have $relation name, $parent model, $ids detaching model ids, $attributes additional data
 #### BelongsToMany::updateExistingPivot
-    - fires belongsToManyUpdatingExistingPivot, belongsToManyUpdatedExistingPivot
-    - events have $relation name, $parent model, $id updating model id, $attributes additional data
+- fires belongsToManyUpdatingExistingPivot, belongsToManyUpdatedExistingPivot
+- events have $relation name, $parent model, $id updating model id, $attributes additional data

@@ -5,7 +5,10 @@ Missing relationship events for Laravel
 
 [![Latest Stable Version](https://poser.pugx.org/chelout/laravel-relationship-events/version)](https://packagist.org/packages/chelout/laravel-relationship-events)
 [![Total Downloads](https://poser.pugx.org/chelout/laravel-relationship-events/downloads)](https://packagist.org/packages/chelout/laravel-relationship-events)
+[![Build Status](https://travis-ci.org/chelout/laravel-relationship-events.svg?branch=master)](https://travis-ci.org/chelout/laravel-relationship-events)
 [![License](https://poser.pugx.org/chelout/laravel-relationship-events/license)](https://packagist.org/packages/chelout/laravel-relationship-events)
+
+### For Laravel < 5.8, please use the [v0.6.3](https://github.com/chelout/laravel-relationship-events/tree/v0.6.3)!
 
 ## Install
 
@@ -95,15 +98,17 @@ class Post extends Model
 ```
 
 3. Dispatchable relationship events.
-It is possible to fire event classes via $dispatchesEvents properties:
+It is possible to fire event classes via $dispatchesEvents properties and adding ```HasDispatchableEvents``` trait:
 
 ```php
 
 use Chelout\RelationshipEvents\Concerns\HasOneEvents;
+use Chelout\RelationshipEvents\Traits\HasDispatchableEvents;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
+    use HasDispatchableEvents;
     use HasOneEvents;
 
     protected $dispatchesEvents = [
@@ -123,17 +128,78 @@ class User extends Model
 - [Many To Many Polymorphic Relations](doc/7-many-to-many-polymorphic.md)
 
 
-## Todo
+## Observers
+Starting from v0.4 it is possible to use relationship events in [Laravel observers classes](https://laravel.com/docs/5.6/eloquent#observers) Usage is very simple. Let's take ```User``` and ```Profile``` classes from [One To One Relations](doc/1-one-to-one.md), add ```HasRelationshipObservables``` trait to ```User``` class. Define observer class:
 
- - Add relationship events to models $observables property in order to create model observers:
 ```php
-HasEvents::addObservableEvents([
-    'hasOneCreating',
-    'hasOneCreated',
-    'hasOneSaving',
-    'hasOneSaved',
-    'hasOneUpdating',
-    'hasOneUpdated',
-]);
+namespace App\Observer;
+
+class UserObserver
+{
+    /**
+     * Handle the User "hasOneCreating" event.
+     *
+     * @param \App\Models\User $user
+     * @param \Illuminate\Database\Eloquent\Model $related
+     *
+     * @return void
+     */
+    public function hasOneCreating(User $user, Model $related)
+    {
+        Log::info("Creating profile for user {$related->name}.");
+    }
+
+    /**
+     * Handle the User "hasOneCreated" event.
+     *
+     * @param \App\Models\User $user
+     * @param \Illuminate\Database\Eloquent\Model $related
+     *
+     * @return void
+     */
+    public function hasOneCreated(User $user, Model $related)
+    {
+        Log::info("Profile for user {$related->name} has been created.");
+    }
+}
 ```
+
+Don't forget to register an observer in the ```boot``` method of your ```AppServiceProvider```:
+```php
+namespace App\Providers;
+
+use App\Models\User;
+use App\Observers\UserObserver;
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+// ...
+    public function boot()
+    {
+        User::observe(UserObserver::class);
+    }
+// ...
+}
+```
+
+And now just create profile for user:
+```php
+// ...
+$user = factory(User::class)->create([
+    'name' => 'John Smith',
+]);
+
+// Create profile and assosiate it with user
+// This will fire two events hasOneCreating, hasOneCreated
+$user->profile()->create([
+    'phone' => '8-800-123-45-67',
+    'email' => 'user@example.com',
+    'address' => 'One Infinite Loop Cupertino, CA 95014',
+]);
+// ...
+```
+
+
+## Todo
  - Tests, tests, tests
