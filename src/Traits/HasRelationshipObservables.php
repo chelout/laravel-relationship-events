@@ -19,9 +19,20 @@ trait HasRelationshipObservables
      */
     public static function bootHasRelationshipObservables()
     {
-        $methods = collect(
-            class_uses(static::class)
-        )
+        $class = static::class;
+        $traits = [];
+        
+        do {
+            $traits = array_merge(class_uses($class), $traits);
+        } while ($class = get_parent_class($class));
+
+        foreach ($traits as $trait => $same) {
+            $traits = array_merge(class_uses($trait), $traits);
+        }
+
+        $trait_uses = array_unique($traits);
+
+        $methods = collect($trait_uses)
             ->filter(function ($trait) {
                 return starts_with($trait, 'Chelout\RelationshipEvents\Concerns');
             })
