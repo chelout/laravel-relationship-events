@@ -66,7 +66,7 @@ trait HasRelationshipObservables
         return array_merge(
             [
                 'retrieved', 'creating', 'created', 'updating', 'updated',
-                'saving', 'saved', 'restoring', 'restored',
+                'saving', 'saved', 'restoring', 'restored', 'replicating',
                 'deleting', 'deleted', 'forceDeleted',
             ],
             static::getRelationshipObservables(),
