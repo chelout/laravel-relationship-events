@@ -68,7 +68,8 @@ class MorphTo extends MorphToBase implements EventDispatcher
 
         $this->parent->fireModelMorphToEvent('updating', $this->relationName, $related);
 
-        if ($related && $result = $related->fill($attributes)->save()) {
+        $result = $related->fill($attributes)->save();
+        if ($related && $result) {
             $this->parent->fireModelMorphToEvent('updated', $this->relationName, $related);
         }
 
