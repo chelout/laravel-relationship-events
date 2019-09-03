@@ -4,9 +4,15 @@ namespace Chelout\RelationshipEvents;
 
 use Chelout\RelationshipEvents\Contracts\EventDispatcher;
 use Chelout\RelationshipEvents\Traits\HasEventDispatcher;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany as BelongsToManyBase;
 
+/**
+ * Class BelongsToMany
+ *
+ * @package Chelout\RelationshipEvents
+ *
+ * @property-read \Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents $parent
+ */
 class BelongsToMany extends BelongsToManyBase implements EventDispatcher
 {
     use HasEventDispatcher;

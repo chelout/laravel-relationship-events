@@ -7,6 +7,7 @@ use Chelout\RelationshipEvents\Concerns\HasManyEvents;
 use Chelout\RelationshipEvents\Concerns\HasMorphOneEvents;
 use Chelout\RelationshipEvents\Concerns\HasOneEvents;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class User extends Model
@@ -18,7 +19,7 @@ class User extends Model
 
     public static function setupTable()
     {
-        Schema::create('users', function ($table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });

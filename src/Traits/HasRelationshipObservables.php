@@ -5,6 +5,13 @@ namespace Chelout\RelationshipEvents\Traits;
 use ReflectionClass;
 use ReflectionMethod;
 
+/**
+ * Trait HasRelationshipObservables
+ *
+ * @package Chelout\RelationshipEvents\Traits
+ *
+ * @mixin \Illuminate\Database\Eloquent\Concerns\HasEvents
+ */
 trait HasRelationshipObservables
 {
     /**
@@ -21,40 +28,26 @@ trait HasRelationshipObservables
     {
         $methods = collect(
             class_uses(static::class)
-        )
-            ->filter(function ($trait) {
-                return starts_with($trait, 'Chelout\RelationshipEvents\Concerns');
-            })
-            ->flatMap(function ($trait) {
-                $trait = new ReflectionClass($trait);
-                $methods = $trait->getMethods(ReflectionMethod::IS_PUBLIC);
+        )->filter(function ($trait) {
+            return Str::startsWith($trait, 'Chelout\RelationshipEvents\Concerns');
+        })->flatMap(function ($trait) {
+            $trait   = new ReflectionClass($trait);
+            $methods = $trait->getMethods(ReflectionMethod::IS_PUBLIC);
 
-                return collect($methods)->filter(function ($method) {
-                    return $method->isStatic();
-                })
-                    ->map(function ($method) {
-                        return $method->name;
-                    });
-            })
-            ->toArray();
+            return collect($methods)->filter(function (ReflectionMethod $method) {
+                return $method->isStatic();
+            })->map(function ($method) {
+                return $method->name;
+            });
+        })->toArray();
 
         static::mergeRelationshipObservables($methods);
     }
 
     /**
-     * Get relationship observables.
-     *
-     * @return array
-     */
-    public static function getRelationshipObservables(): array
-    {
-        return static::$relationshipObservables;
-    }
-
-    /**
      * Merge relationship observables.
      *
-     * @param array $relationshipObservables
+     * @param  array  $relationshipObservables
      *
      * @return void
      */
@@ -79,5 +72,15 @@ trait HasRelationshipObservables
             static::getRelationshipObservables(),
             $this->observables
         );
+    }
+
+    /**
+     * Get relationship observables.
+     *
+     * @return array
+     */
+    public static function getRelationshipObservables(): array
+    {
+        return static::$relationshipObservables;
     }
 }

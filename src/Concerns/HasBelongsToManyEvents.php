@@ -7,6 +7,13 @@ use Chelout\RelationshipEvents\Helpers\AttributesMethods;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Trait HasBelongsToManyEvents
+ *
+ * @package Chelout\RelationshipEvents\Concerns
+ *
+ * @mixin \Chelout\RelationshipEvents\Traits\HasDispatchableEvents
+ */
 trait HasBelongsToManyEvents
 {
     /**

@@ -4,9 +4,15 @@ namespace Chelout\RelationshipEvents;
 
 use Chelout\RelationshipEvents\Contracts\EventDispatcher;
 use Chelout\RelationshipEvents\Traits\HasEventDispatcher;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo as MorphToBase;
 
+/**
+ * Class MorphTo
+ *
+ * @package Chelout\RelationshipEvents
+ *
+ * @property-read \Chelout\RelationshipEvents\Concerns\HasMorphToEvents $parent
+ */
 class MorphTo extends MorphToBase implements EventDispatcher
 {
     use HasEventDispatcher;
