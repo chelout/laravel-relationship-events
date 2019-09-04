@@ -5,6 +5,13 @@ namespace Chelout\RelationshipEvents\Traits;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Trait HasOneOrManyMethods
+ *
+ * @package Chelout\RelationshipEvents\Traits
+ *
+ * @property-read \Illuminate\Database\Eloquent\Model $related
+ */
 trait HasOneOrManyMethods
 {
     /**
@@ -16,7 +23,7 @@ trait HasOneOrManyMethods
      */
     public function create(array $attributes = [])
     {
-        return tap($this->related->newInstance($attributes), function ($instance) {
+        return tap($this->related->newInstance($attributes), function (Model $instance) {
             $this->fireModelRelationshipEvent('creating', $instance);
 
             $this->setForeignAttributesForCreate($instance);

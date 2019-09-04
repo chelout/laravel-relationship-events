@@ -8,6 +8,11 @@ use Chelout\RelationshipEvents\Traits\HasOneOrManyMethods;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany as MorphManyBase;
 
+/**
+ * Class MorphMany
+ *
+ * @package Chelout\RelationshipEvents
+ */
 class MorphMany extends MorphManyBase implements EventDispatcher
 {
     use HasEventDispatcher;
