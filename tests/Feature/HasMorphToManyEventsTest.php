@@ -28,13 +28,13 @@ class HasMorphToManyEventsTest extends TestCase
 
         Event::assertDispatched(
             'eloquent.morphToManyAttaching: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
+            function ($event, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }
         );
         Event::assertDispatched(
             'eloquent.morphToManyAttached: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
+            function ($event, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }
         );
@@ -52,13 +52,13 @@ class HasMorphToManyEventsTest extends TestCase
 
         Event::assertDispatched(
             'eloquent.morphToManyDetaching: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
+            function ($event, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }
         );
         Event::assertDispatched(
             'eloquent.morphToManyDetached: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
+            function ($event, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }
         );
@@ -75,13 +75,13 @@ class HasMorphToManyEventsTest extends TestCase
 
         Event::assertDispatched(
             'eloquent.morphToManySyncing: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
+            function ($event, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }
         );
         Event::assertDispatched(
             'eloquent.morphToManySynced: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
+            function ($event, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }
         );
@@ -99,13 +99,13 @@ class HasMorphToManyEventsTest extends TestCase
 
         Event::assertDispatched(
             'eloquent.morphToManyUpdatingExistingPivot: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
+            function ($event, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }
         );
         Event::assertDispatched(
             'eloquent.morphToManyUpdatedExistingPivot: ' . Post::class,
-            function ($e, $callback) use ($post, $tag) {
+            function ($event, $callback) use ($post, $tag) {
                 return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
             }
         );

@@ -27,13 +27,13 @@ class HasOneEventsTest extends TestCase
 
         Event::assertDispatched(
             'eloquent.hasOneCreating: ' . User::class,
-            function ($e, $callback) use ($user, $profile) {
+            function ($event, $callback) use ($user, $profile) {
                 return $callback[0]->is($user) && $callback[1]->is($profile);
             }
         );
         Event::assertDispatched(
             'eloquent.hasOneCreated: ' . User::class,
-            function ($e, $callback) use ($user, $profile) {
+            function ($event, $callback) use ($user, $profile) {
                 return $callback[0]->is($user) && $callback[1]->is($profile);
             }
         );
@@ -49,13 +49,13 @@ class HasOneEventsTest extends TestCase
 
         Event::assertDispatched(
             'eloquent.hasOneSaving: ' . User::class,
-            function ($e, $callback) use ($user, $profile) {
+            function ($event, $callback) use ($user, $profile) {
                 return $callback[0]->is($user) && $callback[1]->is($profile);
             }
         );
         Event::assertDispatched(
             'eloquent.hasOneSaved: ' . User::class,
-            function ($e, $callback) use ($user, $profile) {
+            function ($event, $callback) use ($user, $profile) {
                 return $callback[0]->is($user) && $callback[1]->is($profile);
             }
         );
@@ -72,13 +72,13 @@ class HasOneEventsTest extends TestCase
 
         Event::assertDispatched(
             'eloquent.hasOneUpdating: ' . User::class,
-            function ($e, $callback) use ($user, $profile) {
+            function ($event, $callback) use ($user, $profile) {
                 return $callback[0]->is($user) && $callback[1]->is($profile);
             }
         );
         Event::assertDispatched(
             'eloquent.hasOneUpdated: ' . User::class,
-            function ($e, $callback) use ($user, $profile) {
+            function ($event, $callback) use ($user, $profile) {
                 return $callback[0]->is($user) && $callback[1]->is($profile);
             }
         );

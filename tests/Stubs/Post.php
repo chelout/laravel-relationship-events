@@ -5,6 +5,7 @@ namespace Chelout\RelationshipEvents\Tests\Stubs;
 use Chelout\RelationshipEvents\Concerns\HasMorphManyEvents;
 use Chelout\RelationshipEvents\Concerns\HasMorphToManyEvents;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class Post extends Model
@@ -16,7 +17,7 @@ class Post extends Model
 
     public static function setupTable()
     {
-        Schema::create('posts', function ($table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id')->nullable();
             $table->timestamps();

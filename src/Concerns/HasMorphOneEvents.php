@@ -6,6 +6,13 @@ use Chelout\RelationshipEvents\MorphOne;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Trait HasMorphOneEvents
+ *
+ * @package Chelout\RelationshipEvents\Concerns
+ *
+ * @mixin \Chelout\RelationshipEvents\Traits\HasDispatchableEvents
+ */
 trait HasMorphOneEvents
 {
     /**

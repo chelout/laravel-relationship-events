@@ -7,6 +7,13 @@ use Chelout\RelationshipEvents\MorphedByMany;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Trait HasMorphedByManyEvents
+ *
+ * @package Chelout\RelationshipEvents\Concerns
+ *
+ * @mixin \Chelout\RelationshipEvents\Traits\HasDispatchableEvents
+ */
 trait HasMorphedByManyEvents
 {
     /**

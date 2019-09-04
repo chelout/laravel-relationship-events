@@ -3,8 +3,9 @@
 namespace Chelout\RelationshipEvents\Tests;
 
 use Chelout\RelationshipEvents\RelationshipEventsServiceProvider;
+use Orchestra\Testbench\TestCase as BaseTestCase;
 
-class TestCase extends \Orchestra\Testbench\TestCase
+class TestCase extends BaseTestCase
 {
     /**
      * @param \Illuminate\Foundation\Application $app

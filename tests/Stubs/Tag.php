@@ -4,6 +4,7 @@ namespace Chelout\RelationshipEvents\Tests\Stubs;
 
 use Chelout\RelationshipEvents\Concerns\HasMorphedByManyEvents;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class Tag extends Model
@@ -14,11 +15,12 @@ class Tag extends Model
 
     public static function setupTable()
     {
-        Schema::create('tags', function ($table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });
-        Schema::create('taggables', function ($table) {
+
+        Schema::create('taggables', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('tag_id');
             $table->unsignedInteger('taggable_id');

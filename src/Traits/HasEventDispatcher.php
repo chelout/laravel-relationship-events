@@ -4,6 +4,11 @@ namespace Chelout\RelationshipEvents\Traits;
 
 use Illuminate\Contracts\Events\Dispatcher;
 
+/**
+ * Trait HasEventDispatcher
+ *
+ * @package Chelout\RelationshipEvents\Traits
+ */
 trait HasEventDispatcher
 {
     /**
