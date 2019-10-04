@@ -8,9 +8,7 @@ use Chelout\RelationshipEvents\Traits\HasOneOrManyMethods;
 use Illuminate\Database\Eloquent\Relations\HasMany as HasManyBase;
 
 /**
- * Class HasMany
- *
- * @package Chelout\RelationshipEvents
+ * Class HasMany.
  */
 class HasMany extends HasManyBase implements EventDispatcher
 {

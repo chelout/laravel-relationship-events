@@ -8,9 +8,7 @@ use Chelout\RelationshipEvents\Traits\HasOneOrManyMethods;
 use Illuminate\Database\Eloquent\Relations\MorphOne as MorphOneBase;
 
 /**
- * Class MorphOne
- *
- * @package Chelout\RelationshipEvents
+ * Class MorphOne.
  */
 class MorphOne extends MorphOneBase implements EventDispatcher
 {

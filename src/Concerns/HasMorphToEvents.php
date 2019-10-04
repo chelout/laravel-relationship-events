@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Trait HasMorphToEvents
+ * Trait HasMorphToEvents.
  *
- * @package Chelout\RelationshipEvents\Concerns
  *
  * @mixin \Chelout\RelationshipEvents\Traits\HasDispatchableEvents
  */
@@ -110,10 +109,10 @@ trait HasMorphToEvents
     /**
      * Fire the given event for the model relationship.
      *
-     * @param string $event
-     * @param string $relation
+     * @param string                                         $event
+     * @param string                                         $relation
      * @param \Illuminate\Database\Eloquent\Model|int|string $parent
-     * @param bool   $halt
+     * @param bool                                           $halt
      *
      * @return mixed
      */

@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Trait HasOneOrManyMethods
+ * Trait HasOneOrManyMethods.
  *
- * @package Chelout\RelationshipEvents\Traits
  *
  * @property-read \Illuminate\Database\Eloquent\Model $related
  */
