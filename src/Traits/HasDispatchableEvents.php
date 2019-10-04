@@ -3,9 +3,8 @@
 namespace Chelout\RelationshipEvents\Traits;
 
 /**
- * Trait HasDispatchableEvents
+ * Trait HasDispatchableEvents.
  *
- * @package Chelout\RelationshipEvents\Traits
  *
  * @mixin \Illuminate\Database\Eloquent\Concerns\HasEvents
  */

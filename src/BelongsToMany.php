@@ -7,9 +7,8 @@ use Chelout\RelationshipEvents\Traits\HasEventDispatcher;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany as BelongsToManyBase;
 
 /**
- * Class BelongsToMany
+ * Class BelongsToMany.
  *
- * @package Chelout\RelationshipEvents
  *
  * @property-read \Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents $parent
  */
@@ -25,7 +24,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      * Each existing model is detached, and non existing ones are attached.
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|int|string $ids
-     * @param bool                                                                                                                  $touch
+     * @param bool                                                                                                                   $touch
      *
      * @return array
      */
@@ -44,7 +43,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      * Sync the intermediate tables with a list of IDs or collection of models.
      *
      * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|int|string $ids
-     * @param bool                                                                                                                  $detaching
+     * @param bool                                                                                                                   $detaching
      *
      * @return array
      */

@@ -7,9 +7,8 @@ use Chelout\RelationshipEvents\Traits\HasEventDispatcher;
 use Illuminate\Database\Eloquent\Relations\MorphToMany as MorphToManyBase;
 
 /**
- * Class MorphedByMany
+ * Class MorphedByMany.
  *
- * @package Chelout\RelationshipEvents
  *
  * @property-read \Chelout\RelationshipEvents\Concerns\HasMorphedByManyEvents $parent
  */

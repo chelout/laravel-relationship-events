@@ -5,9 +5,7 @@ namespace Chelout\RelationshipEvents;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class RelationshipEventsServiceProvider
- *
- * @package Chelout\RelationshipEvents
+ * Class RelationshipEventsServiceProvider.
  */
 class RelationshipEventsServiceProvider extends ServiceProvider
 {

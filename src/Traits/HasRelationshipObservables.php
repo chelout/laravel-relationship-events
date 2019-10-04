@@ -2,14 +2,13 @@
 
 namespace Chelout\RelationshipEvents\Traits;
 
+use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
-use Illuminate\Support\Str;
 
 /**
- * Trait HasRelationshipObservables
+ * Trait HasRelationshipObservables.
  *
- * @package Chelout\RelationshipEvents\Traits
  *
  * @mixin \Illuminate\Database\Eloquent\Concerns\HasEvents
  */
@@ -32,7 +31,7 @@ trait HasRelationshipObservables
         )->filter(function ($trait) {
             return Str::startsWith($trait, 'Chelout\RelationshipEvents\Concerns');
         })->flatMap(function ($trait) {
-            $trait   = new ReflectionClass($trait);
+            $trait = new ReflectionClass($trait);
             $methods = $trait->getMethods(ReflectionMethod::IS_PUBLIC);
 
             return collect($methods)->filter(function (ReflectionMethod $method) {
@@ -48,7 +47,7 @@ trait HasRelationshipObservables
     /**
      * Merge relationship observables.
      *
-     * @param  array  $relationshipObservables
+     * @param array $relationshipObservables
      *
      * @return void
      */

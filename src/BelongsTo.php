@@ -7,9 +7,8 @@ use Chelout\RelationshipEvents\Traits\HasEventDispatcher;
 use Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToBase;
 
 /**
- * Class BelongsTo
+ * Class BelongsTo.
  *
- * @package Chelout\RelationshipEvents
  *
  * @property-read \Chelout\RelationshipEvents\Concerns\HasBelongsToEvents $parent
  */
