@@ -4,6 +4,7 @@ namespace Chelout\RelationshipEvents\Traits;
 
 use ReflectionClass;
 use ReflectionMethod;
+use Illuminate\Support\Str;
 
 /**
  * Trait HasRelationshipObservables
