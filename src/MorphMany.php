@@ -9,9 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany as MorphManyBase;
 
 /**
- * Class MorphMany
- *
- * @package Chelout\RelationshipEvents
+ * Class MorphMany.
  */
 class MorphMany extends MorphManyBase implements EventDispatcher
 {

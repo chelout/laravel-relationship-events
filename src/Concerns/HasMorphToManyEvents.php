@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Trait HasMorphToManyEvents
+ * Trait HasMorphToManyEvents.
  *
- * @package Chelout\RelationshipEvents\Concerns
  *
  * @mixin \Chelout\RelationshipEvents\Traits\HasDispatchableEvents
  */

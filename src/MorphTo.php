@@ -7,9 +7,8 @@ use Chelout\RelationshipEvents\Traits\HasEventDispatcher;
 use Illuminate\Database\Eloquent\Relations\MorphTo as MorphToBase;
 
 /**
- * Class MorphTo
+ * Class MorphTo.
  *
- * @package Chelout\RelationshipEvents
  *
  * @property-read \Chelout\RelationshipEvents\Concerns\HasMorphToEvents $parent
  */
