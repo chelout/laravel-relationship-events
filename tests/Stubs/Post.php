@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Schema;
 
 class Post extends Model
 {
-    use HasMorphManyEvents,
-        HasMorphToManyEvents;
+    use HasMorphManyEvents;
+    use HasMorphToManyEvents;
 
     protected $guarded = [];
 

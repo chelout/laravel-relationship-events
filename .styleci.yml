@@ -1,13 +1,2 @@
-enabled:
-  - concat_with_spaces
-  - logical_not_operators_with_successor_space
-disabled:
-  - align_double_arrow
-  - concat_without_spaces
-  - post_increment
-  - new_with_braces
-finder:
-  exclude:
-    - "tests"
-  name:
-    - "*.php"
+php:
+  preset: laravel
