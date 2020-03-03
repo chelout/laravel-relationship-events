@@ -1,47 +1,47 @@
 {
-  "name": "chelout/laravel-relationship-events",
-  "description": "Missing relationship events for Laravel",
-  "homepage": "https://github.com/chelout/laravel-relationship-events",
-  "license": "MIT",
-  "keywords": [
-    "laravel",
-    "relationship",
-    "relations",
-    "events"
-  ],
-  "authors": [
-    {
-      "name": "chelout",
-      "email": "chelout@gmail.com"
+    "name": "chelout/laravel-relationship-events",
+    "description": "Missing relationship events for Laravel",
+    "homepage": "https://github.com/chelout/laravel-relationship-events",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "relationship",
+        "relations",
+        "events"
+    ],
+    "authors": [
+        {
+            "name": "chelout",
+            "email": "chelout@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "illuminate/container": "^6.0|^7.0",
+        "illuminate/database": "^6.0|^7.0",
+        "illuminate/events": "^6.0|^7.0",
+        "illuminate/support": "^6.0|^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.3|^9.0",
+        "orchestra/testbench": "^4.0|^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Chelout\\RelationshipEvents\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Chelout\\RelationshipEvents\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Chelout\\RelationshipEvents\\RelationshipEventsServiceProvider"
+            ]
+        }
     }
-  ],
-  "require": {
-    "php": "^7.2|^7.2.5",
-    "illuminate/container": "^6.0|^7.0",
-    "illuminate/database": "^6.0|^7.0",
-    "illuminate/events": "^6.0|^7.0",
-    "illuminate/support": "^6.0|^7.0"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^8.4|^9.0",
-    "orchestra/testbench": "^4.0|^5.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Chelout\\RelationshipEvents\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Chelout\\RelationshipEvents\\Tests\\": "tests/"
-    }
-  },
-  "minimum-stability": "dev",
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Chelout\\RelationshipEvents\\RelationshipEventsServiceProvider"
-      ]
-    }
-  }
 }
