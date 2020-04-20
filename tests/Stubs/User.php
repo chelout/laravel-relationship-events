@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Schema;
 
 class User extends Model
 {
-    use HasOneEvents,
-        HasManyEvents,
-        HasMorphOneEvents,
-        HasBelongsToManyEvents;
+    use HasOneEvents;
+    use HasManyEvents;
+    use HasMorphOneEvents;
+    use HasBelongsToManyEvents;
 
     public static function setupTable()
     {
