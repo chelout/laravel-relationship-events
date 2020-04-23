@@ -3,7 +3,7 @@
 
 Missing relationship events for Laravel
 
-<<p align="center">
+<p align="center">
  <a href="https://github.com/chelout/laravel-relationship-events/actions"><img src="https://github.com/chelout/laravel-relationship-events/workflows/tests/badge.svg" alt="Build Status"></a>
  <a href="https://packagist.org/packages/chelout/laravel-relationship-events"><img src="https://poser.pugx.org/chelout/laravel-relationship-events/d/total.svg" alt="Total Downloads"></a>
  <a href="https://packagist.org/packages/chelout/laravel-relationship-events"><img src="https://poser.pugx.org/chelout/laravel-relationship-events/v/stable.svg" alt="Latest Stable Version"></a>
