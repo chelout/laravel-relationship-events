@@ -27,7 +27,7 @@ class User extends Model
 }
 ```
 
-Now we can use methods to attach, detach, sync, toggle and update existing pivot:
+Now we can use attach, detach, sync, toggle methods to update existing pivot:
 
 ```php
 // ...
