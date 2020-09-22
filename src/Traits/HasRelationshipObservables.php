@@ -26,7 +26,6 @@ trait HasRelationshipObservables
      */
     public static function bootHasRelationshipObservables()
     {
-        static::$relationshipObservables = [];
         $methods = collect(
             class_uses(static::class)
         )->filter(function ($trait) {
