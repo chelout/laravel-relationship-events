@@ -17,7 +17,7 @@ class HasRelationshipObservablesTraitTest extends TestCase
 	}
 
 	/** @test */
-	public function it_succeeds_first_time()
+	public function it_fails_first_time()
 	{
 		$user = User::create();
 		$role = Role::create(['name' => 'admin']);
@@ -31,7 +31,7 @@ class HasRelationshipObservablesTraitTest extends TestCase
 	}
 
 	/** @test */
-	public function it_fails_second_time()
+	public function it_fails_even_greater_second_time()
 	{
 		$this->withoutJobs();
 		$this->beforeApplicationDestroyed(function () {
@@ -47,23 +47,5 @@ class HasRelationshipObservablesTraitTest extends TestCase
 			collect(User::getRelationshipObservables())->unique()->count()
 		);
 
-	}
-
-	/** @test */
-	public function it_fails_even_greater_third_time()
-	{
-		$this->withoutJobs();
-		$this->beforeApplicationDestroyed(function () {
-			$this->assertCount(1, $this->dispatchedJobs);
-		});
-
-		$user = User::create();
-		$role = Role::create(['name' => 'admin']);
-		$user->roles()->attach($role);
-
-		$this->assertEquals(
-			collect(User::getRelationshipObservables())->count(),
-			collect(User::getRelationshipObservables())->unique()->count()
-		);
 	}
 }
