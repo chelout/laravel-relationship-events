@@ -84,14 +84,20 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      * @param mixed $id
      * @param array $attributes
      * @param bool  $touch
+     *
+     * @return bool
      */
     public function attach($id, array $attributes = [], $touch = true)
     {
-        $this->parent->fireModelBelongsToManyEvent('attaching', $this->getRelationName(), $id, $attributes);
+        if ($this->parent->fireModelBelongsToManyEvent('attaching', $this->getRelationName(), $id, $attributes) === false) {
+            return false;
+        }
 
         parent::attach($id, $attributes, $touch);
 
         $this->parent->fireModelBelongsToManyEvent('attached', $this->getRelationName(), $id, $attributes, false);
+
+        return true;
     }
 
     /**
@@ -107,7 +113,9 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
         // Get detached ids to pass them to event
         $ids = $ids ?? $this->parent->{$this->getRelationName()}->pluck($this->relatedKey);
 
-        $this->parent->fireModelBelongsToManyEvent('detaching', $this->getRelationName(), $ids);
+        if ($this->parent->fireModelBelongsToManyEvent('detaching', $this->getRelationName(), $ids) === false) {
+            return false;
+        }
 
         if ($result = parent::detach($ids, $touch)) {
             // If records are detached fire detached event

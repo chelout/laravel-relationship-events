@@ -21,11 +21,13 @@ class MorphTo extends MorphToBase implements EventDispatcher
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function associate($model)
     {
-        $this->parent->fireModelMorphToEvent('associating', $this->relationName, $model);
+        if ($this->parent->fireModelMorphToEvent('associating', $this->relation, $model) === false) {
+            return;
+        }
 
         $result = parent::associate($model);
 
@@ -37,13 +39,15 @@ class MorphTo extends MorphToBase implements EventDispatcher
     /**
      * Dissociate previously associated model from the given parent.
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function dissociate()
     {
         $parent = $this->getResults();
 
-        $this->parent->fireModelMorphToEvent('dissociating', $this->relationName, $parent);
+        if ($this->parent->fireModelMorphToEvent('dissociating', $this->relation, $parent) === false) {
+            return;
+        }
 
         $result = parent::dissociate();
 
