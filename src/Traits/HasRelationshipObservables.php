@@ -27,7 +27,7 @@ trait HasRelationshipObservables
     public static function bootHasRelationshipObservables()
     {
         $methods = collect(
-            class_uses(static::class)
+            self::class_uses_deep(static::class)
         )->filter(function ($trait) {
             return Str::startsWith($trait, 'Chelout\RelationshipEvents\Concerns');
         })->flatMap(function ($trait) {
@@ -42,6 +42,17 @@ trait HasRelationshipObservables
         })->toArray();
 
         static::mergeRelationshipObservables($methods);
+    }
+
+    private static function class_uses_deep($class, $autoload = true) {
+        $traits = [];
+        do {
+            $traits = array_merge(class_uses($class, $autoload), $traits);
+        } while($class = get_parent_class($class));
+        foreach ($traits as $trait => $same) {
+            $traits = array_merge(class_uses($trait, $autoload), $traits);
+        }
+        return array_unique($traits);
     }
 
     /**
