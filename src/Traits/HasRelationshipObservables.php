@@ -9,7 +9,6 @@ use ReflectionMethod;
 /**
  * Trait HasRelationshipObservables.
  *
- *
  * @mixin \Illuminate\Database\Eloquent\Concerns\HasEvents
  */
 trait HasRelationshipObservables
@@ -27,18 +26,12 @@ trait HasRelationshipObservables
     public static function bootHasRelationshipObservables()
     {
         $methods = collect(
-            class_uses(static::class)
-        )->filter(function ($trait) {
-            return Str::startsWith($trait, 'Chelout\RelationshipEvents\Concerns');
-        })->flatMap(function ($trait) {
+            class_uses(static::class),
+        )->filter(fn ($trait) => Str::startsWith($trait, 'Chelout\RelationshipEvents\Concerns'))->flatMap(function ($trait) {
             $trait = new ReflectionClass($trait);
             $methods = $trait->getMethods(ReflectionMethod::IS_PUBLIC);
 
-            return collect($methods)->filter(function (ReflectionMethod $method) {
-                return $method->isStatic();
-            })->map(function ($method) {
-                return $method->name;
-            });
+            return collect($methods)->filter(fn (ReflectionMethod $method) => $method->isStatic())->map(fn ($method) => $method->name);
         })->toArray();
 
         static::mergeRelationshipObservables($methods);
@@ -46,8 +39,6 @@ trait HasRelationshipObservables
 
     /**
      * Merge relationship observables.
-     *
-     * @param array $relationshipObservables
      *
      * @return void
      */
@@ -70,14 +61,12 @@ trait HasRelationshipObservables
                 'deleting', 'deleted', 'forceDeleted',
             ],
             static::getRelationshipObservables(),
-            $this->observables
+            $this->observables,
         );
     }
 
     /**
      * Get relationship observables.
-     *
-     * @return array
      */
     public static function getRelationshipObservables(): array
     {

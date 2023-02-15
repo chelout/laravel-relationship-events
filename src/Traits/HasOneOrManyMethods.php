@@ -8,15 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Trait HasOneOrManyMethods.
  *
- *
  * @property-read \Illuminate\Database\Eloquent\Model $related
  */
 trait HasOneOrManyMethods
 {
     /**
      * Create a new instance of the related model.
-     *
-     * @param array $attributes
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -27,7 +24,7 @@ trait HasOneOrManyMethods
 
             $this->setForeignAttributesForCreate($instance);
 
-            if (false !== $instance->save()) {
+            if ($instance->save() !== false) {
                 $this->fireModelRelationshipEvent('created', $instance, false);
             }
         });
@@ -36,9 +33,7 @@ trait HasOneOrManyMethods
     /**
      * Attach a model instance to the parent model.
      *
-     * @param \Illuminate\Database\Eloquent\Model $model
-     *
-     * @return \Illuminate\Database\Eloquent\Model|false
+     * @return false|\Illuminate\Database\Eloquent\Model
      */
     public function save(Model $model)
     {
@@ -46,7 +41,7 @@ trait HasOneOrManyMethods
 
         $result = parent::save($model);
 
-        if (false !== $result) {
+        if ($result !== false) {
             $this->fireModelRelationshipEvent('saved', $result, false);
         }
 
@@ -55,8 +50,6 @@ trait HasOneOrManyMethods
 
     /**
      * Perform an update on all the related models.
-     *
-     * @param array $attributes
      *
      * @return int
      */
@@ -86,8 +79,8 @@ trait HasOneOrManyMethods
      * Fire the given event for the model relationship.
      *
      * @param string $event
-     * @param mixed  $related
-     * @param bool   $halt
+     * @param mixed $related
+     * @param bool $halt
      *
      * @return mixed
      */
@@ -98,11 +91,6 @@ trait HasOneOrManyMethods
 
     /**
      * Updated related model's attributes.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $related
-     * @param array                               $attributes
-     *
-     * @return \Illuminate\Database\Eloquent\Model
      */
     protected function updateRelated(Model $related, array $attributes): Model
     {

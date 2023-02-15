@@ -3,12 +3,12 @@
 namespace Chelout\RelationshipEvents\Concerns;
 
 use Chelout\RelationshipEvents\HasMany;
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Trait HasManyEvents.
- *
  *
  * @mixin \Chelout\RelationshipEvents\Traits\HasDispatchableEvents
  */
@@ -17,10 +17,8 @@ trait HasManyEvents
     /**
      * Instantiate a new HasMany relationship.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \Illuminate\Database\Eloquent\Model   $parent
-     * @param string                                $foreignKey
-     * @param string                                $localKey
+     * @param string $foreignKey
+     * @param string $localKey
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -32,8 +30,8 @@ trait HasManyEvents
     /**
      * Register a model event with the dispatcher.
      *
-     * @param string          $event
-     * @param \Closure|string $callback
+     * @param string $event
+     * @param Closure|string $callback
      */
     protected static function registerModelHasManyEvent($event, $callback)
     {
@@ -47,7 +45,7 @@ trait HasManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function hasManyCreating($callback)
     {
@@ -57,7 +55,7 @@ trait HasManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function hasManyCreated($callback)
     {
@@ -67,7 +65,7 @@ trait HasManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function hasManySaving($callback)
     {
@@ -77,7 +75,7 @@ trait HasManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function hasManySaved($callback)
     {
@@ -87,7 +85,7 @@ trait HasManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function hasManyUpdating($callback)
     {
@@ -97,7 +95,7 @@ trait HasManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function hasManyUpdated($callback)
     {
@@ -108,14 +106,14 @@ trait HasManyEvents
      * Fire the given event for the model relationship.
      *
      * @param string $event
-     * @param mixed  $related
-     * @param bool   $halt
+     * @param mixed $related
+     * @param bool $halt
      *
      * @return mixed
      */
     public function fireModelHasManyEvent($event, $related = null, $halt = true)
     {
-        if (! isset(static::$dispatcher)) {
+        if (!isset(static::$dispatcher)) {
             return true;
         }
 
@@ -127,15 +125,16 @@ trait HasManyEvents
         $method = $halt ? 'until' : 'dispatch';
 
         $result = $this->filterModelEventResults(
-            $this->fireCustomModelEvent($event, $method, $related)
+            $this->fireCustomModelEvent($event, $method, $related),
         );
 
-        if (false === $result) {
+        if ($result === false) {
             return false;
         }
 
-        return ! empty($result) ? $result : static::$dispatcher->{$method}(
-            "eloquent.{$event}: " . static::class, [
+        return !empty($result) ? $result : static::$dispatcher->{$method}(
+            "eloquent.{$event}: " . static::class,
+            [
                 $this,
                 $related,
             ]

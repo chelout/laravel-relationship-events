@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany as MorphToManyBase;
 /**
  * Class MorphToMany.
  *
- *
  * @property-read \Chelout\RelationshipEvents\Concerns\HasMorphToManyEvents $parent
  */
 class MorphToMany extends MorphToManyBase implements EventDispatcher
@@ -22,7 +21,7 @@ class MorphToMany extends MorphToManyBase implements EventDispatcher
      * Each existing model is detached, and non existing ones are attached.
      *
      * @param mixed $ids
-     * @param bool  $touch
+     * @param bool $touch
      *
      * @return array
      */
@@ -40,8 +39,8 @@ class MorphToMany extends MorphToManyBase implements EventDispatcher
     /**
      * Sync the intermediate tables with a list of IDs or collection of models.
      *
-     * @param \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|array $ids
-     * @param bool                                                                          $detaching
+     * @param array|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection $ids
+     * @param bool $detaching
      *
      * @return array
      */
@@ -60,8 +59,7 @@ class MorphToMany extends MorphToManyBase implements EventDispatcher
      * Update an existing pivot record on the table.
      *
      * @param mixed $id
-     * @param array $attributes
-     * @param bool  $touch
+     * @param bool $touch
      *
      * @return int
      */
@@ -80,8 +78,7 @@ class MorphToMany extends MorphToManyBase implements EventDispatcher
      * Attach a model to the parent.
      *
      * @param mixed $id
-     * @param array $attributes
-     * @param bool  $touch
+     * @param bool $touch
      */
     public function attach($id, array $attributes = [], $touch = true)
     {
@@ -96,14 +93,14 @@ class MorphToMany extends MorphToManyBase implements EventDispatcher
      * Detach models from the relationship.
      *
      * @param mixed $ids
-     * @param bool  $touch
+     * @param bool $touch
      *
      * @return int
      */
     public function detach($ids = null, $touch = true)
     {
         // Get detached ids to pass them to event
-        $ids = $ids ?? $this->parent->{$this->getRelationName()}->pluck($this->relatedKey);
+        $ids ??= $this->parent->{$this->getRelationName()}->pluck($this->relatedKey);
 
         $this->parent->fireModelMorphToManyEvent('detaching', $this->getRelationName(), $ids);
 

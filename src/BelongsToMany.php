@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany as BelongsToManyBase;
 /**
  * Class BelongsToMany.
  *
- *
  * @property-read \Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents $parent
  */
 class BelongsToMany extends BelongsToManyBase implements EventDispatcher
@@ -23,8 +22,8 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      *
      * Each existing model is detached, and non existing ones are attached.
      *
-     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|int|string $ids
-     * @param bool                                                                                                                   $touch
+     * @param \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|\Illuminate\Support\Collection|int|string $ids
+     * @param bool $touch
      *
      * @return array
      */
@@ -42,8 +41,8 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
     /**
      * Sync the intermediate tables with a list of IDs or collection of models.
      *
-     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|int|string $ids
-     * @param bool                                                                                                                   $detaching
+     * @param \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|\Illuminate\Support\Collection|int|string $ids
+     * @param bool $detaching
      *
      * @return array
      */
@@ -62,8 +61,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      * Update an existing pivot record on the table.
      *
      * @param mixed $id
-     * @param array $attributes
-     * @param bool  $touch
+     * @param bool $touch
      *
      * @return int
      */
@@ -82,8 +80,7 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      * Attach a model to the parent.
      *
      * @param mixed $id
-     * @param array $attributes
-     * @param bool  $touch
+     * @param bool $touch
      */
     public function attach($id, array $attributes = [], $touch = true)
     {
@@ -98,14 +95,14 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      * Detach models from the relationship.
      *
      * @param mixed $ids
-     * @param bool  $touch
+     * @param bool $touch
      *
      * @return int
      */
     public function detach($ids = null, $touch = true)
     {
         // Get detached ids to pass them to event
-        $ids = $ids ?? $this->parent->{$this->getRelationName()}->pluck($this->relatedKey);
+        $ids ??= $this->parent->{$this->getRelationName()}->pluck($this->relatedKey);
 
         $this->parent->fireModelBelongsToManyEvent('detaching', $this->getRelationName(), $ids);
 

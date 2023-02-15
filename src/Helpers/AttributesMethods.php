@@ -34,31 +34,19 @@ class AttributesMethods
 
     /**
      * Parse ids for event.
-     *
-     * @param array $ids
-     *
-     * @return array
      */
     public static function parseIdsForEvent(array $ids): array
     {
-        return array_map(function ($key, $id) {
-            return is_array($id) ? $key : $id;
-        }, array_keys($ids), $ids);
+        return array_map(fn ($key, $id) => is_array($id) ? $key : $id, array_keys($ids), $ids);
     }
 
     /**
      * Parse attributes for event.
      *
      * @param mixed $rawIds
-     * @param array $parsedIds
-     * @param array $attributes
-     *
-     * @return array
      */
     public static function parseAttributesForEvent($rawIds, array $parsedIds, array $attributes = []): array
     {
-        return is_array($rawIds) ? array_filter($parsedIds, function ($id) {
-            return is_array($id) && ! empty($id);
-        }) : $attributes;
+        return is_array($rawIds) ? array_filter($parsedIds, fn ($id) => is_array($id) && !empty($id)) : $attributes;
     }
 }

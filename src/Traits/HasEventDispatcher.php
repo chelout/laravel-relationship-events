@@ -28,8 +28,6 @@ trait HasEventDispatcher
 
     /**
      * Set the event dispatcher instance.
-     *
-     * @param \Illuminate\Contracts\Events\Dispatcher $dispatcher
      */
     public static function setEventDispatcher(Dispatcher $dispatcher)
     {

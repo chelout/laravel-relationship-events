@@ -3,12 +3,12 @@
 namespace Chelout\RelationshipEvents\Concerns;
 
 use Chelout\RelationshipEvents\MorphTo;
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Trait HasMorphToEvents.
- *
  *
  * @mixin \Chelout\RelationshipEvents\Traits\HasDispatchableEvents
  */
@@ -17,12 +17,10 @@ trait HasMorphToEvents
     /**
      * Instantiate a new MorphTo relationship.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \Illuminate\Database\Eloquent\Model   $parent
-     * @param string                                $foreignKey
-     * @param string                                $ownerKey
-     * @param string                                $type
-     * @param string                                $relation
+     * @param string $foreignKey
+     * @param string $ownerKey
+     * @param string $type
+     * @param string $relation
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
@@ -34,8 +32,8 @@ trait HasMorphToEvents
     /**
      * Register a model event with the dispatcher.
      *
-     * @param string          $event
-     * @param \Closure|string $callback
+     * @param string $event
+     * @param Closure|string $callback
      */
     protected static function registerModelMorphToEvent($event, $callback)
     {
@@ -49,7 +47,7 @@ trait HasMorphToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToAssociating($callback)
     {
@@ -59,7 +57,7 @@ trait HasMorphToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToAssociated($callback)
     {
@@ -69,7 +67,7 @@ trait HasMorphToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToDissociating($callback)
     {
@@ -79,7 +77,7 @@ trait HasMorphToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToDissociated($callback)
     {
@@ -89,7 +87,7 @@ trait HasMorphToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToUpdating($callback)
     {
@@ -99,7 +97,7 @@ trait HasMorphToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToUpdated($callback)
     {
@@ -109,16 +107,16 @@ trait HasMorphToEvents
     /**
      * Fire the given event for the model relationship.
      *
-     * @param string                                         $event
-     * @param string                                         $relation
+     * @param string $event
+     * @param string $relation
      * @param \Illuminate\Database\Eloquent\Model|int|string $parent
-     * @param bool                                           $halt
+     * @param bool $halt
      *
      * @return mixed
      */
     public function fireModelMorphToEvent($event, $relation, $parent, $halt = true)
     {
-        if (! isset(static::$dispatcher)) {
+        if (!isset(static::$dispatcher)) {
             return true;
         }
 
@@ -130,15 +128,16 @@ trait HasMorphToEvents
         $method = $halt ? 'until' : 'dispatch';
 
         $result = $this->filterModelEventResults(
-            $this->fireCustomModelEvent($event, $method, $relation, $parent)
+            $this->fireCustomModelEvent($event, $method, $relation, $parent),
         );
 
-        if (false === $result) {
+        if ($result === false) {
             return false;
         }
 
-        return ! empty($result) ? $result : static::$dispatcher->{$method}(
-            "eloquent.{$event}: " . static::class, [
+        return !empty($result) ? $result : static::$dispatcher->{$method}(
+            "eloquent.{$event}: " . static::class,
+            [
                 $relation,
                 $this,
                 $parent,

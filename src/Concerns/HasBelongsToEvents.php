@@ -3,12 +3,12 @@
 namespace Chelout\RelationshipEvents\Concerns;
 
 use Chelout\RelationshipEvents\BelongsTo;
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Trait HasBelongsToEvents.
- *
  *
  * @mixin \Chelout\RelationshipEvents\Traits\HasDispatchableEvents
  */
@@ -17,11 +17,9 @@ trait HasBelongsToEvents
     /**
      * Instantiate a new BelongsTo relationship.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \Illuminate\Database\Eloquent\Model   $child
-     * @param string                                $foreignKey
-     * @param string                                $ownerKey
-     * @param string                                $relation
+     * @param string $foreignKey
+     * @param string $ownerKey
+     * @param string $relation
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -33,8 +31,8 @@ trait HasBelongsToEvents
     /**
      * Register a model event with the dispatcher.
      *
-     * @param string          $event
-     * @param \Closure|string $callback
+     * @param string $event
+     * @param Closure|string $callback
      */
     protected static function registerModelBelongsToEvent($event, $callback)
     {
@@ -48,7 +46,7 @@ trait HasBelongsToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToAssociating($callback)
     {
@@ -58,7 +56,7 @@ trait HasBelongsToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToAssociated($callback)
     {
@@ -68,7 +66,7 @@ trait HasBelongsToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToDissociating($callback)
     {
@@ -78,7 +76,7 @@ trait HasBelongsToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToDissociated($callback)
     {
@@ -88,7 +86,7 @@ trait HasBelongsToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToUpdating($callback)
     {
@@ -98,7 +96,7 @@ trait HasBelongsToEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToUpdated($callback)
     {
@@ -108,16 +106,16 @@ trait HasBelongsToEvents
     /**
      * Fire the given event for the model relationship.
      *
-     * @param string                                         $event
-     * @param string                                         $relation
+     * @param string $event
+     * @param string $relation
      * @param \Illuminate\Database\Eloquent\Model|int|string $parent
-     * @param bool                                           $halt
+     * @param bool $halt
      *
      * @return bool
      */
     public function fireModelBelongsToEvent($event, $relation, $parent, $halt = true)
     {
-        if (! isset(static::$dispatcher)) {
+        if (!isset(static::$dispatcher)) {
             return true;
         }
 
@@ -129,15 +127,16 @@ trait HasBelongsToEvents
         $method = $halt ? 'until' : 'dispatch';
 
         $result = $this->filterModelEventResults(
-            $this->fireCustomModelEvent($event, $method, $relation, $parent)
+            $this->fireCustomModelEvent($event, $method, $relation, $parent),
         );
 
-        if (false === $result) {
+        if ($result === false) {
             return false;
         }
 
-        return ! empty($result) ? $result : static::$dispatcher->{$method}(
-            "eloquent.{$event}: " . static::class, [
+        return !empty($result) ? $result : static::$dispatcher->{$method}(
+            "eloquent.{$event}: " . static::class,
+            [
                 $relation,
                 $this,
                 $parent,
