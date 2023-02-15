@@ -27,6 +27,10 @@
         "orchestra/testbench": "^8.0",
         "friendsofphp/php-cs-fixer": "^3.14"
     },
+    "scripts": {
+        "fix": "php-cs-fixer --config=.php-cs-fixer.php --dry-run --allow-risky=yes --verbose fix",
+        "test": "phpunit tests"
+    },
     "autoload": {
         "psr-4": {
             "Chelout\\RelationshipEvents\\": "src/"
