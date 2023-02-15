@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToBase;
 /**
  * Class BelongsTo.
  *
- *
  * @property-read \Chelout\RelationshipEvents\Concerns\HasBelongsToEvents $parent
  */
 class BelongsTo extends BelongsToBase implements EventDispatcher
@@ -49,7 +48,7 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
 
         $result = parent::dissociate();
 
-        if (! is_null($parent)) {
+        if ($parent !== null) {
             $this->parent->fireModelBelongsToEvent('dissociated', $this->relationName, $parent);
         }
 
@@ -58,8 +57,6 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
 
     /**
      * Update the parent model on the relationship.
-     *
-     * @param array $attributes
      *
      * @return mixed
      */

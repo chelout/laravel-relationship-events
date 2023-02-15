@@ -4,12 +4,12 @@ namespace Chelout\RelationshipEvents\Concerns;
 
 use Chelout\RelationshipEvents\Helpers\AttributesMethods;
 use Chelout\RelationshipEvents\MorphToMany;
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Trait HasMorphToManyEvents.
- *
  *
  * @mixin \Chelout\RelationshipEvents\Traits\HasDispatchableEvents
  */
@@ -18,32 +18,48 @@ trait HasMorphToManyEvents
     /**
      * Instantiate a new HasManyThrough relationship.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \Illuminate\Database\Eloquent\Model   $parent
-     * @param string                                $name
-     * @param string                                $table
-     * @param string                                $foreignPivotKey
-     * @param string                                $relatedPivotKey
-     * @param string                                $parentKey
-     * @param string                                $relatedKey
-     * @param string                                $relationName
-     * @param bool                                  $inverse
+     * @param string $name
+     * @param string $table
+     * @param string $foreignPivotKey
+     * @param string $relatedPivotKey
+     * @param string $parentKey
+     * @param string $relatedKey
+     * @param string $relationName
+     * @param bool $inverse
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
-    protected function newMorphToMany(Builder $query, Model $parent, $name, $table, $foreignPivotKey,
-                                      $relatedPivotKey, $parentKey, $relatedKey,
-                                      $relationName = null, $inverse = false)
-    {
-        return new MorphToMany($query, $parent, $name, $table, $foreignPivotKey, $relatedPivotKey, $parentKey, $relatedKey,
-            $relationName, $inverse);
+    protected function newMorphToMany(
+        Builder $query,
+        Model $parent,
+        $name,
+        $table,
+        $foreignPivotKey,
+        $relatedPivotKey,
+        $parentKey,
+        $relatedKey,
+        $relationName = null,
+        $inverse = false,
+    ) {
+        return new MorphToMany(
+            $query,
+            $parent,
+            $name,
+            $table,
+            $foreignPivotKey,
+            $relatedPivotKey,
+            $parentKey,
+            $relatedKey,
+            $relationName,
+            $inverse,
+        );
     }
 
     /**
      * Register a model event with the dispatcher.
      *
-     * @param string          $event
-     * @param \Closure|string $callback
+     * @param string $event
+     * @param Closure|string $callback
      */
     protected static function registerModelMorphToManyEvent($event, $callback)
     {
@@ -57,7 +73,7 @@ trait HasMorphToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToManyCreating($callback)
     {
@@ -67,7 +83,7 @@ trait HasMorphToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToManyCreated($callback)
     {
@@ -77,7 +93,7 @@ trait HasMorphToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToManySaving($callback)
     {
@@ -87,7 +103,7 @@ trait HasMorphToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToManySaved($callback)
     {
@@ -97,7 +113,7 @@ trait HasMorphToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToManyAttaching($callback)
     {
@@ -107,7 +123,7 @@ trait HasMorphToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToManyAttached($callback)
     {
@@ -117,7 +133,7 @@ trait HasMorphToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToManyDetaching($callback)
     {
@@ -127,7 +143,7 @@ trait HasMorphToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToManyDetached($callback)
     {
@@ -137,7 +153,7 @@ trait HasMorphToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToManySyncing($callback)
     {
@@ -147,7 +163,7 @@ trait HasMorphToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToManySynced($callback)
     {
@@ -157,7 +173,7 @@ trait HasMorphToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToManyToggling($callback)
     {
@@ -167,7 +183,7 @@ trait HasMorphToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToManyToggled($callback)
     {
@@ -177,7 +193,7 @@ trait HasMorphToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToManyUpdatingExistingPivot($callback)
     {
@@ -187,7 +203,7 @@ trait HasMorphToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphToManyUpdatedExistingPivot($callback)
     {
@@ -199,15 +215,15 @@ trait HasMorphToManyEvents
      *
      * @param string $event
      * @param string $relation
-     * @param mixed  $ids
-     * @param array  $attributes
-     * @param bool   $halt
+     * @param mixed $ids
+     * @param array $attributes
+     * @param bool $halt
      *
      * @return mixed
      */
     public function fireModelMorphToManyEvent($event, $relation, $ids, $attributes = [], $halt = true)
     {
-        if (! isset(static::$dispatcher)) {
+        if (!isset(static::$dispatcher)) {
             return true;
         }
 
@@ -223,15 +239,16 @@ trait HasMorphToManyEvents
         $method = $halt ? 'until' : 'dispatch';
 
         $result = $this->filterModelEventResults(
-            $this->fireCustomModelEvent($event, $method, $relation, $parsedIdsForEvent, $parseAttributesForEvent)
+            $this->fireCustomModelEvent($event, $method, $relation, $parsedIdsForEvent, $parseAttributesForEvent),
         );
 
-        if (false === $result) {
+        if ($result === false) {
             return false;
         }
 
-        return ! empty($result) ? $result : static::$dispatcher->{$method}(
-            "eloquent.{$event}: " . static::class, [
+        return !empty($result) ? $result : static::$dispatcher->{$method}(
+            "eloquent.{$event}: " . static::class,
+            [
                 $relation,
                 $this,
                 $parsedIdsForEvent,

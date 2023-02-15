@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo as MorphToBase;
 /**
  * Class MorphTo.
  *
- *
  * @property-read \Chelout\RelationshipEvents\Concerns\HasMorphToEvents $parent
  */
 class MorphTo extends MorphToBase implements EventDispatcher
@@ -47,7 +46,7 @@ class MorphTo extends MorphToBase implements EventDispatcher
 
         $result = parent::dissociate();
 
-        if (! is_null($parent)) {
+        if ($parent !== null) {
             $this->parent->fireModelMorphToEvent('dissociated', $this->relationName, $parent);
         }
 
@@ -56,8 +55,6 @@ class MorphTo extends MorphToBase implements EventDispatcher
 
     /**
      * Update the parent model on the relationship.
-     *
-     * @param array $attributes
      *
      * @return mixed
      */

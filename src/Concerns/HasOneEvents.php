@@ -3,12 +3,12 @@
 namespace Chelout\RelationshipEvents\Concerns;
 
 use Chelout\RelationshipEvents\HasOne;
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Trait HasOneEvents.
- *
  *
  * @mixin \Chelout\RelationshipEvents\Traits\HasDispatchableEvents
  */
@@ -17,10 +17,8 @@ trait HasOneEvents
     /**
      * Instantiate a new HasOne relationship.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \Illuminate\Database\Eloquent\Model   $parent
-     * @param string                                $foreignKey
-     * @param string                                $localKey
+     * @param string $foreignKey
+     * @param string $localKey
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -32,8 +30,8 @@ trait HasOneEvents
     /**
      * Register a model has one event with the dispatcher.
      *
-     * @param string          $event
-     * @param \Closure|string $callback
+     * @param string $event
+     * @param Closure|string $callback
      */
     protected static function registerModelHasOneEvent($event, $callback)
     {
@@ -47,7 +45,7 @@ trait HasOneEvents
     /**
      * Register a creating model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function hasOneCreating($callback)
     {
@@ -57,7 +55,7 @@ trait HasOneEvents
     /**
      * Register a created model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function hasOneCreated($callback)
     {
@@ -67,7 +65,7 @@ trait HasOneEvents
     /**
      * Register a saving model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function hasOneSaving($callback)
     {
@@ -77,7 +75,7 @@ trait HasOneEvents
     /**
      * Register a saved model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function hasOneSaved($callback)
     {
@@ -87,7 +85,7 @@ trait HasOneEvents
     /**
      * Register a updating model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function hasOneUpdating($callback)
     {
@@ -97,7 +95,7 @@ trait HasOneEvents
     /**
      * Register a updated model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function hasOneUpdated($callback)
     {
@@ -108,14 +106,14 @@ trait HasOneEvents
      * Fire the given event for the model relationship.
      *
      * @param string $event
-     * @param mixed  $related
-     * @param bool   $halt
+     * @param mixed $related
+     * @param bool $halt
      *
      * @return mixed
      */
     public function fireModelHasOneEvent($event, $related = null, $halt = true)
     {
-        if (! isset(static::$dispatcher)) {
+        if (!isset(static::$dispatcher)) {
             return true;
         }
 
@@ -127,15 +125,16 @@ trait HasOneEvents
         $method = $halt ? 'until' : 'dispatch';
 
         $result = $this->filterModelEventResults(
-            $this->fireCustomModelEvent($event, $method, $related)
+            $this->fireCustomModelEvent($event, $method, $related),
         );
 
-        if (false === $result) {
+        if ($result === false) {
             return false;
         }
 
-        return ! empty($result) ? $result : static::$dispatcher->{$method}(
-            "eloquent.{$event}: " . static::class, [
+        return !empty($result) ? $result : static::$dispatcher->{$method}(
+            "eloquent.{$event}: " . static::class,
+            [
                 $this,
                 $related,
             ]

@@ -4,12 +4,12 @@ namespace Chelout\RelationshipEvents\Concerns;
 
 use Chelout\RelationshipEvents\BelongsToMany;
 use Chelout\RelationshipEvents\Helpers\AttributesMethods;
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Trait HasBelongsToManyEvents.
- *
  *
  * @mixin \Chelout\RelationshipEvents\Traits\HasDispatchableEvents
  */
@@ -18,28 +18,33 @@ trait HasBelongsToManyEvents
     /**
      * Instantiate a new BelongsToMany relationship.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \Illuminate\Database\Eloquent\Model   $parent
-     * @param string                                $table
-     * @param string                                $foreignPivotKey
-     * @param string                                $relatedPivotKey
-     * @param string                                $parentKey
-     * @param string                                $relatedKey
-     * @param string                                $relationName
+     * @param string $table
+     * @param string $foreignPivotKey
+     * @param string $relatedPivotKey
+     * @param string $parentKey
+     * @param string $relatedKey
+     * @param string $relationName
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    protected function newBelongsToMany(Builder $query, Model $parent, $table, $foreignPivotKey, $relatedPivotKey,
-                                        $parentKey, $relatedKey, $relationName = null)
-    {
+    protected function newBelongsToMany(
+        Builder $query,
+        Model $parent,
+        $table,
+        $foreignPivotKey,
+        $relatedPivotKey,
+        $parentKey,
+        $relatedKey,
+        $relationName = null,
+    ) {
         return new BelongsToMany($query, $parent, $table, $foreignPivotKey, $relatedPivotKey, $parentKey, $relatedKey, $relationName);
     }
 
     /**
      * Register a model event with the dispatcher.
      *
-     * @param string          $event
-     * @param \Closure|string $callback
+     * @param string $event
+     * @param Closure|string $callback
      */
     protected static function registerModelBelongsToManyEvent($event, $callback)
     {
@@ -53,7 +58,7 @@ trait HasBelongsToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToManyAttaching($callback)
     {
@@ -63,7 +68,7 @@ trait HasBelongsToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToManyAttached($callback)
     {
@@ -73,7 +78,7 @@ trait HasBelongsToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToManyDetaching($callback)
     {
@@ -83,7 +88,7 @@ trait HasBelongsToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToManyDetached($callback)
     {
@@ -93,7 +98,7 @@ trait HasBelongsToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToManySyncing($callback)
     {
@@ -103,7 +108,7 @@ trait HasBelongsToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToManySynced($callback)
     {
@@ -113,7 +118,7 @@ trait HasBelongsToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToManyToggling($callback)
     {
@@ -123,7 +128,7 @@ trait HasBelongsToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToManyToggled($callback)
     {
@@ -133,7 +138,7 @@ trait HasBelongsToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToManyUpdatingExistingPivot($callback)
     {
@@ -143,7 +148,7 @@ trait HasBelongsToManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function belongsToManyUpdatedExistingPivot($callback)
     {
@@ -155,15 +160,15 @@ trait HasBelongsToManyEvents
      *
      * @param string $event
      * @param string $relation
-     * @param mixed  $ids
-     * @param array  $attributes
-     * @param bool   $halt
+     * @param mixed $ids
+     * @param array $attributes
+     * @param bool $halt
      *
      * @return mixed
      */
     public function fireModelBelongsToManyEvent($event, $relation, $ids, $attributes = [], $halt = true)
     {
-        if (! isset(static::$dispatcher)) {
+        if (!isset(static::$dispatcher)) {
             return true;
         }
 
@@ -179,15 +184,16 @@ trait HasBelongsToManyEvents
         $method = $halt ? 'until' : 'dispatch';
 
         $result = $this->filterModelEventResults(
-            $this->fireCustomModelEvent($event, $method, $relation, $parsedIdsForEvent, $parseAttributesForEvent)
+            $this->fireCustomModelEvent($event, $method, $relation, $parsedIdsForEvent, $parseAttributesForEvent),
         );
 
-        if (false === $result) {
+        if ($result === false) {
             return false;
         }
 
-        return ! empty($result) ? $result : static::$dispatcher->{$method}(
-            "eloquent.{$event}: " . static::class, [
+        return !empty($result) ? $result : static::$dispatcher->{$method}(
+            "eloquent.{$event}: " . static::class,
+            [
                 $relation,
                 $this,
                 $parsedIdsForEvent,

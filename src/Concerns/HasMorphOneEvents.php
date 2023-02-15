@@ -3,12 +3,12 @@
 namespace Chelout\RelationshipEvents\Concerns;
 
 use Chelout\RelationshipEvents\MorphOne;
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Trait HasMorphOneEvents.
- *
  *
  * @mixin \Chelout\RelationshipEvents\Traits\HasDispatchableEvents
  */
@@ -17,11 +17,9 @@ trait HasMorphOneEvents
     /**
      * Instantiate a new MorphOne relationship.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \Illuminate\Database\Eloquent\Model   $parent
-     * @param string                                $type
-     * @param string                                $id
-     * @param string                                $localKey
+     * @param string $type
+     * @param string $id
+     * @param string $localKey
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphOne
      */
@@ -33,8 +31,8 @@ trait HasMorphOneEvents
     /**
      * Register a model event with the dispatcher.
      *
-     * @param string          $event
-     * @param \Closure|string $callback
+     * @param string $event
+     * @param Closure|string $callback
      */
     protected static function registerModelMorphOneEvent($event, $callback)
     {
@@ -48,7 +46,7 @@ trait HasMorphOneEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphOneCreating($callback)
     {
@@ -58,7 +56,7 @@ trait HasMorphOneEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphOneCreated($callback)
     {
@@ -68,7 +66,7 @@ trait HasMorphOneEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphOneSaving($callback)
     {
@@ -78,7 +76,7 @@ trait HasMorphOneEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphOneSaved($callback)
     {
@@ -88,7 +86,7 @@ trait HasMorphOneEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphOneUpdating($callback)
     {
@@ -98,7 +96,7 @@ trait HasMorphOneEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphOneUpdated($callback)
     {
@@ -109,14 +107,14 @@ trait HasMorphOneEvents
      * Fire the given event for the model relationship.
      *
      * @param string $event
-     * @param mixed  $related
-     * @param bool   $halt
+     * @param mixed $related
+     * @param bool $halt
      *
      * @return mixed
      */
     public function fireModelMorphOneEvent($event, $related = null, $halt = true)
     {
-        if (! isset(static::$dispatcher)) {
+        if (!isset(static::$dispatcher)) {
             return true;
         }
 
@@ -128,15 +126,16 @@ trait HasMorphOneEvents
         $method = $halt ? 'until' : 'dispatch';
 
         $result = $this->filterModelEventResults(
-            $this->fireCustomModelEvent($event, $method, $related)
+            $this->fireCustomModelEvent($event, $method, $related),
         );
 
-        if (false === $result) {
+        if ($result === false) {
             return false;
         }
 
-        return ! empty($result) ? $result : static::$dispatcher->{$method}(
-            "eloquent.{$event}: " . static::class, [
+        return !empty($result) ? $result : static::$dispatcher->{$method}(
+            "eloquent.{$event}: " . static::class,
+            [
                 $this,
                 $related,
             ]

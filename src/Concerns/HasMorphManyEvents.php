@@ -3,12 +3,12 @@
 namespace Chelout\RelationshipEvents\Concerns;
 
 use Chelout\RelationshipEvents\MorphMany;
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Trait HasMorphManyEvents.
- *
  *
  * @mixin \Chelout\RelationshipEvents\Traits\HasDispatchableEvents
  */
@@ -17,11 +17,9 @@ trait HasMorphManyEvents
     /**
      * Instantiate a new MorphMany relationship.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \Illuminate\Database\Eloquent\Model   $parent
-     * @param string                                $type
-     * @param string                                $id
-     * @param string                                $localKey
+     * @param string $type
+     * @param string $id
+     * @param string $localKey
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
@@ -33,8 +31,8 @@ trait HasMorphManyEvents
     /**
      * Register a model event with the dispatcher.
      *
-     * @param string          $event
-     * @param \Closure|string $callback
+     * @param string $event
+     * @param Closure|string $callback
      */
     protected static function registerModelMorphManyEvent($event, $callback)
     {
@@ -48,7 +46,7 @@ trait HasMorphManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphManyCreating($callback)
     {
@@ -58,7 +56,7 @@ trait HasMorphManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphManyCreated($callback)
     {
@@ -68,7 +66,7 @@ trait HasMorphManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphManySaving($callback)
     {
@@ -78,7 +76,7 @@ trait HasMorphManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphManySaved($callback)
     {
@@ -88,7 +86,7 @@ trait HasMorphManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphManyUpdating($callback)
     {
@@ -98,7 +96,7 @@ trait HasMorphManyEvents
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
+     * @param Closure|string $callback
      */
     public static function morphManyUpdated($callback)
     {
@@ -109,14 +107,14 @@ trait HasMorphManyEvents
      * Fire the given event for the model relationship.
      *
      * @param string $event
-     * @param mixed  $related
-     * @param bool   $halt
+     * @param mixed $related
+     * @param bool $halt
      *
      * @return mixed
      */
     public function fireModelMorphManyEvent($event, $related = null, $halt = true)
     {
-        if (! isset(static::$dispatcher)) {
+        if (!isset(static::$dispatcher)) {
             return true;
         }
 
@@ -128,15 +126,16 @@ trait HasMorphManyEvents
         $method = $halt ? 'until' : 'dispatch';
 
         $result = $this->filterModelEventResults(
-            $this->fireCustomModelEvent($event, $method, $related)
+            $this->fireCustomModelEvent($event, $method, $related),
         );
 
-        if (false === $result) {
+        if ($result === false) {
             return false;
         }
 
-        return ! empty($result) ? $result : static::$dispatcher->{$method}(
-            "eloquent.{$event}: " . static::class, [
+        return !empty($result) ? $result : static::$dispatcher->{$method}(
+            "eloquent.{$event}: " . static::class,
+            [
                 $this,
                 $related,
             ]

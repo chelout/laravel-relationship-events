@@ -19,8 +19,6 @@ class MorphMany extends MorphManyBase implements EventDispatcher
     /**
      * Attach a model instance to the parent model.
      *
-     * @param \Illuminate\Database\Eloquent\Model $model
-     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function save(Model $model)
@@ -29,7 +27,7 @@ class MorphMany extends MorphManyBase implements EventDispatcher
 
         $result = parent::save($model);
 
-        if (false !== $result) {
+        if ($result !== false) {
             $this->fireModelRelationshipEvent('saved', $result, false);
         }
 
