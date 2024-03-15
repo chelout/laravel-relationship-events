@@ -19,7 +19,7 @@ class HasBelongsToManyEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_belongsToManyAttaching_and_belongsToManyAttached_when_a_model_attached()
+    public function it_fires_belongsToManyAttaching_and_belongsToManyAttached_when_a_model_attached(): void
     {
         Event::fake();
 
@@ -42,7 +42,7 @@ class HasBelongsToManyEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_belongsToManyDetaching_and_belongsToManyDetached_when_a_model_detached()
+    public function it_fires_belongsToManyDetaching_and_belongsToManyDetached_when_a_model_detached(): void
     {
         Event::fake();
 
@@ -66,7 +66,7 @@ class HasBelongsToManyEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_belongsToManySyncing_and_belongsToManySynced_when_a_model_synced()
+    public function it_fires_belongsToManySyncing_and_belongsToManySynced_when_a_model_synced(): void
     {
         Event::fake();
 
@@ -89,7 +89,7 @@ class HasBelongsToManyEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_belongsToManyToggling_and_belongsToManyToggled_when_a_model_toggled()
+    public function it_fires_belongsToManyToggling_and_belongsToManyToggled_when_a_model_toggled(): void
     {
         Event::fake();
 
@@ -112,7 +112,7 @@ class HasBelongsToManyEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_belongsToManyUpdatingExistingPivot_and_belongsToManyUpdatedExistingPivot_when_updaing_pivot_table()
+    public function it_fires_belongsToManyUpdatingExistingPivot_and_belongsToManyUpdatedExistingPivot_when_updaing_pivot_table(): void
     {
         Event::fake();
 

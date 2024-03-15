@@ -19,7 +19,7 @@ class HasMorphManyEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_morphManyCreating_and_morphManyCreated_when_belonged_model_with_morph_many_created()
+    public function it_fires_morphManyCreating_and_morphManyCreated_when_belonged_model_with_morph_many_created(): void
     {
         Event::fake();
 
@@ -41,7 +41,7 @@ class HasMorphManyEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_morphManySaving_and_morphManySaved_when_belonged_model_with_morph_many_saved()
+    public function it_fires_morphManySaving_and_morphManySaved_when_belonged_model_with_morph_many_saved(): void
     {
         Event::fake();
 
@@ -63,7 +63,7 @@ class HasMorphManyEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_morphManyUpdating_and_morphManyUpdated_when_belonged_model_with_morph_many_updated()
+    public function it_fires_morphManyUpdating_and_morphManyUpdated_when_belonged_model_with_morph_many_updated(): void
     {
         Event::fake();
 

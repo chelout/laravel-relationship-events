@@ -19,7 +19,7 @@ class HasOneEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_hasOneCreating_and_hasOneCreated_when_a_belonged_model_created()
+    public function it_fires_hasOneCreating_and_hasOneCreated_when_a_belonged_model_created(): void
     {
         Event::fake();
 
@@ -41,7 +41,7 @@ class HasOneEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_hasOneSaving_and_hasOneSaved_when_a_belonged_model_saved()
+    public function it_fires_hasOneSaving_and_hasOneSaved_when_a_belonged_model_saved(): void
     {
         Event::fake();
 
@@ -63,7 +63,7 @@ class HasOneEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_hasOneUpdating_and_hasOneUpdated_when_a_belonged_model_updated()
+    public function it_fires_hasOneUpdating_and_hasOneUpdated_when_a_belonged_model_updated(): void
     {
         Event::fake();
 
