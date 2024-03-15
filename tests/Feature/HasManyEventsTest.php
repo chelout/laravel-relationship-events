@@ -2,6 +2,7 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Chelout\RelationshipEvents\Tests\Stubs\Post;
 use Chelout\RelationshipEvents\Tests\Stubs\User;
 use Chelout\RelationshipEvents\Tests\TestCase;
@@ -17,7 +18,7 @@ class HasManyEventsTest extends TestCase
         Post::setupTable();
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_hasManyCreating_and_hasManyCreated_when_belonged_model_with_many_created()
     {
         Event::fake();
@@ -39,7 +40,7 @@ class HasManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_hasManySaving_and_hasManySaved_when_belonged_model_with_many_saved()
     {
         Event::fake();
@@ -61,7 +62,7 @@ class HasManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_hasManyUpdating_and_hasManyUpdated_when_belonged_model_with_many_updated()
     {
         Event::fake();

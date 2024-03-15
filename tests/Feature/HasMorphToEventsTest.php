@@ -2,6 +2,7 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Chelout\RelationshipEvents\Tests\Stubs\Comment;
 use Chelout\RelationshipEvents\Tests\Stubs\Post;
 use Chelout\RelationshipEvents\Tests\TestCase;
@@ -17,7 +18,7 @@ class HasMorphToEventsTest extends TestCase
         Comment::setupTable();
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphToAssociating_and_morphToAssociated()
     {
         Event::fake();
@@ -40,7 +41,7 @@ class HasMorphToEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphToDissociating_and_morphToDissociated()
     {
         Event::fake();
@@ -64,7 +65,7 @@ class HasMorphToEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphToUpdating_and_morphToUpdated()
     {
         Event::fake();

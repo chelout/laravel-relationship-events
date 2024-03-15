@@ -2,6 +2,7 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Chelout\RelationshipEvents\Tests\Stubs\Post;
 use Chelout\RelationshipEvents\Tests\Stubs\Tag;
 use Chelout\RelationshipEvents\Tests\TestCase;
@@ -17,7 +18,7 @@ class HasMorphToManyEventsTest extends TestCase
         Tag::setupTable();
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphToManyAttaching_and_morphToManyAttached()
     {
         Event::fake();
@@ -40,7 +41,7 @@ class HasMorphToManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphToManyDetaching_and_morphToManyDetached()
     {
         Event::fake();
@@ -64,7 +65,7 @@ class HasMorphToManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphToManySyncing_and_morphToManySynced()
     {
         Event::fake();
@@ -87,7 +88,7 @@ class HasMorphToManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphToManyUpdatingExistingPivot_and_morphToManyUpdatedExistingPivot()
     {
         Event::fake();

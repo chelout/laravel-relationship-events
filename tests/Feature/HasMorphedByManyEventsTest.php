@@ -2,6 +2,7 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Chelout\RelationshipEvents\Tests\Stubs\Post;
 use Chelout\RelationshipEvents\Tests\Stubs\Tag;
 use Chelout\RelationshipEvents\Tests\TestCase;
@@ -17,7 +18,7 @@ class HasMorphedByManyEventsTest extends TestCase
         Tag::setupTable();
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphedByManyAttaching_and_morphedByManyAttached_when_created()
     {
         Event::fake();
@@ -39,7 +40,7 @@ class HasMorphedByManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphedByManyAttaching_and_morphedByManyAttached_when_saved()
     {
         Event::fake();
@@ -61,7 +62,7 @@ class HasMorphedByManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphedByManyAttaching_and_morphedByManyAttached_when_attached()
     {
         Event::fake();
@@ -84,7 +85,7 @@ class HasMorphedByManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphedByManyDetaching_and_morphedByManyDetached_when_detached()
     {
         Event::fake();
@@ -108,7 +109,7 @@ class HasMorphedByManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphedByManySyncing_and_morphedByManySynced()
     {
         Event::fake();
@@ -131,7 +132,7 @@ class HasMorphedByManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphedByManyToggling_and_morphedByManyToggled()
     {
         Event::fake();
@@ -154,7 +155,7 @@ class HasMorphedByManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphedByManyUpdatingExistingPivot_and_morphedByManyUpdatedExistingPivot()
     {
         Event::fake();

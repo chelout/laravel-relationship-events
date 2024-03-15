@@ -2,6 +2,7 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Chelout\RelationshipEvents\Tests\Stubs\Address;
 use Chelout\RelationshipEvents\Tests\Stubs\User;
 use Chelout\RelationshipEvents\Tests\TestCase;
@@ -17,7 +18,7 @@ class HasMorphOneEventsTest extends TestCase
         Address::setupTable();
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphOneCreating_and_morphOneCreated_when_belonged_model_with_morph_one_created()
     {
         Event::fake();
@@ -39,7 +40,7 @@ class HasMorphOneEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphOneSaving_and_morphOneSaved_when_belonged_model_with_morph_one_saved()
     {
         Event::fake();
@@ -61,7 +62,7 @@ class HasMorphOneEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_morphOneUpdating_and_morphOneUpdated_when_belonged_model_with_morph_one_updated()
     {
         Event::fake();

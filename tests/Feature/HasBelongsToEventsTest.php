@@ -2,6 +2,7 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Chelout\RelationshipEvents\Tests\Stubs\Profile;
 use Chelout\RelationshipEvents\Tests\Stubs\User;
 use Chelout\RelationshipEvents\Tests\TestCase;
@@ -17,7 +18,7 @@ class HasBelongsToEventsTest extends TestCase
         Profile::setupTable();
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_belongsToAssociating_and_belongsToAssociated_when_a_model_associated()
     {
         Event::fake();
@@ -39,7 +40,7 @@ class HasBelongsToEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_belongsToDissociating_and_belongsToDissociated_when_a_model_dissociated()
     {
         Event::fake();
@@ -62,7 +63,7 @@ class HasBelongsToEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_belongsToUpdating_and_belongsToUpdated_when_a_parent_model_updated()
     {
         Event::fake();
