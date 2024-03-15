@@ -8,7 +8,7 @@ use Chelout\RelationshipEvents\Tests\Stubs\User;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 
-class HasMorphOneEventsTest extends TestCase
+final class HasMorphOneEventsTest extends TestCase
 {
     public function setup(): void
     {
