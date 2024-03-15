@@ -2,6 +2,7 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Chelout\RelationshipEvents\Tests\Stubs\Role;
 use Chelout\RelationshipEvents\Tests\Stubs\User;
 use Chelout\RelationshipEvents\Tests\TestCase;
@@ -17,7 +18,7 @@ class HasBelongsToManyEventsTest extends TestCase
         Role::setupTable();
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_belongsToManyAttaching_and_belongsToManyAttached_when_a_model_attached()
     {
         Event::fake();
@@ -40,7 +41,7 @@ class HasBelongsToManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_belongsToManyDetaching_and_belongsToManyDetached_when_a_model_detached()
     {
         Event::fake();
@@ -64,7 +65,7 @@ class HasBelongsToManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_belongsToManySyncing_and_belongsToManySynced_when_a_model_synced()
     {
         Event::fake();
@@ -87,7 +88,7 @@ class HasBelongsToManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_belongsToManyToggling_and_belongsToManyToggled_when_a_model_toggled()
     {
         Event::fake();
@@ -110,7 +111,7 @@ class HasBelongsToManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_fires_belongsToManyUpdatingExistingPivot_and_belongsToManyUpdatedExistingPivot_when_updaing_pivot_table()
     {
         Event::fake();
