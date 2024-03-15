@@ -19,7 +19,7 @@ class HasMorphOneEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_morphOneCreating_and_morphOneCreated_when_belonged_model_with_morph_one_created()
+    public function it_fires_morphOneCreating_and_morphOneCreated_when_belonged_model_with_morph_one_created(): void
     {
         Event::fake();
 
@@ -41,7 +41,7 @@ class HasMorphOneEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_morphOneSaving_and_morphOneSaved_when_belonged_model_with_morph_one_saved()
+    public function it_fires_morphOneSaving_and_morphOneSaved_when_belonged_model_with_morph_one_saved(): void
     {
         Event::fake();
 
@@ -63,7 +63,7 @@ class HasMorphOneEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_morphOneUpdating_and_morphOneUpdated_when_belonged_model_with_morph_one_updated()
+    public function it_fires_morphOneUpdating_and_morphOneUpdated_when_belonged_model_with_morph_one_updated(): void
     {
         Event::fake();
 

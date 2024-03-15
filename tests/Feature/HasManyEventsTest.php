@@ -19,7 +19,7 @@ class HasManyEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_hasManyCreating_and_hasManyCreated_when_belonged_model_with_many_created()
+    public function it_fires_hasManyCreating_and_hasManyCreated_when_belonged_model_with_many_created(): void
     {
         Event::fake();
 
@@ -41,7 +41,7 @@ class HasManyEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_hasManySaving_and_hasManySaved_when_belonged_model_with_many_saved()
+    public function it_fires_hasManySaving_and_hasManySaved_when_belonged_model_with_many_saved(): void
     {
         Event::fake();
 
@@ -63,7 +63,7 @@ class HasManyEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_hasManyUpdating_and_hasManyUpdated_when_belonged_model_with_many_updated()
+    public function it_fires_hasManyUpdating_and_hasManyUpdated_when_belonged_model_with_many_updated(): void
     {
         Event::fake();
 

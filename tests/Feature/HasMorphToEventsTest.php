@@ -19,7 +19,7 @@ class HasMorphToEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_morphToAssociating_and_morphToAssociated()
+    public function it_fires_morphToAssociating_and_morphToAssociated(): void
     {
         Event::fake();
 
@@ -42,7 +42,7 @@ class HasMorphToEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_morphToDissociating_and_morphToDissociated()
+    public function it_fires_morphToDissociating_and_morphToDissociated(): void
     {
         Event::fake();
 
@@ -66,7 +66,7 @@ class HasMorphToEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_morphToUpdating_and_morphToUpdated()
+    public function it_fires_morphToUpdating_and_morphToUpdated(): void
     {
         Event::fake();
 

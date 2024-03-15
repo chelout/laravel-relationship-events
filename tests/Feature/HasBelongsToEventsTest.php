@@ -19,7 +19,7 @@ class HasBelongsToEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_belongsToAssociating_and_belongsToAssociated_when_a_model_associated()
+    public function it_fires_belongsToAssociating_and_belongsToAssociated_when_a_model_associated(): void
     {
         Event::fake();
 
@@ -41,7 +41,7 @@ class HasBelongsToEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_belongsToDissociating_and_belongsToDissociated_when_a_model_dissociated()
+    public function it_fires_belongsToDissociating_and_belongsToDissociated_when_a_model_dissociated(): void
     {
         Event::fake();
 
@@ -64,7 +64,7 @@ class HasBelongsToEventsTest extends TestCase
     }
 
     #[Test]
-    public function it_fires_belongsToUpdating_and_belongsToUpdated_when_a_parent_model_updated()
+    public function it_fires_belongsToUpdating_and_belongsToUpdated_when_a_parent_model_updated(): void
     {
         Event::fake();
 
