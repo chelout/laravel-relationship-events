@@ -2,12 +2,13 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Chelout\RelationshipEvents\Tests\Stubs\Post;
 use Chelout\RelationshipEvents\Tests\Stubs\Tag;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 
-class HasMorphedByManyEventsTest extends TestCase
+final class HasMorphedByManyEventsTest extends TestCase
 {
     public function setup(): void
     {
@@ -17,8 +18,8 @@ class HasMorphedByManyEventsTest extends TestCase
         Tag::setupTable();
     }
 
-    /** @test */
-    public function it_fires_morphedByManyAttaching_and_morphedByManyAttached_when_created()
+    #[Test]
+    public function it_fires_morphedByManyAttaching_and_morphedByManyAttached_when_created(): void
     {
         Event::fake();
 
@@ -39,8 +40,8 @@ class HasMorphedByManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_morphedByManyAttaching_and_morphedByManyAttached_when_saved()
+    #[Test]
+    public function it_fires_morphedByManyAttaching_and_morphedByManyAttached_when_saved(): void
     {
         Event::fake();
 
@@ -61,8 +62,8 @@ class HasMorphedByManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_morphedByManyAttaching_and_morphedByManyAttached_when_attached()
+    #[Test]
+    public function it_fires_morphedByManyAttaching_and_morphedByManyAttached_when_attached(): void
     {
         Event::fake();
 
@@ -84,8 +85,8 @@ class HasMorphedByManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_morphedByManyDetaching_and_morphedByManyDetached_when_detached()
+    #[Test]
+    public function it_fires_morphedByManyDetaching_and_morphedByManyDetached_when_detached(): void
     {
         Event::fake();
 
@@ -108,8 +109,8 @@ class HasMorphedByManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_morphedByManySyncing_and_morphedByManySynced()
+    #[Test]
+    public function it_fires_morphedByManySyncing_and_morphedByManySynced(): void
     {
         Event::fake();
 
@@ -131,8 +132,8 @@ class HasMorphedByManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_morphedByManyToggling_and_morphedByManyToggled()
+    #[Test]
+    public function it_fires_morphedByManyToggling_and_morphedByManyToggled(): void
     {
         Event::fake();
 
@@ -154,8 +155,8 @@ class HasMorphedByManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_morphedByManyUpdatingExistingPivot_and_morphedByManyUpdatedExistingPivot()
+    #[Test]
+    public function it_fires_morphedByManyUpdatingExistingPivot_and_morphedByManyUpdatedExistingPivot(): void
     {
         Event::fake();
 

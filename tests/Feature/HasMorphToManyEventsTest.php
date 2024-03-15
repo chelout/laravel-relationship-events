@@ -2,12 +2,13 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Chelout\RelationshipEvents\Tests\Stubs\Post;
 use Chelout\RelationshipEvents\Tests\Stubs\Tag;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 
-class HasMorphToManyEventsTest extends TestCase
+final class HasMorphToManyEventsTest extends TestCase
 {
     public function setup(): void
     {
@@ -17,8 +18,8 @@ class HasMorphToManyEventsTest extends TestCase
         Tag::setupTable();
     }
 
-    /** @test */
-    public function it_fires_morphToManyAttaching_and_morphToManyAttached()
+    #[Test]
+    public function it_fires_morphToManyAttaching_and_morphToManyAttached(): void
     {
         Event::fake();
 
@@ -40,8 +41,8 @@ class HasMorphToManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_morphToManyDetaching_and_morphToManyDetached()
+    #[Test]
+    public function it_fires_morphToManyDetaching_and_morphToManyDetached(): void
     {
         Event::fake();
 
@@ -64,8 +65,8 @@ class HasMorphToManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_morphToManySyncing_and_morphToManySynced()
+    #[Test]
+    public function it_fires_morphToManySyncing_and_morphToManySynced(): void
     {
         Event::fake();
 
@@ -87,8 +88,8 @@ class HasMorphToManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_morphToManyUpdatingExistingPivot_and_morphToManyUpdatedExistingPivot()
+    #[Test]
+    public function it_fires_morphToManyUpdatingExistingPivot_and_morphToManyUpdatedExistingPivot(): void
     {
         Event::fake();
 

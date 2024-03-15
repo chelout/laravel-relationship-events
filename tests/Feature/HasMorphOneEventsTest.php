@@ -2,12 +2,13 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Chelout\RelationshipEvents\Tests\Stubs\Address;
 use Chelout\RelationshipEvents\Tests\Stubs\User;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 
-class HasMorphOneEventsTest extends TestCase
+final class HasMorphOneEventsTest extends TestCase
 {
     public function setup(): void
     {
@@ -17,8 +18,8 @@ class HasMorphOneEventsTest extends TestCase
         Address::setupTable();
     }
 
-    /** @test */
-    public function it_fires_morphOneCreating_and_morphOneCreated_when_belonged_model_with_morph_one_created()
+    #[Test]
+    public function it_fires_morphOneCreating_and_morphOneCreated_when_belonged_model_with_morph_one_created(): void
     {
         Event::fake();
 
@@ -39,8 +40,8 @@ class HasMorphOneEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_morphOneSaving_and_morphOneSaved_when_belonged_model_with_morph_one_saved()
+    #[Test]
+    public function it_fires_morphOneSaving_and_morphOneSaved_when_belonged_model_with_morph_one_saved(): void
     {
         Event::fake();
 
@@ -61,8 +62,8 @@ class HasMorphOneEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_morphOneUpdating_and_morphOneUpdated_when_belonged_model_with_morph_one_updated()
+    #[Test]
+    public function it_fires_morphOneUpdating_and_morphOneUpdated_when_belonged_model_with_morph_one_updated(): void
     {
         Event::fake();
 

@@ -2,12 +2,13 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Chelout\RelationshipEvents\Tests\Stubs\Profile;
 use Chelout\RelationshipEvents\Tests\Stubs\User;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 
-class HasBelongsToEventsTest extends TestCase
+final class HasBelongsToEventsTest extends TestCase
 {
     public function setup(): void
     {
@@ -17,8 +18,8 @@ class HasBelongsToEventsTest extends TestCase
         Profile::setupTable();
     }
 
-    /** @test */
-    public function it_fires_belongsToAssociating_and_belongsToAssociated_when_a_model_associated()
+    #[Test]
+    public function it_fires_belongsToAssociating_and_belongsToAssociated_when_a_model_associated(): void
     {
         Event::fake();
 
@@ -39,8 +40,8 @@ class HasBelongsToEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_belongsToDissociating_and_belongsToDissociated_when_a_model_dissociated()
+    #[Test]
+    public function it_fires_belongsToDissociating_and_belongsToDissociated_when_a_model_dissociated(): void
     {
         Event::fake();
 
@@ -62,8 +63,8 @@ class HasBelongsToEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_belongsToUpdating_and_belongsToUpdated_when_a_parent_model_updated()
+    #[Test]
+    public function it_fires_belongsToUpdating_and_belongsToUpdated_when_a_parent_model_updated(): void
     {
         Event::fake();
 

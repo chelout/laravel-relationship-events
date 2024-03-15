@@ -2,12 +2,13 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Chelout\RelationshipEvents\Tests\Stubs\Comment;
 use Chelout\RelationshipEvents\Tests\Stubs\Post;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 
-class HasMorphToEventsTest extends TestCase
+final class HasMorphToEventsTest extends TestCase
 {
     public function setup(): void
     {
@@ -17,8 +18,8 @@ class HasMorphToEventsTest extends TestCase
         Comment::setupTable();
     }
 
-    /** @test */
-    public function it_fires_morphToAssociating_and_morphToAssociated()
+    #[Test]
+    public function it_fires_morphToAssociating_and_morphToAssociated(): void
     {
         Event::fake();
 
@@ -40,8 +41,8 @@ class HasMorphToEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_morphToDissociating_and_morphToDissociated()
+    #[Test]
+    public function it_fires_morphToDissociating_and_morphToDissociated(): void
     {
         Event::fake();
 
@@ -64,8 +65,8 @@ class HasMorphToEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_morphToUpdating_and_morphToUpdated()
+    #[Test]
+    public function it_fires_morphToUpdating_and_morphToUpdated(): void
     {
         Event::fake();
 

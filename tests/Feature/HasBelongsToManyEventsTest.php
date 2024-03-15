@@ -2,12 +2,13 @@
 
 namespace Chelout\RelationshipEvents\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Chelout\RelationshipEvents\Tests\Stubs\Role;
 use Chelout\RelationshipEvents\Tests\Stubs\User;
 use Chelout\RelationshipEvents\Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 
-class HasBelongsToManyEventsTest extends TestCase
+final class HasBelongsToManyEventsTest extends TestCase
 {
     public function setup(): void
     {
@@ -17,8 +18,8 @@ class HasBelongsToManyEventsTest extends TestCase
         Role::setupTable();
     }
 
-    /** @test */
-    public function it_fires_belongsToManyAttaching_and_belongsToManyAttached_when_a_model_attached()
+    #[Test]
+    public function it_fires_belongsToManyAttaching_and_belongsToManyAttached_when_a_model_attached(): void
     {
         Event::fake();
 
@@ -40,8 +41,8 @@ class HasBelongsToManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_belongsToManyDetaching_and_belongsToManyDetached_when_a_model_detached()
+    #[Test]
+    public function it_fires_belongsToManyDetaching_and_belongsToManyDetached_when_a_model_detached(): void
     {
         Event::fake();
 
@@ -64,8 +65,8 @@ class HasBelongsToManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_belongsToManySyncing_and_belongsToManySynced_when_a_model_synced()
+    #[Test]
+    public function it_fires_belongsToManySyncing_and_belongsToManySynced_when_a_model_synced(): void
     {
         Event::fake();
 
@@ -87,8 +88,8 @@ class HasBelongsToManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_belongsToManyToggling_and_belongsToManyToggled_when_a_model_toggled()
+    #[Test]
+    public function it_fires_belongsToManyToggling_and_belongsToManyToggled_when_a_model_toggled(): void
     {
         Event::fake();
 
@@ -110,8 +111,8 @@ class HasBelongsToManyEventsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_fires_belongsToManyUpdatingExistingPivot_and_belongsToManyUpdatedExistingPivot_when_updaing_pivot_table()
+    #[Test]
+    public function it_fires_belongsToManyUpdatingExistingPivot_and_belongsToManyUpdatedExistingPivot_when_updaing_pivot_table(): void
     {
         Event::fake();
 
