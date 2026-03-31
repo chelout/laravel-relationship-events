@@ -10,6 +10,12 @@ Missing relationship events for Laravel
  <a href="https://packagist.org/packages/chelout/laravel-relationship-events"><img src="https://poser.pugx.org/chelout/laravel-relationship-events/license.svg" alt="License"></a>
  </p>
 
+## Compatibility
+
+| Package | Laravel | PHP |
+|---------|---------|-----|
+| `v5.x`  | `13.x` | `^8.3` |
+
 ## Install
 
 1. Install package with composer

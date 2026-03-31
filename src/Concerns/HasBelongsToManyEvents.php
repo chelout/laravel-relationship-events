@@ -27,6 +27,7 @@ trait HasBelongsToManyEvents
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
+    #[\Override]
     protected function newBelongsToMany(
         Builder $query,
         Model $parent,
@@ -36,7 +37,7 @@ trait HasBelongsToManyEvents
         $parentKey,
         $relatedKey,
         $relationName = null,
-    ) {
+    ): BelongsToMany {
         return new BelongsToMany($query, $parent, $table, $foreignPivotKey, $relatedPivotKey, $parentKey, $relatedKey, $relationName);
     }
 
@@ -46,7 +47,7 @@ trait HasBelongsToManyEvents
      * @param string $event
      * @param Closure|string $callback
      */
-    protected static function registerModelBelongsToManyEvent($event, $callback)
+    protected static function registerModelBelongsToManyEvent($event, $callback): void
     {
         if (isset(static::$dispatcher)) {
             $name = static::class;
@@ -60,7 +61,7 @@ trait HasBelongsToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToManyAttaching($callback)
+    public static function belongsToManyAttaching($callback): void
     {
         static::registerModelBelongsToManyEvent('belongsToManyAttaching', $callback);
     }
@@ -70,7 +71,7 @@ trait HasBelongsToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToManyAttached($callback)
+    public static function belongsToManyAttached($callback): void
     {
         static::registerModelBelongsToManyEvent('belongsToManyAttached', $callback);
     }
@@ -80,7 +81,7 @@ trait HasBelongsToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToManyDetaching($callback)
+    public static function belongsToManyDetaching($callback): void
     {
         static::registerModelBelongsToManyEvent('belongsToManyDetaching', $callback);
     }
@@ -90,7 +91,7 @@ trait HasBelongsToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToManyDetached($callback)
+    public static function belongsToManyDetached($callback): void
     {
         static::registerModelBelongsToManyEvent('belongsToManyDetached', $callback);
     }
@@ -100,7 +101,7 @@ trait HasBelongsToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToManySyncing($callback)
+    public static function belongsToManySyncing($callback): void
     {
         static::registerModelBelongsToManyEvent('belongsToManySyncing', $callback);
     }
@@ -110,7 +111,7 @@ trait HasBelongsToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToManySynced($callback)
+    public static function belongsToManySynced($callback): void
     {
         static::registerModelBelongsToManyEvent('belongsToManySynced', $callback);
     }
@@ -120,7 +121,7 @@ trait HasBelongsToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToManyToggling($callback)
+    public static function belongsToManyToggling($callback): void
     {
         static::registerModelBelongsToManyEvent('belongsToManyToggling', $callback);
     }
@@ -130,7 +131,7 @@ trait HasBelongsToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToManyToggled($callback)
+    public static function belongsToManyToggled($callback): void
     {
         static::registerModelBelongsToManyEvent('belongsToManyToggled', $callback);
     }
@@ -140,7 +141,7 @@ trait HasBelongsToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToManyUpdatingExistingPivot($callback)
+    public static function belongsToManyUpdatingExistingPivot($callback): void
     {
         static::registerModelBelongsToManyEvent('belongsToManyUpdatingExistingPivot', $callback);
     }
@@ -150,7 +151,7 @@ trait HasBelongsToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToManyUpdatedExistingPivot($callback)
+    public static function belongsToManyUpdatedExistingPivot($callback): void
     {
         static::registerModelBelongsToManyEvent('belongsToManyUpdatedExistingPivot', $callback);
     }
@@ -166,7 +167,7 @@ trait HasBelongsToManyEvents
      *
      * @return mixed
      */
-    public function fireModelBelongsToManyEvent($event, $relation, $ids, $attributes = [], $halt = true)
+    public function fireModelBelongsToManyEvent($event, $relation, $ids, $attributes = [], $halt = true): mixed
     {
         if (!isset(static::$dispatcher)) {
             return true;

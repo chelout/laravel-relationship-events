@@ -22,6 +22,7 @@ class MorphTo extends MorphToBase implements EventDispatcher
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
+    #[\Override]
     public function associate($model)
     {
         $this->parent->fireModelMorphToEvent('associating', $this->relationName, $model);
@@ -38,6 +39,7 @@ class MorphTo extends MorphToBase implements EventDispatcher
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
+    #[\Override]
     public function dissociate()
     {
         $parent = $this->getResults();

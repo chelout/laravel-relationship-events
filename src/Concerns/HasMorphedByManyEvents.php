@@ -5,6 +5,7 @@ namespace Chelout\RelationshipEvents\Concerns;
 use Chelout\RelationshipEvents\Helpers\AttributesMethods;
 use Chelout\RelationshipEvents\MorphedByMany;
 use Closure;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,6 +30,7 @@ trait HasMorphedByManyEvents
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
+    #[\Override]
     protected function newMorphToMany(
         Builder $query,
         Model $parent,
@@ -40,7 +42,7 @@ trait HasMorphedByManyEvents
         $relatedKey,
         $relationName = null,
         $inverse = false,
-    ) {
+    ): MorphToMany {
         return new MorphedByMany(
             $query,
             $parent,
@@ -61,7 +63,7 @@ trait HasMorphedByManyEvents
      * @param string $event
      * @param Closure|string $callback
      */
-    protected static function registerModelMorphedByManyEvent($event, $callback)
+    protected static function registerModelMorphedByManyEvent($event, $callback): void
     {
         if (isset(static::$dispatcher)) {
             $name = static::class;
@@ -75,7 +77,7 @@ trait HasMorphedByManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphedByManyCreating($callback)
+    public static function morphedByManyCreating($callback): void
     {
         static::registerModelMorphedByManyEvent('morphedByManyCreating', $callback);
     }
@@ -85,7 +87,7 @@ trait HasMorphedByManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphedByManyCreated($callback)
+    public static function morphedByManyCreated($callback): void
     {
         static::registerModelMorphedByManyEvent('morphedByManyCreated', $callback);
     }
@@ -95,7 +97,7 @@ trait HasMorphedByManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphedByManySaving($callback)
+    public static function morphedByManySaving($callback): void
     {
         static::registerModelMorphedByManyEvent('morphedByManySaving', $callback);
     }
@@ -105,7 +107,7 @@ trait HasMorphedByManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphedByManySaved($callback)
+    public static function morphedByManySaved($callback): void
     {
         static::registerModelMorphedByManyEvent('morphedByManySaved', $callback);
     }
@@ -115,7 +117,7 @@ trait HasMorphedByManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphedByManyAttaching($callback)
+    public static function morphedByManyAttaching($callback): void
     {
         static::registerModelMorphedByManyEvent('morphedByManyAttaching', $callback);
     }
@@ -125,7 +127,7 @@ trait HasMorphedByManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphedByManyAttached($callback)
+    public static function morphedByManyAttached($callback): void
     {
         static::registerModelMorphedByManyEvent('morphedByManyAttached', $callback);
     }
@@ -135,7 +137,7 @@ trait HasMorphedByManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphedByManyDetaching($callback)
+    public static function morphedByManyDetaching($callback): void
     {
         static::registerModelMorphedByManyEvent('morphedByManyDetaching', $callback);
     }
@@ -145,7 +147,7 @@ trait HasMorphedByManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphedByManyDetached($callback)
+    public static function morphedByManyDetached($callback): void
     {
         static::registerModelMorphedByManyEvent('morphedByManyDetached', $callback);
     }
@@ -155,7 +157,7 @@ trait HasMorphedByManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphedByManySyncing($callback)
+    public static function morphedByManySyncing($callback): void
     {
         static::registerModelMorphedByManyEvent('morphedByManySyncing', $callback);
     }
@@ -165,7 +167,7 @@ trait HasMorphedByManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphedByManySynced($callback)
+    public static function morphedByManySynced($callback): void
     {
         static::registerModelMorphedByManyEvent('morphedByManySynced', $callback);
     }
@@ -175,7 +177,7 @@ trait HasMorphedByManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphedByManyToggling($callback)
+    public static function morphedByManyToggling($callback): void
     {
         static::registerModelMorphedByManyEvent('morphedByManyToggling', $callback);
     }
@@ -185,7 +187,7 @@ trait HasMorphedByManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphedByManyToggled($callback)
+    public static function morphedByManyToggled($callback): void
     {
         static::registerModelMorphedByManyEvent('morphedByManyToggled', $callback);
     }
@@ -195,7 +197,7 @@ trait HasMorphedByManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphedByManyUpdatingExistingPivot($callback)
+    public static function morphedByManyUpdatingExistingPivot($callback): void
     {
         static::registerModelMorphedByManyEvent('morphedByManyUpdatingExistingPivot', $callback);
     }
@@ -205,7 +207,7 @@ trait HasMorphedByManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphedByManyUpdatedExistingPivot($callback)
+    public static function morphedByManyUpdatedExistingPivot($callback): void
     {
         static::registerModelMorphedByManyEvent('morphedByManyUpdatedExistingPivot', $callback);
     }
@@ -221,7 +223,7 @@ trait HasMorphedByManyEvents
      *
      * @return mixed
      */
-    public function fireModelMorphedByManyEvent($event, $relation, $ids, $attributes = [], $halt = true)
+    public function fireModelMorphedByManyEvent($event, $relation, $ids, $attributes = [], $halt = true): mixed
     {
         if (!isset(static::$dispatcher)) {
             return true;

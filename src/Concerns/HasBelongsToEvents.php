@@ -23,7 +23,8 @@ trait HasBelongsToEvents
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    protected function newBelongsTo(Builder $query, Model $child, $foreignKey, $ownerKey, $relation)
+    #[\Override]
+    protected function newBelongsTo(Builder $query, Model $child, $foreignKey, $ownerKey, $relation): BelongsTo
     {
         return new BelongsTo($query, $child, $foreignKey, $ownerKey, $relation);
     }
@@ -34,7 +35,7 @@ trait HasBelongsToEvents
      * @param string $event
      * @param Closure|string $callback
      */
-    protected static function registerModelBelongsToEvent($event, $callback)
+    protected static function registerModelBelongsToEvent($event, $callback): void
     {
         if (isset(static::$dispatcher)) {
             $name = static::class;
@@ -48,7 +49,7 @@ trait HasBelongsToEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToAssociating($callback)
+    public static function belongsToAssociating($callback): void
     {
         static::registerModelBelongsToEvent('belongsToAssociating', $callback);
     }
@@ -58,7 +59,7 @@ trait HasBelongsToEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToAssociated($callback)
+    public static function belongsToAssociated($callback): void
     {
         static::registerModelBelongsToEvent('belongsToAssociated', $callback);
     }
@@ -68,7 +69,7 @@ trait HasBelongsToEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToDissociating($callback)
+    public static function belongsToDissociating($callback): void
     {
         static::registerModelBelongsToEvent('belongsToDissociating', $callback);
     }
@@ -78,7 +79,7 @@ trait HasBelongsToEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToDissociated($callback)
+    public static function belongsToDissociated($callback): void
     {
         static::registerModelBelongsToEvent('belongsToDissociated', $callback);
     }
@@ -88,7 +89,7 @@ trait HasBelongsToEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToUpdating($callback)
+    public static function belongsToUpdating($callback): void
     {
         static::registerModelBelongsToEvent('belongsToUpdating', $callback);
     }
@@ -98,7 +99,7 @@ trait HasBelongsToEvents
      *
      * @param Closure|string $callback
      */
-    public static function belongsToUpdated($callback)
+    public static function belongsToUpdated($callback): void
     {
         static::registerModelBelongsToEvent('belongsToUpdated', $callback);
     }
@@ -113,7 +114,7 @@ trait HasBelongsToEvents
      *
      * @return bool
      */
-    public function fireModelBelongsToEvent($event, $relation, $parent, $halt = true)
+    public function fireModelBelongsToEvent($event, $relation, $parent, $halt = true): mixed
     {
         if (!isset(static::$dispatcher)) {
             return true;

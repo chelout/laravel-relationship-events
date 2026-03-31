@@ -11,14 +11,25 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.2, 8.3]
-        stability: [prefer-lowest, prefer-stable]
+        include:
+          - php: "8.3"
+            laravel: "13.x-dev"
+            framework: "13.x-dev"
+            testbench: "11.x-dev"
+            stability: prefer-lowest
+            minimum_stability: dev
+          - php: "8.4"
+            laravel: "13.x-dev"
+            framework: "13.x-dev"
+            testbench: "11.x-dev"
+            stability: prefer-stable
+            minimum_stability: dev
 
-    name: P${{ matrix.php }} - S${{ matrix.stability }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - T${{ matrix.testbench }} - S${{ matrix.stability }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Cache dependencies
         uses: actions/cache@v4
@@ -34,7 +45,22 @@ jobs:
           coverage: none
 
       - name: Install dependencies
-        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress --no-suggest
+        run: |
+          composer config minimum-stability ${{ matrix.minimum_stability }}
+          composer config prefer-stable true
+          composer require \
+            "illuminate/container:${{ matrix.laravel }}" \
+            "illuminate/database:${{ matrix.laravel }}" \
+            "illuminate/events:${{ matrix.laravel }}" \
+            "illuminate/support:${{ matrix.laravel }}" \
+            "laravel/framework:${{ matrix.framework }}" \
+            --no-update \
+            --no-interaction
+          composer require --dev \
+            "orchestra/testbench:${{ matrix.testbench }}" \
+            --no-update \
+            --no-interaction
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
 
       - name: Execute tests
         run: vendor/bin/phpunit

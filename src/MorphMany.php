@@ -21,6 +21,7 @@ class MorphMany extends MorphManyBase implements EventDispatcher
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
+    #[\Override]
     public function save(Model $model)
     {
         $this->fireModelRelationshipEvent('saving', $model);

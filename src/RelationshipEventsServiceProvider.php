@@ -12,7 +12,7 @@ class RelationshipEventsServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application events.
      */
-    public function boot()
+    public function boot(): void
     {
         BelongsTo::setEventDispatcher($this->app['events']);
         BelongsToMany::setEventDispatcher($this->app['events']);
@@ -28,7 +28,7 @@ class RelationshipEventsServiceProvider extends ServiceProvider
     /**
      * Register the service provider.
      */
-    public function register()
+    public function register(): void
     {
     }
 }

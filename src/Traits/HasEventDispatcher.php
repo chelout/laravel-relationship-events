@@ -14,14 +14,14 @@ trait HasEventDispatcher
      *
      * @var \Illuminate\Contracts\Events\Dispatcher
      */
-    protected static $dispatcher;
+    protected static ?Dispatcher $dispatcher = null;
 
     /**
      * Get the event dispatcher instance.
      *
      * @return \Illuminate\Contracts\Events\Dispatcher
      */
-    public static function getEventDispatcher()
+    public static function getEventDispatcher(): ?Dispatcher
     {
         return static::$dispatcher;
     }
@@ -29,7 +29,7 @@ trait HasEventDispatcher
     /**
      * Set the event dispatcher instance.
      */
-    public static function setEventDispatcher(Dispatcher $dispatcher)
+    public static function setEventDispatcher(Dispatcher $dispatcher): void
     {
         static::$dispatcher = $dispatcher;
     }
@@ -37,7 +37,7 @@ trait HasEventDispatcher
     /**
      * Unset the event dispatcher for models.
      */
-    public static function unsetEventDispatcher()
+    public static function unsetEventDispatcher(): void
     {
         static::$dispatcher = null;
     }

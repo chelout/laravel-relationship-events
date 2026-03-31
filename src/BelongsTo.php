@@ -24,6 +24,7 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
+    #[\Override]
     public function associate($model)
     {
         $this->parent->fireModelBelongsToEvent('associating', $this->relationName, $model);
@@ -40,6 +41,7 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
+    #[\Override]
     public function dissociate()
     {
         $parent = $this->getResults();

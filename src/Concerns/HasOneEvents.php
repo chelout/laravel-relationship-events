@@ -22,7 +22,8 @@ trait HasOneEvents
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    protected function newHasOne(Builder $query, Model $parent, $foreignKey, $localKey)
+    #[\Override]
+    protected function newHasOne(Builder $query, Model $parent, $foreignKey, $localKey): HasOne
     {
         return new HasOne($query, $parent, $foreignKey, $localKey);
     }
@@ -33,7 +34,7 @@ trait HasOneEvents
      * @param string $event
      * @param Closure|string $callback
      */
-    protected static function registerModelHasOneEvent($event, $callback)
+    protected static function registerModelHasOneEvent($event, $callback): void
     {
         if (isset(static::$dispatcher)) {
             $name = static::class;
@@ -47,7 +48,7 @@ trait HasOneEvents
      *
      * @param Closure|string $callback
      */
-    public static function hasOneCreating($callback)
+    public static function hasOneCreating($callback): void
     {
         static::registerModelHasOneEvent('hasOneCreating', $callback);
     }
@@ -57,7 +58,7 @@ trait HasOneEvents
      *
      * @param Closure|string $callback
      */
-    public static function hasOneCreated($callback)
+    public static function hasOneCreated($callback): void
     {
         static::registerModelHasOneEvent('hasOneCreated', $callback);
     }
@@ -67,7 +68,7 @@ trait HasOneEvents
      *
      * @param Closure|string $callback
      */
-    public static function hasOneSaving($callback)
+    public static function hasOneSaving($callback): void
     {
         static::registerModelHasOneEvent('hasOneSaving', $callback);
     }
@@ -77,7 +78,7 @@ trait HasOneEvents
      *
      * @param Closure|string $callback
      */
-    public static function hasOneSaved($callback)
+    public static function hasOneSaved($callback): void
     {
         static::registerModelHasOneEvent('hasOneSaved', $callback);
     }
@@ -87,7 +88,7 @@ trait HasOneEvents
      *
      * @param Closure|string $callback
      */
-    public static function hasOneUpdating($callback)
+    public static function hasOneUpdating($callback): void
     {
         static::registerModelHasOneEvent('hasOneUpdating', $callback);
     }
@@ -97,7 +98,7 @@ trait HasOneEvents
      *
      * @param Closure|string $callback
      */
-    public static function hasOneUpdated($callback)
+    public static function hasOneUpdated($callback): void
     {
         static::registerModelHasOneEvent('hasOneUpdated', $callback);
     }
@@ -111,7 +112,7 @@ trait HasOneEvents
      *
      * @return mixed
      */
-    public function fireModelHasOneEvent($event, $related = null, $halt = true)
+    public function fireModelHasOneEvent($event, $related = null, $halt = true): mixed
     {
         if (!isset(static::$dispatcher)) {
             return true;

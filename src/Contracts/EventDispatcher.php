@@ -11,15 +11,15 @@ interface EventDispatcher
      *
      * @return \Illuminate\Contracts\Events\Dispatcher
      */
-    public static function getEventDispatcher();
+    public static function getEventDispatcher(): ?Dispatcher;
 
     /**
      * Set the event dispatcher instance.
      */
-    public static function setEventDispatcher(Dispatcher $dispatcher);
+    public static function setEventDispatcher(Dispatcher $dispatcher): void;
 
     /**
      * Unset the event dispatcher for models.
      */
-    public static function unsetEventDispatcher();
+    public static function unsetEventDispatcher(): void;
 }

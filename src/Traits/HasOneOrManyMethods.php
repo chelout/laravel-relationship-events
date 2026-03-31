@@ -17,7 +17,8 @@ trait HasOneOrManyMethods
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function create(array $attributes = [])
+    #[\Override]
+    public function create(array $attributes = []): Model
     {
         return tap($this->related->newInstance($attributes), function (Model $instance) {
             $this->fireModelRelationshipEvent('creating', $instance);
@@ -35,7 +36,8 @@ trait HasOneOrManyMethods
      *
      * @return false|\Illuminate\Database\Eloquent\Model
      */
-    public function save(Model $model)
+    #[\Override]
+    public function save(Model $model): Model|false
     {
         $this->fireModelRelationshipEvent('saving', $model);
 
@@ -53,7 +55,7 @@ trait HasOneOrManyMethods
      *
      * @return int
      */
-    public function update(array $attributes)
+    public function update(array $attributes): int
     {
         $related = $this->getResults();
 
@@ -84,7 +86,7 @@ trait HasOneOrManyMethods
      *
      * @return mixed
      */
-    public function fireModelRelationshipEvent($event, $related = null, $halt = true)
+    public function fireModelRelationshipEvent($event, $related = null, $halt = true): mixed
     {
         return $this->parent->{'fireModel' . class_basename(static::class) . 'Event'}($event, $related, $halt);
     }

@@ -12,7 +12,8 @@ class TestCase extends BaseTestCase
      *
      * @return array
      */
-    protected function getPackageProviders($app)
+    #[\Override]
+    protected function getPackageProviders($app): array
     {
         return [RelationshipEventsServiceProvider::class];
     }
@@ -24,7 +25,8 @@ class TestCase extends BaseTestCase
      *
      * @return void
      */
-    protected function getEnvironmentSetUp($app)
+    #[\Override]
+    protected function getEnvironmentSetUp($app): void
     {
         // Setup default database to use sqlite :memory:
         $app['config']->set('database.default', 'testbench');
