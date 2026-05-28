@@ -89,6 +89,29 @@ final class HasMorphToManyEventsTest extends TestCase
     }
 
     #[Test]
+    public function it_fires_morphToManyToggling_and_morphToManyToggled(): void
+    {
+        Event::fake();
+
+        $post = Post::create();
+        $tag = Tag::create();
+        $post->tags()->toggle($tag);
+
+        Event::assertDispatched(
+            'eloquent.morphToManyToggling: ' . Post::class,
+            function ($event, $callback) use ($post, $tag) {
+                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.morphToManyToggled: ' . Post::class,
+            function ($event, $callback) use ($post, $tag) {
+                return $callback[0] == 'tags' && $callback[1]->is($post) && $callback[2][0] == $tag->id;
+            }
+        );
+    }
+
+    #[Test]
     public function it_fires_morphToManyUpdatingExistingPivot_and_morphToManyUpdatedExistingPivot(): void
     {
         Event::fake();
