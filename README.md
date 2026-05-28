@@ -15,6 +15,10 @@ Missing relationship events for Laravel
 | Package | Laravel | PHP |
 |---------|---------|-----|
 | `v5.x`  | `13.x` | `^8.3` |
+| `v4.x`  | `12.x` | `^8.2` |
+| `v3.x`  | `11.x` | `^8.2` |
+| `v2.x`  | `10.x` | `^8.1` |
+| `v1.x`  | `6.x` - `9.x` | `^7.2` \| `^8.0` |
 
 ## Install
 
