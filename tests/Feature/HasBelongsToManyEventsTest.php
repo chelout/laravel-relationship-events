@@ -134,4 +134,38 @@ final class HasBelongsToManyEventsTest extends TestCase
             }
         );
     }
+
+    #[Test]
+    public function it_fires_belongsToManyDetaching_and_belongsToManyDetached_when_detaching_without_ids(): void
+    {
+        Event::fake();
+
+        $user = User::create();
+        $role1 = Role::create(['name' => 'admin']);
+        $role2 = Role::create(['name' => 'editor']);
+        $user->roles()->attach([$role1->id, $role2->id]);
+
+        // Calling detach() with no arguments resolves the ids from the related
+        // models ($ids ??= ...->pluck($this->relatedKey)) before detaching.
+        $user->roles()->detach();
+
+        Event::assertDispatched(
+            'eloquent.belongsToManyDetaching: ' . User::class,
+            function ($event, $callback) use ($user, $role1, $role2) {
+                return $callback[0] == 'roles'
+                    && $callback[1]->is($user)
+                    && in_array($role1->id, $callback[2])
+                    && in_array($role2->id, $callback[2]);
+            }
+        );
+        Event::assertDispatched(
+            'eloquent.belongsToManyDetached: ' . User::class,
+            function ($event, $callback) use ($user, $role1, $role2) {
+                return $callback[0] == 'roles'
+                    && $callback[1]->is($user)
+                    && in_array($role1->id, $callback[2])
+                    && in_array($role2->id, $callback[2]);
+            }
+        );
+    }
 }
