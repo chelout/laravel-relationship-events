@@ -112,7 +112,7 @@ trait HasBelongsToEvents
      * @param \Illuminate\Database\Eloquent\Model|int|string $parent
      * @param bool $halt
      *
-     * @return bool
+     * @return mixed
      */
     public function fireModelBelongsToEvent($event, $relation, $parent, $halt = true): mixed
     {

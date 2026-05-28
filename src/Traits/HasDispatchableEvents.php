@@ -14,7 +14,7 @@ trait HasDispatchableEvents
      *
      * @param string $event
      * @param string $method
-     * @param array $params
+     * @param mixed ...$params
      *
      * @return null|mixed
      */

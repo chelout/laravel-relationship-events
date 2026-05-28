@@ -12,14 +12,14 @@ trait HasEventDispatcher
     /**
      * The event dispatcher instance.
      *
-     * @var \Illuminate\Contracts\Events\Dispatcher
+     * @var ?\Illuminate\Contracts\Events\Dispatcher
      */
     protected static ?Dispatcher $dispatcher = null;
 
     /**
      * Get the event dispatcher instance.
      *
-     * @return \Illuminate\Contracts\Events\Dispatcher
+     * @return ?\Illuminate\Contracts\Events\Dispatcher
      */
     public static function getEventDispatcher(): ?Dispatcher
     {
