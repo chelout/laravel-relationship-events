@@ -23,7 +23,8 @@ trait HasMorphManyEvents
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    protected function newMorphMany(Builder $query, Model $parent, $type, $id, $localKey)
+    #[\Override]
+    protected function newMorphMany(Builder $query, Model $parent, $type, $id, $localKey): MorphMany
     {
         return new MorphMany($query, $parent, $type, $id, $localKey);
     }
@@ -34,7 +35,7 @@ trait HasMorphManyEvents
      * @param string $event
      * @param Closure|string $callback
      */
-    protected static function registerModelMorphManyEvent($event, $callback)
+    protected static function registerModelMorphManyEvent($event, $callback): void
     {
         if (isset(static::$dispatcher)) {
             $name = static::class;
@@ -48,7 +49,7 @@ trait HasMorphManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphManyCreating($callback)
+    public static function morphManyCreating($callback): void
     {
         static::registerModelMorphManyEvent('morphManyCreating', $callback);
     }
@@ -58,7 +59,7 @@ trait HasMorphManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphManyCreated($callback)
+    public static function morphManyCreated($callback): void
     {
         static::registerModelMorphManyEvent('morphManyCreated', $callback);
     }
@@ -68,7 +69,7 @@ trait HasMorphManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphManySaving($callback)
+    public static function morphManySaving($callback): void
     {
         static::registerModelMorphManyEvent('morphManySaving', $callback);
     }
@@ -78,7 +79,7 @@ trait HasMorphManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphManySaved($callback)
+    public static function morphManySaved($callback): void
     {
         static::registerModelMorphManyEvent('morphManySaved', $callback);
     }
@@ -88,7 +89,7 @@ trait HasMorphManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphManyUpdating($callback)
+    public static function morphManyUpdating($callback): void
     {
         static::registerModelMorphManyEvent('morphManyUpdating', $callback);
     }
@@ -98,7 +99,7 @@ trait HasMorphManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphManyUpdated($callback)
+    public static function morphManyUpdated($callback): void
     {
         static::registerModelMorphManyEvent('morphManyUpdated', $callback);
     }
@@ -112,7 +113,7 @@ trait HasMorphManyEvents
      *
      * @return mixed
      */
-    public function fireModelMorphManyEvent($event, $related = null, $halt = true)
+    public function fireModelMorphManyEvent($event, $related = null, $halt = true): mixed
     {
         if (!isset(static::$dispatcher)) {
             return true;

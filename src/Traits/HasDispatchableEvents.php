@@ -14,11 +14,12 @@ trait HasDispatchableEvents
      *
      * @param string $event
      * @param string $method
-     * @param array $params
+     * @param mixed ...$params
      *
      * @return null|mixed
      */
-    protected function fireCustomModelEvent($event, $method, ...$params)
+    #[\Override]
+    protected function fireCustomModelEvent($event, $method, ...$params): mixed
     {
         if (!isset($this->dispatchesEvents[$event])) {
             return;

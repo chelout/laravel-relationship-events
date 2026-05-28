@@ -24,7 +24,8 @@ trait HasMorphToEvents
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    protected function newMorphTo(Builder $query, Model $parent, $foreignKey, $ownerKey, $type, $relation)
+    #[\Override]
+    protected function newMorphTo(Builder $query, Model $parent, $foreignKey, $ownerKey, $type, $relation): MorphTo
     {
         return new MorphTo($query, $parent, $foreignKey, $ownerKey, $type, $relation);
     }
@@ -35,7 +36,7 @@ trait HasMorphToEvents
      * @param string $event
      * @param Closure|string $callback
      */
-    protected static function registerModelMorphToEvent($event, $callback)
+    protected static function registerModelMorphToEvent($event, $callback): void
     {
         if (isset(static::$dispatcher)) {
             $name = static::class;
@@ -49,7 +50,7 @@ trait HasMorphToEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToAssociating($callback)
+    public static function morphToAssociating($callback): void
     {
         static::registerModelMorphToEvent('morphToAssociating', $callback);
     }
@@ -59,7 +60,7 @@ trait HasMorphToEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToAssociated($callback)
+    public static function morphToAssociated($callback): void
     {
         static::registerModelMorphToEvent('morphToAssociated', $callback);
     }
@@ -69,7 +70,7 @@ trait HasMorphToEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToDissociating($callback)
+    public static function morphToDissociating($callback): void
     {
         static::registerModelMorphToEvent('morphToDissociating', $callback);
     }
@@ -79,7 +80,7 @@ trait HasMorphToEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToDissociated($callback)
+    public static function morphToDissociated($callback): void
     {
         static::registerModelMorphToEvent('morphToDissociated', $callback);
     }
@@ -89,7 +90,7 @@ trait HasMorphToEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToUpdating($callback)
+    public static function morphToUpdating($callback): void
     {
         static::registerModelMorphToEvent('morphToUpdating', $callback);
     }
@@ -99,7 +100,7 @@ trait HasMorphToEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToUpdated($callback)
+    public static function morphToUpdated($callback): void
     {
         static::registerModelMorphToEvent('morphToUpdated', $callback);
     }
@@ -114,7 +115,7 @@ trait HasMorphToEvents
      *
      * @return mixed
      */
-    public function fireModelMorphToEvent($event, $relation, $parent, $halt = true)
+    public function fireModelMorphToEvent($event, $relation, $parent, $halt = true): mixed
     {
         if (!isset(static::$dispatcher)) {
             return true;

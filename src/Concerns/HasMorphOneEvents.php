@@ -23,7 +23,8 @@ trait HasMorphOneEvents
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphOne
      */
-    protected function newMorphOne(Builder $query, Model $parent, $type, $id, $localKey)
+    #[\Override]
+    protected function newMorphOne(Builder $query, Model $parent, $type, $id, $localKey): MorphOne
     {
         return new MorphOne($query, $parent, $type, $id, $localKey);
     }
@@ -34,7 +35,7 @@ trait HasMorphOneEvents
      * @param string $event
      * @param Closure|string $callback
      */
-    protected static function registerModelMorphOneEvent($event, $callback)
+    protected static function registerModelMorphOneEvent($event, $callback): void
     {
         if (isset(static::$dispatcher)) {
             $name = static::class;
@@ -48,7 +49,7 @@ trait HasMorphOneEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphOneCreating($callback)
+    public static function morphOneCreating($callback): void
     {
         static::registerModelMorphOneEvent('morphOneCreating', $callback);
     }
@@ -58,7 +59,7 @@ trait HasMorphOneEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphOneCreated($callback)
+    public static function morphOneCreated($callback): void
     {
         static::registerModelMorphOneEvent('morphOneCreated', $callback);
     }
@@ -68,7 +69,7 @@ trait HasMorphOneEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphOneSaving($callback)
+    public static function morphOneSaving($callback): void
     {
         static::registerModelMorphOneEvent('morphOneSaving', $callback);
     }
@@ -78,7 +79,7 @@ trait HasMorphOneEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphOneSaved($callback)
+    public static function morphOneSaved($callback): void
     {
         static::registerModelMorphOneEvent('morphOneSaved', $callback);
     }
@@ -88,7 +89,7 @@ trait HasMorphOneEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphOneUpdating($callback)
+    public static function morphOneUpdating($callback): void
     {
         static::registerModelMorphOneEvent('morphOneUpdating', $callback);
     }
@@ -98,7 +99,7 @@ trait HasMorphOneEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphOneUpdated($callback)
+    public static function morphOneUpdated($callback): void
     {
         static::registerModelMorphOneEvent('morphOneUpdated', $callback);
     }
@@ -112,7 +113,7 @@ trait HasMorphOneEvents
      *
      * @return mixed
      */
-    public function fireModelMorphOneEvent($event, $related = null, $halt = true)
+    public function fireModelMorphOneEvent($event, $related = null, $halt = true): mixed
     {
         if (!isset(static::$dispatcher)) {
             return true;

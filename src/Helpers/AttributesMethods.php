@@ -15,7 +15,7 @@ class AttributesMethods
      *
      * @return array
      */
-    public static function parseIds($value)
+    public static function parseIds($value): array
     {
         if ($value instanceof Model) {
             return [$value->getKey()];

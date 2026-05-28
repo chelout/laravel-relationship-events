@@ -27,7 +27,8 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      *
      * @return array
      */
-    public function toggle($ids, $touch = true)
+    #[\Override]
+    public function toggle($ids, $touch = true): array
     {
         $this->parent->fireModelBelongsToManyEvent('toggling', $this->getRelationName(), $ids);
 
@@ -46,7 +47,8 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      *
      * @return array
      */
-    public function sync($ids, $detaching = true)
+    #[\Override]
+    public function sync($ids, $detaching = true): array
     {
         $this->parent->fireModelBelongsToManyEvent('syncing', $this->getRelationName(), $ids);
 
@@ -65,7 +67,8 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      *
      * @return int
      */
-    public function updateExistingPivot($id, array $attributes, $touch = true)
+    #[\Override]
+    public function updateExistingPivot($id, array $attributes, $touch = true): int
     {
         $this->parent->fireModelBelongsToManyEvent('updatingExistingPivot', $this->getRelationName(), $id, $attributes);
 
@@ -82,7 +85,8 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      * @param mixed $id
      * @param bool $touch
      */
-    public function attach($id, array $attributes = [], $touch = true)
+    #[\Override]
+    public function attach($id, array $attributes = [], $touch = true): void
     {
         $this->parent->fireModelBelongsToManyEvent('attaching', $this->getRelationName(), $id, $attributes);
 
@@ -99,7 +103,8 @@ class BelongsToMany extends BelongsToManyBase implements EventDispatcher
      *
      * @return int
      */
-    public function detach($ids = null, $touch = true)
+    #[\Override]
+    public function detach($ids = null, $touch = true): int
     {
         // Get detached ids to pass them to event
         $ids ??= $this->parent->{$this->getRelationName()}->pluck($this->relatedKey);

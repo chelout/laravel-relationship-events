@@ -23,7 +23,7 @@ trait HasRelationshipObservables
      *
      * @return void
      */
-    public static function bootHasRelationshipObservables()
+    public static function bootHasRelationshipObservables(): void
     {
         $methods = collect(
             class_uses(static::class),
@@ -42,7 +42,7 @@ trait HasRelationshipObservables
      *
      * @return void
      */
-    public static function mergeRelationshipObservables(array $relationshipObservables)
+    public static function mergeRelationshipObservables(array $relationshipObservables): void
     {
         static::$relationshipObservables = array_merge(static::$relationshipObservables, $relationshipObservables);
     }
@@ -52,7 +52,8 @@ trait HasRelationshipObservables
      *
      * @return array
      */
-    public function getObservableEvents()
+    #[\Override]
+    public function getObservableEvents(): array
     {
         return array_merge(
             [

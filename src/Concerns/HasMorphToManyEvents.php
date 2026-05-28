@@ -29,6 +29,7 @@ trait HasMorphToManyEvents
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
+    #[\Override]
     protected function newMorphToMany(
         Builder $query,
         Model $parent,
@@ -40,7 +41,7 @@ trait HasMorphToManyEvents
         $relatedKey,
         $relationName = null,
         $inverse = false,
-    ) {
+    ): MorphToMany {
         return new MorphToMany(
             $query,
             $parent,
@@ -61,7 +62,7 @@ trait HasMorphToManyEvents
      * @param string $event
      * @param Closure|string $callback
      */
-    protected static function registerModelMorphToManyEvent($event, $callback)
+    protected static function registerModelMorphToManyEvent($event, $callback): void
     {
         if (isset(static::$dispatcher)) {
             $name = static::class;
@@ -75,7 +76,7 @@ trait HasMorphToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToManyCreating($callback)
+    public static function morphToManyCreating($callback): void
     {
         static::registerModelMorphToManyEvent('morphToManyCreating', $callback);
     }
@@ -85,7 +86,7 @@ trait HasMorphToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToManyCreated($callback)
+    public static function morphToManyCreated($callback): void
     {
         static::registerModelMorphToManyEvent('morphToManyCreated', $callback);
     }
@@ -95,7 +96,7 @@ trait HasMorphToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToManySaving($callback)
+    public static function morphToManySaving($callback): void
     {
         static::registerModelMorphToManyEvent('morphToManySaving', $callback);
     }
@@ -105,7 +106,7 @@ trait HasMorphToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToManySaved($callback)
+    public static function morphToManySaved($callback): void
     {
         static::registerModelMorphToManyEvent('morphToManySaved', $callback);
     }
@@ -115,7 +116,7 @@ trait HasMorphToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToManyAttaching($callback)
+    public static function morphToManyAttaching($callback): void
     {
         static::registerModelMorphToManyEvent('morphToManyAttaching', $callback);
     }
@@ -125,7 +126,7 @@ trait HasMorphToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToManyAttached($callback)
+    public static function morphToManyAttached($callback): void
     {
         static::registerModelMorphToManyEvent('morphToManyAttached', $callback);
     }
@@ -135,7 +136,7 @@ trait HasMorphToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToManyDetaching($callback)
+    public static function morphToManyDetaching($callback): void
     {
         static::registerModelMorphToManyEvent('morphToManyDetaching', $callback);
     }
@@ -145,7 +146,7 @@ trait HasMorphToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToManyDetached($callback)
+    public static function morphToManyDetached($callback): void
     {
         static::registerModelMorphToManyEvent('morphToManyDetached', $callback);
     }
@@ -155,7 +156,7 @@ trait HasMorphToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToManySyncing($callback)
+    public static function morphToManySyncing($callback): void
     {
         static::registerModelMorphToManyEvent('morphToManySyncing', $callback);
     }
@@ -165,7 +166,7 @@ trait HasMorphToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToManySynced($callback)
+    public static function morphToManySynced($callback): void
     {
         static::registerModelMorphToManyEvent('morphToManySynced', $callback);
     }
@@ -175,7 +176,7 @@ trait HasMorphToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToManyToggling($callback)
+    public static function morphToManyToggling($callback): void
     {
         static::registerModelMorphToManyEvent('morphToManyToggling', $callback);
     }
@@ -185,7 +186,7 @@ trait HasMorphToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToManyToggled($callback)
+    public static function morphToManyToggled($callback): void
     {
         static::registerModelMorphToManyEvent('morphToManyToggled', $callback);
     }
@@ -195,7 +196,7 @@ trait HasMorphToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToManyUpdatingExistingPivot($callback)
+    public static function morphToManyUpdatingExistingPivot($callback): void
     {
         static::registerModelMorphToManyEvent('morphToManyUpdatingExistingPivot', $callback);
     }
@@ -205,7 +206,7 @@ trait HasMorphToManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function morphToManyUpdatedExistingPivot($callback)
+    public static function morphToManyUpdatedExistingPivot($callback): void
     {
         static::registerModelMorphToManyEvent('morphToManyUpdatedExistingPivot', $callback);
     }
@@ -221,7 +222,7 @@ trait HasMorphToManyEvents
      *
      * @return mixed
      */
-    public function fireModelMorphToManyEvent($event, $relation, $ids, $attributes = [], $halt = true)
+    public function fireModelMorphToManyEvent($event, $relation, $ids, $attributes = [], $halt = true): mixed
     {
         if (!isset(static::$dispatcher)) {
             return true;

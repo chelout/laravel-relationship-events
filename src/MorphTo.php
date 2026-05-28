@@ -4,6 +4,7 @@ namespace Chelout\RelationshipEvents;
 
 use Chelout\RelationshipEvents\Contracts\EventDispatcher;
 use Chelout\RelationshipEvents\Traits\HasEventDispatcher;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo as MorphToBase;
 
 /**
@@ -22,7 +23,8 @@ class MorphTo extends MorphToBase implements EventDispatcher
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function associate($model)
+    #[\Override]
+    public function associate($model): Model
     {
         $this->parent->fireModelMorphToEvent('associating', $this->relationName, $model);
 
@@ -38,7 +40,8 @@ class MorphTo extends MorphToBase implements EventDispatcher
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function dissociate()
+    #[\Override]
+    public function dissociate(): Model
     {
         $parent = $this->getResults();
 

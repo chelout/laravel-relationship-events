@@ -4,6 +4,7 @@ namespace Chelout\RelationshipEvents;
 
 use Chelout\RelationshipEvents\Contracts\EventDispatcher;
 use Chelout\RelationshipEvents\Traits\HasEventDispatcher;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo as BelongsToBase;
 
 /**
@@ -24,7 +25,8 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function associate($model)
+    #[\Override]
+    public function associate($model): Model
     {
         $this->parent->fireModelBelongsToEvent('associating', $this->relationName, $model);
 
@@ -40,7 +42,8 @@ class BelongsTo extends BelongsToBase implements EventDispatcher
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function dissociate()
+    #[\Override]
+    public function dissociate(): Model
     {
         $parent = $this->getResults();
 

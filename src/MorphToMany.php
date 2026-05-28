@@ -25,7 +25,8 @@ class MorphToMany extends MorphToManyBase implements EventDispatcher
      *
      * @return array
      */
-    public function toggle($ids, $touch = true)
+    #[\Override]
+    public function toggle($ids, $touch = true): array
     {
         $this->parent->fireModelMorphToManyEvent('toggling', $this->getRelationName(), $ids);
 
@@ -44,7 +45,8 @@ class MorphToMany extends MorphToManyBase implements EventDispatcher
      *
      * @return array
      */
-    public function sync($ids, $detaching = true)
+    #[\Override]
+    public function sync($ids, $detaching = true): array
     {
         $this->parent->fireModelMorphToManyEvent('syncing', $this->getRelationName(), $ids);
 
@@ -63,7 +65,8 @@ class MorphToMany extends MorphToManyBase implements EventDispatcher
      *
      * @return int
      */
-    public function updateExistingPivot($id, array $attributes, $touch = true)
+    #[\Override]
+    public function updateExistingPivot($id, array $attributes, $touch = true): int
     {
         $this->parent->fireModelMorphToManyEvent('updatingExistingPivot', $this->getRelationName(), $id, $attributes);
 
@@ -80,7 +83,8 @@ class MorphToMany extends MorphToManyBase implements EventDispatcher
      * @param mixed $id
      * @param bool $touch
      */
-    public function attach($id, array $attributes = [], $touch = true)
+    #[\Override]
+    public function attach($id, array $attributes = [], $touch = true): void
     {
         $this->parent->fireModelMorphToManyEvent('attaching', $this->getRelationName(), $id, $attributes);
 
@@ -97,7 +101,8 @@ class MorphToMany extends MorphToManyBase implements EventDispatcher
      *
      * @return int
      */
-    public function detach($ids = null, $touch = true)
+    #[\Override]
+    public function detach($ids = null, $touch = true): int
     {
         // Get detached ids to pass them to event
         $ids ??= $this->parent->{$this->getRelationName()}->pluck($this->relatedKey);

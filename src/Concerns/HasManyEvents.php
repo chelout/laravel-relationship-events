@@ -22,7 +22,8 @@ trait HasManyEvents
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    protected function newHasMany(Builder $query, Model $parent, $foreignKey, $localKey)
+    #[\Override]
+    protected function newHasMany(Builder $query, Model $parent, $foreignKey, $localKey): HasMany
     {
         return new HasMany($query, $parent, $foreignKey, $localKey);
     }
@@ -33,7 +34,7 @@ trait HasManyEvents
      * @param string $event
      * @param Closure|string $callback
      */
-    protected static function registerModelHasManyEvent($event, $callback)
+    protected static function registerModelHasManyEvent($event, $callback): void
     {
         if (isset(static::$dispatcher)) {
             $name = static::class;
@@ -47,7 +48,7 @@ trait HasManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function hasManyCreating($callback)
+    public static function hasManyCreating($callback): void
     {
         static::registerModelHasManyEvent('hasManyCreating', $callback);
     }
@@ -57,7 +58,7 @@ trait HasManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function hasManyCreated($callback)
+    public static function hasManyCreated($callback): void
     {
         static::registerModelHasManyEvent('hasManyCreated', $callback);
     }
@@ -67,7 +68,7 @@ trait HasManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function hasManySaving($callback)
+    public static function hasManySaving($callback): void
     {
         static::registerModelHasManyEvent('hasManySaving', $callback);
     }
@@ -77,7 +78,7 @@ trait HasManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function hasManySaved($callback)
+    public static function hasManySaved($callback): void
     {
         static::registerModelHasManyEvent('hasManySaved', $callback);
     }
@@ -87,7 +88,7 @@ trait HasManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function hasManyUpdating($callback)
+    public static function hasManyUpdating($callback): void
     {
         static::registerModelHasManyEvent('hasManyUpdating', $callback);
     }
@@ -97,7 +98,7 @@ trait HasManyEvents
      *
      * @param Closure|string $callback
      */
-    public static function hasManyUpdated($callback)
+    public static function hasManyUpdated($callback): void
     {
         static::registerModelHasManyEvent('hasManyUpdated', $callback);
     }
@@ -111,7 +112,7 @@ trait HasManyEvents
      *
      * @return mixed
      */
-    public function fireModelHasManyEvent($event, $related = null, $halt = true)
+    public function fireModelHasManyEvent($event, $related = null, $halt = true): mixed
     {
         if (!isset(static::$dispatcher)) {
             return true;
