@@ -178,4 +178,46 @@ final class HasMorphedByManyEventsTest extends TestCase
             }
         );
     }
+
+    #[Test]
+    public function it_detaches_through_a_relationship_helper_requiring_arguments(): void
+    {
+        $parent = Tag::create();
+        $related = Post::create();
+        $other = Post::create();
+        $parent->posts()->attach([$related->id, $other->id]);
+
+        Event::fake();
+
+        $this->assertSame(1, $parent->postsFor($related->id)->detach());
+        $this->assertSame([$other->id], $parent->posts()->allRelatedIds()->all());
+
+        foreach (['morphedByManyDetaching', 'morphedByManyDetached'] as $event) {
+            Event::assertDispatched('eloquent.' . $event . ': ' . Tag::class, function ($event, $payload) use ($parent, $related) {
+                return $payload[1]->is($parent) && $payload[2] === [$related->id];
+            });
+        }
+    }
+
+    #[Test]
+    public function it_detaches_current_assignments_when_the_relationship_was_loaded_earlier(): void
+    {
+        $parent = Tag::create();
+        $related = Post::create();
+        $other = Post::create();
+        $parent->posts()->attach($related);
+        $parent->load('posts');
+        $parent->posts()->attach($other);
+
+        Event::fake();
+
+        $this->assertSame(2, $parent->posts()->detach());
+        $this->assertSame([], $parent->posts()->allRelatedIds()->all());
+
+        foreach (['morphedByManyDetaching', 'morphedByManyDetached'] as $event) {
+            Event::assertDispatched('eloquent.' . $event . ': ' . Tag::class, function ($event, $payload) use ($parent, $related, $other) {
+                return $payload[1]->is($parent) && $payload[2] === [$related->id, $other->id];
+            });
+        }
+    }
 }

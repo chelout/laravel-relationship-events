@@ -105,7 +105,7 @@ class MorphedByMany extends MorphToManyBase implements EventDispatcher
     public function detach($ids = null, $touch = true): int
     {
         // Get detached ids to pass them to event
-        $ids ??= $this->parent->{$this->getRelationName()}->pluck($this->relatedKey);
+        $ids ??= $this->allRelatedIds();
 
         $this->parent->fireModelMorphedByManyEvent('detaching', $this->getRelationName(), $ids);
 
