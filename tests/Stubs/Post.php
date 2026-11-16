@@ -33,4 +33,9 @@ class Post extends Model
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
+
+    public function tagsFor(int $id)
+    {
+        return $this->morphToMany(Tag::class, 'taggable')->wherePivot('tag_id', $id);
+    }
 }
